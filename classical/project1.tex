@@ -1,0 +1,73 @@
+\documentclass{article}
+% the code below is used to stretch the left and right margins
+\usepackage[right=1.0in,left=1.0in]{geometry}
+\usepackage{graphics}
+\usepackage{graphicx}
+
+\begin{document}
+\title{Project 1\\{\large{Robot Intelligence: Planning 8803 \textbf{``RIP"}}}}
+\author{Philip Rogers, Alex Cunningham, Oktay Arslan}
+\maketitle
+
+\paragraph{2.) Pre-Project: Towers of Hanoi}
+\begin{enumerate}
+\item{\textit{Explain the method by which each of the two planners finds a solution.\\}}
+The Fast-Forward (FF) planner works by combining HSP with a heuristic using GraphPlan. Following the HSP method, the FF planner grows the state space while ignoring delete lists.  A difference between HSP and FF is that the heuristic used in FF is based on a relaxed version of GraphPlan, which is a more informed heuristic than HSP because it takes into account positive interactions.  An example of this is given in \cite{hoffmann2001fast}, where the naive heuristic does not consider a single precondition being shared between two actions, whereas GraphPlan considers it and produces a lower (more informed) heuristic value.
+
+
+The Blackbox planner also uses GraphPlan, but in a very different way than FF.  Blackbox uses GraphPlan (especially Mutex constraint propagation) to generate a boolean satisfiability problem, which Blackbox then uses SAT solvers to solve.  This is clear from the output of Blackbox, which shows how it works: first GraphPlan is used to generate a SAT problem, then a SAT solver is used to determine the feasibility.
+
+\item{\textit{Which planner was fastest?\\}}
+We used two planners:Fast-Forward (FF), and Blackbox.\\
+FF is clearly the fastest planner, with two of its variants (Metric-FF and Contingent-FF) taking less than 0.01s to generate a plan for the 3-disk Hanoi problem.  The Blackbox planner was considerabally slower, taking 0.032s when using the Chaff solver, and taking 0.10s when using the SatPlan solver.  All four generated the same plan, which was 7 steps.
+
+\item{\textit{Explain why the winning planner might be more effective on this problem.\\}}
+The heuristic used by FF appears to be particularly useful in this small Hanoi problem, because positive effects are frequent when dealing with only 3 plates.  Dr. Hoffman mentions this in \cite{hoffmann2001fast} when he notes that the heuristics of FF are good for many benchmark planning problems, such as Hanoi.  
+\end{enumerate}
+
+\paragraph{3.) Project Part I: Sokoban PDDL}
+\begin{enumerate}
+\item{\textit{Show successful plans from at least one planner on the Sokoban problems.\\}}
+\item{\textit{Compare the performance of two planners on this domain. Which one works better? Does this make sense, why?\\}}
+\item{\textit{Clearly PDDL was not intended for this sort of application. Discuss the challenges in expressing geometric constraints in semantic planning.\\}}
+\item{\textit{In many cases, geometric and dynamic planning are insufficient to describe a domain. Give an example of a problem that is best suited for sematic (classical) planning. Explain why a semantic representation would be desirable.\\}}
+\end{enumerate}
+
+\paragraph{4.) Project Part II: Sokoban Planner}
+
+[Description of our planner]
+
+\begin{center}
+\begin{table}[h!]
+\begin{tabular*}{1.0\textwidth}{@{\extracolsep{\fill}}| l | c | c | c | c |}
+\hline
+\multicolumn{5}{| c |}{Planner stats for Sokoban problems} \\ \hline
+& Problem 1 & Problem 2 & Problem 3  & Problem 4 \\ \hline
+Computation time (ms) &  1 & 2 & 3 & 1 \\ \hline
+\# of steps & 4 & 5 & 6 & 1\\ \hline
+\# of states explored & 7 & 8 & 9 & 1\\
+\hline
+\end{tabular*}
+\caption{Statistics for our Sokoban planner.}
+\label{PlannerStats}
+\end{table}
+\end{center}
+
+\begin{enumerate}
+\item{\textit{Give successful plans from your planner on the Sokoban problems in Figure 2 and any others.\\}}
+\item{\textit{Compare the performance of your planner to the PDDL planners you used in the previous problem. Which was faster? Why?\\}}
+\item{\textit{Prove that your planner was complete. Your instructor has a math background: a proof ``is a convincing argument." Make sure you address each aspect of completeness and why your planner satisfies it. Pictures are always welcome.\\}}
+\item{\textit{What methods did you use to speed up the planning? Give a short description of each method and explain why it did or didn’t help on each relevant problem.\\}}
+\end{enumerate}
+
+\paragraph{5.) Post-Project: Towers of Hanoi Revisited}
+
+\begin{enumerate}
+\item{\textit{Give successful plans from at least one planner with 6 and 10 disks.\\}}
+\item{\textit{Do you notice anything about the structure of the plans? Can you use this to increase the efficiency of planning for Towers of Hanoi? Explain.\\}}
+\item{\textit{In a paragraph or two, explain a general planning strategy that would take advantage of problem structure. Make sure your strategy applies to problems other than Towers of Hanoi. Would such a planner still be complete?\\}}
+\end{enumerate}
+
+\bibliographystyle{plain}
+\bibliography{project1}
+\end{document}
