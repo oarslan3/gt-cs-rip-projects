@@ -22,13 +22,10 @@
 			(is-above p7 p11)
 			; place the objects
 			(at player p3)
-			;(has-dude p3)
 			(at A p10)
 			(has-block p10)
-			; clear everything else 
-			;(clear p1) (clear p2) (clear p4) (clear p5) (clear p6) (clear p7)
-			;(clear p8) (clear p9) (clear p11) (clear p12) (clear p13)
 			)
 	(:goal (and
 						(at A p2)
-						(has-block p2))))
+						(has-block p2))
+						))
