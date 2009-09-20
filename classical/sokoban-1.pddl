@@ -22,7 +22,7 @@
 			(is-above p7 p11)
 			; place the objects
 			(at player p3)
-			(has-dude p3)
+			;(has-dude p3)
 			(at A p10)
 			(has-block p10)
 			; clear everything else 

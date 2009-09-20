@@ -28,7 +28,7 @@
 			(is-above p9 p14) 
 			; place the objects
 			(at player p9)
-			(has-dude p9)
+			;(has-dude p9)
 			(at A p3)
 			(has-block p3)
 			(at B p6)

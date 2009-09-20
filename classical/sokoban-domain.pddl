@@ -8,28 +8,28 @@
 							 (dude ?x)				; object x is the small robot thing
 							 (block ?x)				; object x is a block
 							 (has-block ?x)		; space x has a block
-							 (has-dude ?x)		; space x has the dude
+							 ;(has-dude ?x)		; space x has the dude
 							 )
 	(:action move; move without pushing anything
 			:parameters (?dude ?start ?end)
 			:precondition (and (dude ?dude)            
-												 (or ; could be any movement direction
+												 (or 
 														(is-above ?start ?end)
 														(is-above ?end ?start)
 														(is-left ?start ?end)
 														(is-left ?end ?start))
 												 (at ?dude ?start)
-												 (has-dude ?start)
+												 ;(has-dude ?start)
 												 (space ?start)
 												 (space ?end)
 												 (not (= ?start ?end))
-												 (not (has-dude ?end))
+												 ;(not (has-dude ?end))
 												 (not (has-block ?end))
 												 (not (has-block ?start)))
 			:effect (and 
 								(at ?dude ?end)
-								(not (has-dude ?start))
-								(has-dude ?end)
+								;(not (has-dude ?start))
+								;(has-dude ?end)
 								(not (at ?dude ?start))))
 	(:action move-block
 			:parameters (?dude ?block ?dude-start ?block-start ?block-end)
@@ -41,9 +41,9 @@
 																	 (space ?dude-start)
 																	 (space ?block-start)
 																	 (space ?block-end)
-																	 (has-dude ?dude-start) ; check for positions
-																	 (not (has-dude ?block-start))
-																	 (not (has-dude ?block-end))
+																	 ;(has-dude ?dude-start) ; check for positions
+																	 ;(not (has-dude ?block-start))
+																	 ;(not (has-dude ?block-end))
 																	 (has-block ?block-start)
 																	 (not (has-block ?dude-start))
 																	 (not (has-block ?block-end))
@@ -61,8 +61,8 @@
 								:effect (and
 														(at ?dude ?block-start)  ; dude moves
 														(not (at ?dude ?dude-start))
-														(has-dude ?block-start)
-														(not (has-dude ?dude-start))
+														;(has-dude ?block-start)
+														;(not (has-dude ?dude-start))
 														(at ?block ?block-end)   ; block moves
 														(not (at ?block ?block-start))
 														(has-block ?block-end)
