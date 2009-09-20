@@ -28,8 +28,7 @@
 			(is-above p3 p5) (is-above p5 p7) (is-above p7 p16) 
 			; place the objects
 			(at player p9)
-			;(has-dude p9)
-			(at A p15)
+			(at A p15) ; real position
 			(has-block p15)
 			(at B p13)
 			(has-block p13)
@@ -37,9 +36,10 @@
 			(has-block p11)
 			)
 	(:goal (and 
-						(at A p1)
+						(at A p1) 
 						(has-block p1)
 						(at B p4)
 						(has-block p4)
 						(at C p6)
-						(has-block p6))))
+						(has-block p6)
+						)))
