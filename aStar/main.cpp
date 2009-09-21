@@ -4,8 +4,9 @@
  *
  * */
 
-#include<iostream>
-#include<fstream>
+#include <iostream>
+#include <fstream>
+#include <cstdlib>
 #include "State.h"
 #include "A_Star.h"
 using namespace std;
