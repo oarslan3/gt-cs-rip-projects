@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstdlib>
 #include "State.h"
 #include "A_Star.h"
 
