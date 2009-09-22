@@ -44,7 +44,7 @@ class Environment{
 class State : public State_Base{
     private:
 		static Environment *env;	/* Since the environment is unique, it is kept as static variable */
-		Location coor;				/* The current location defines the state */
+		Location coorSokoban;				/* The current location defines the state */
 		typedef enum {START,UP,LEFT,DOWN,RIGHT} Direction;
 		Direction last_movement;	/* the last movement is kept */
 	public:
