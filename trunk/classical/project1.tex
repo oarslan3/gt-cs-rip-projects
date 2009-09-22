@@ -19,7 +19,7 @@ The Blackbox planner also uses GraphPlan, but in a very different way than FF.  
 
 \item{\textit{Which planner was fastest?\\}}
 We used two planners:Fast-Forward (FF), and Blackbox.\\
-FF is clearly the fastest planner, with two of its variants (Metric-FF and Contingent-FF) taking less than 0.01s to generate a plan for the 3-disk Hanoi problem.  The Blackbox planner was considerabally slower, taking 0.032s when using the Chaff solver, and taking 0.10s when using the SatPlan solver.  All four generated the same plan, which was 7 steps.
+FF is clearly the fastest planner, with two of its variants (FFv2.3 and Contingent-FF) taking less than 0.01s to generate a plan for the 3-disk Hanoi problem.  The Blackbox planner was considerabally slower, taking 0.032s when using the Chaff solver, and taking 0.10s when using the SatPlan solver.  All four generated the same plan, which was 7 steps.
 
 \item{\textit{Explain why the winning planner might be more effective on this problem.\\}}
 The heuristic used by FF appears to be particularly useful in this small Hanoi problem, because positive effects are frequent when dealing with only 3 plates.  Dr. Hoffman mentions this in \cite{hoffmann2001fast} when he notes that the heuristics of FF are good for many benchmark planning problems, such as Hanoi.  
@@ -118,7 +118,11 @@ Computation time (ms) &  1 & 2 & 3 & 1 \\ \hline
 
 \begin{enumerate}
 \item{\textit{Give successful plans from at least one planner with 6 and 10 disks.\\}}
+See attached \textit{hanoi\_plans.txt}.
+
 \item{\textit{Do you notice anything about the structure of the plans? Can you use this to increase the efficiency of planning for Towers of Hanoi? Explain.\\}}
+Yes, the plans have long spans where a large number of disks are ``shuffled" from one peg to another, inverting all but one of the disks in a tower.  To improve the efficiency of the planner, a move could be introduced to move all but one disk from one peg to another. This new move corresponds to one of the steps in the well-known Hanoi solving algorithm \cite{cutTheKnotHanoiAlgorithm}, which has been shown to be optimal (in terms of efficiency, and optimality.)
+
 \item{\textit{In a paragraph or two, explain a general planning strategy that would take advantage of problem structure. Make sure your strategy applies to problems other than Towers of Hanoi. Would such a planner still be complete?\\}}
 \end{enumerate}
 
