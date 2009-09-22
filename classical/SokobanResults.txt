@@ -1,0 +1,1130 @@
+PDDL Sokoban Results:
+************************************************************************************
+************************************************************************************
+Sokoban 1: 
+************************************************************************************
+====================================================================================
+FF - Vanilla
+====================================================================================
+Cueing down from goal distance:   10 into depth [1]
+                                   9            [1]
+                                   8            [1][2][3][4][5]
+                                   7            [1]
+                                   6            [1]
+                                   5            [1]
+
+Enforced Hill-climbing failed !
+switching to Best-first Search now.
+
+advancing to distance :   10
+                           9
+                           8
+                           7
+                           6
+                           5
+                           4
+                           3
+                           2
+                           1
+                           0
+
+ff: found legal plan as follows
+
+step    0: MOVE-DOWN PLAYER P3 P5
+        1: MOVE-RIGHT PLAYER P5 P6
+        2: MOVE-RIGHT PLAYER P6 P7
+        3: MOVE-DOWN PLAYER P7 P11
+        4: MOVE-BLOCK-LEFT PLAYER A P11 P10 P9
+        5: MOVE-UP PLAYER P10 P6
+        6: MOVE-LEFT PLAYER P6 P5
+        7: MOVE-LEFT PLAYER P5 P4
+        8: MOVE-DOWN PLAYER P4 P8
+        9: MOVE-DOWN PLAYER P8 P12
+       10: MOVE-RIGHT PLAYER P12 P13
+       11: MOVE-BLOCK-UP PLAYER A P13 P9 P5
+       12: MOVE-BLOCK-UP PLAYER A P9 P5 P3
+       13: MOVE-BLOCK-UP PLAYER A P5 P3 P2
+     
+
+time spent:    0.00 seconds instantiating 48 easy, 0 hard action templates
+               0.00 seconds reachability analysis, yielding 52 facts and 48 actions
+               0.00 seconds creating final representation with 49 relevant facts
+               0.00 seconds building connectivity graph
+               0.00 seconds searching, evaluating 49 states, to a max depth of 5
+               0.00 seconds total time
+
+====================================================================================
+FF - Contingent
+====================================================================================
+lowest leaf goal distance/initial state f value seen:     10/    10; maxdepth reached:    0
+9/     9                       1
+8/     8                       2
+8/     8                       3
+8/     8                       4
+7/     7                       5
+7/     7                       6
+5/     5                       7
+5/     5                       8
+5/     5                       9
+5/     5                      10
+4/     4                      10
+3/     3                      11
+2/     2                      12
+1/     1                      13
+
+ff: found plan as follows
+-------------------------------------------------
+0||0 --- MOVE-DOWN PLAYER P3 P5 --- SON: 1||0
+-------------------------------------------------
+1||0 --- MOVE-RIGHT PLAYER P5 P6 --- SON: 2||0
+-------------------------------------------------
+2||0 --- MOVE-RIGHT PLAYER P6 P7 --- SON: 3||0
+-------------------------------------------------
+3||0 --- MOVE-DOWN PLAYER P7 P11 --- SON: 4||0
+-------------------------------------------------
+4||0 --- MOVE-BLOCK-LEFT PLAYER A P11 P10 P9 --- SON: 5||0
+-------------------------------------------------
+5||0 --- MOVE-UP PLAYER P10 P6 --- SON: 6||0
+-------------------------------------------------
+6||0 --- MOVE-LEFT PLAYER P6 P5 --- SON: 7||0
+-------------------------------------------------
+7||0 --- MOVE-LEFT PLAYER P5 P4 --- SON: 8||0
+-------------------------------------------------
+8||0 --- MOVE-DOWN PLAYER P4 P8 --- SON: 9||0
+-------------------------------------------------
+9||0 --- MOVE-DOWN PLAYER P8 P12 --- SON: 10||0
+-------------------------------------------------
+10||0 --- MOVE-RIGHT PLAYER P12 P13 --- SON: 11||0
+-------------------------------------------------
+11||0 --- MOVE-BLOCK-UP PLAYER A P13 P9 P5 --- SON: 12||0
+-------------------------------------------------
+12||0 --- MOVE-BLOCK-UP PLAYER A P9 P5 P3 --- SON: 13||0
+-------------------------------------------------
+13||0 --- MOVE-BLOCK-UP PLAYER A P5 P3 P2 --- SON: 14||-1
+-------------------------------------------------
+
+tree layers: 14
+total nr. actions: 14
+
+statistics:    0.00 seconds instantiating 48 easy, 0 hard action templates
+0.00 seconds reachability analysis, yielding 52 facts and 48 actions
+0.00 seconds creating final representation with 49 relevant facts (0 max U, 0 CNF max U)
+0.00 seconds building connectivity graph
+0.00 seconds (   0.00 pure) evaluating 36 states
+0.00 seconds in DP for 0 RPG ini state implication checks
+0.00 seconds in DP for 0 RPlan extract ini state implication checks (0 lits removed)
+0.00 seconds generating,    0.00 seconds encoding 52 state transition base CNFs
+0.00 seconds in DP solving 0 state transition CNFs
+0.00 seconds checking for self-contradictions, including 0 DP calls
+0.00 seconds checking for stagnating states (16 hits), including 0 DP calls
+0 total DP calls, 0 total UP calls,    0.00 sec membership
+0.00 seconds for remaining searching duties
+0.00 seconds total time (+    0.00 secs for CNF memory allocation)
+
+====================================================================================
+  BlackBox (Standard options) 
+====================================================================================
+End solver specification
+Loading domain file: ../cs-rip/sandbox/classical/sokoban-domain.pddl
+Loading fact file: ../cs-rip/sandbox/classical/sokoban-1.pddl
+Problem name: sokoban-1
+Facts loaded.
+time: 1, 50 facts and 3 exclusive pairs.
+time: 2, 54 facts and 21 exclusive pairs.
+time: 3, 61 facts and 97 exclusive pairs.
+time: 4, 63 facts and 120 exclusive pairs.
+time: 5, 65 facts and 140 exclusive pairs.
+time: 6, 67 facts and 164 exclusive pairs.
+time: 7, 67 facts and 151 exclusive pairs.
+time: 8, 69 facts and 176 exclusive pairs.
+time: 9, 73 facts and 258 exclusive pairs.
+time: 10, 73 facts and 234 exclusive pairs.
+time: 11, 73 facts and 216 exclusive pairs.
+time: 12, 75 facts and 256 exclusive pairs.
+time: 13, 77 facts and 300 exclusive pairs.
+time: 14, 79 facts and 344 exclusive pairs.
+Goals first reachable in 14 steps.
+2367 nodes created.
+
+####################################################
+goals at time 15:
+at_a_p2 has-block_p2 
+
+
+----------------------------------------------------
+Invoking solver graphplan
+Result is Sat
+Iteration was 381
+Performing plan justification:
+0 actions were pruned in 0.00 seconds
+
+----------------------------------------------------
+Begin plan
+1 (move-down player p3 p5)
+2 (move-right player p5 p6)
+3 (move-right player p6 p7)
+4 (move-down player p7 p11)
+5 (move-block-left player a p11 p10 p9)
+6 (move-up player p10 p6)
+7 (move-left player p6 p5)
+8 (move-left player p5 p4)
+9 (move-down player p4 p8)
+10 (move-down player p8 p12)
+11 (move-right player p12 p13)
+12 (move-block-up player a p13 p9 p5)
+13 (move-block-up player a p9 p5 p3)
+14 (move-block-up player a p5 p3 p2)
+End plan
+----------------------------------------------------
+
+14 total actions in plan
+0 entries in hash table, 
+13 total set-creation steps (entries + hits + plan length - 1)
+14 actions tried
+
+####################################################
+Total elapsed time:   0.38 seconds
+Time in milliseconds: 381
+
+####################################################
+
+====================================================================================
+BlackBox (Chaff)
+====================================================================================
+Loading domain file: ../cs-rip/sandbox/classical/sokoban-domain.pddl
+Loading fact file: ../cs-rip/sandbox/classical/sokoban-1.pddl
+Problem name: sokoban-1
+Facts loaded.
+time: 1, 50 facts and 3 exclusive pairs.
+time: 2, 54 facts and 21 exclusive pairs.
+time: 3, 61 facts and 97 exclusive pairs.
+time: 4, 63 facts and 120 exclusive pairs.
+time: 5, 65 facts and 140 exclusive pairs.
+time: 6, 67 facts and 164 exclusive pairs.
+time: 7, 67 facts and 151 exclusive pairs.
+time: 8, 69 facts and 176 exclusive pairs.
+time: 9, 73 facts and 258 exclusive pairs.
+time: 10, 73 facts and 234 exclusive pairs.
+time: 11, 73 facts and 216 exclusive pairs.
+time: 12, 75 facts and 256 exclusive pairs.
+time: 13, 77 facts and 300 exclusive pairs.
+time: 14, 79 facts and 344 exclusive pairs.
+Goals first reachable in 14 steps.
+2367 nodes created.
+
+####################################################
+goals at time 15:
+at_a_p2 has-block_p2 
+
+
+----------------------------------------------------
+** Turning off completeness check **
+Converting graph to wff
+number of action variables = 980
+number of fluent variables = 723
+total number variables = 1703
+number clauses = 14058
+Result is Sat
+Iteration was 0
+Performing plan justification:
+0 actions were pruned in 0.00 seconds
+
+----------------------------------------------------
+Begin plan
+1 (move-down player p3 p5)
+2 (move-right player p5 p6)
+3 (move-right player p6 p7)
+4 (move-down player p7 p11)
+5 (move-block-left player a p11 p10 p9)
+6 (move-up player p10 p6)
+7 (move-left player p6 p5)
+8 (move-left player p5 p4)
+9 (move-down player p4 p8)
+10 (move-down player p8 p12)
+11 (move-right player p12 p13)
+12 (move-block-up player a p13 p9 p5)
+13 (move-block-up player a p9 p5 p3)
+14 (move-block-up player a p5 p3 p2)
+End plan
+----------------------------------------------------
+
+14 total actions in plan
+0 entries in hash table, 
+13 total set-creation steps (entries + hits + plan length - 1)
+0 actions tried
+
+####################################################
+Total elapsed time:   0.31 seconds
+Time in milliseconds: 309
+
+####################################################
+
+
+************************************************************************************
+************************************************************************************
+Sokoban Problem 2
+************************************************************************************
+************************************************************************************
+====================================================================================
+FF - Vanilla
+====================================================================================
+ff: parsing domain file
+domain 'SOKOBAN-DOMAIN' defined
+... done.
+ff: parsing problem file
+problem 'SOKOBAN-2' defined
+... done.
+
+
+ff: goal can be simplified to FALSE. No plan will solve it
+
+====================================================================================
+FF - Contingent
+====================================================================================
+ff: parsing domain file
+domain 'SOKOBAN-DOMAIN' defined
+... done.
+ff: parsing problem file
+problem 'SOKOBAN-2' defined
+... done.
+
+
+ff: goal can be simplified to FALSE. No plan will solve it
+
+====================================================================================
+BlackBox (Standard Options)
+====================================================================================
+Loading domain file: ../cs-rip/sandbox/classical/sokoban-domain.pddl
+Loading fact file: ../cs-rip/sandbox/classical/sokoban-2.pddl
+Problem name: sokoban-2
+Facts loaded.
+time: 1, 56 facts and 1 exclusive pairs.
+time: 2, 57 facts and 3 exclusive pairs.
+time: 3, 62 facts and 34 exclusive pairs.
+time: 4, 69 facts and 104 exclusive pairs.
+time: 5, 75 facts and 181 exclusive pairs.
+time: 6, 78 facts and 195 exclusive pairs.
+time: 7, 85 facts and 325 exclusive pairs.
+time: 8, 89 facts and 394 exclusive pairs.
+time: 9, 89 facts and 323 exclusive pairs.
+time: 10, 96 facts and 465 exclusive pairs.
+time: 11, 100 facts and 560 exclusive pairs.
+time: 12, 100 facts and 481 exclusive pairs.
+time: 13, 102 facts and 510 exclusive pairs.
+time: 14, 102 facts and 464 exclusive pairs.
+time: 15, 102 facts and 434 exclusive pairs.
+time: 16, 104 facts and 507 exclusive pairs.
+time: 17, 105 facts and 547 exclusive pairs.
+time: 18, 105 facts and 537 exclusive pairs.
+time: 19, 105 facts and 531 exclusive pairs.
+time: 20, 105 facts and 524 exclusive pairs.
+time: 21, 105 facts and 520 exclusive pairs.
+time: 22, 105 facts and 516 exclusive pairs.
+time: 23, 105 facts and 515 exclusive pairs.
+time: 24, 105 facts and 515 exclusive pairs.
+5695 nodes created.
+
+----------------------------------------------------
+NO SOLUTION
+Problem not solvable: can't even reach non-mutex goals
+Search halted after 0 steps
+0 entries in hash table and 0 hits
+avg set size 0
+----------------------------------------------------
+
+####################################################
+Total elapsed time:   1.08 seconds
+Time in milliseconds: 1077
+
+####################################################
+
+====================================================================================
+BlackBox (Chaff)
+====================================================================================
+Loading domain file: ../cs-rip/sandbox/classical/sokoban-domain.pddl
+Loading fact file: ../cs-rip/sandbox/classical/sokoban-2.pddl
+Problem name: sokoban-2
+Facts loaded.
+time: 1, 56 facts and 1 exclusive pairs.
+time: 2, 57 facts and 3 exclusive pairs.
+time: 3, 62 facts and 34 exclusive pairs.
+time: 4, 69 facts and 104 exclusive pairs.
+time: 5, 75 facts and 181 exclusive pairs.
+time: 6, 78 facts and 195 exclusive pairs.
+time: 7, 85 facts and 325 exclusive pairs.
+time: 8, 89 facts and 394 exclusive pairs.
+time: 9, 89 facts and 323 exclusive pairs.
+time: 10, 96 facts and 465 exclusive pairs.
+time: 11, 100 facts and 560 exclusive pairs.
+time: 12, 100 facts and 481 exclusive pairs.
+time: 13, 102 facts and 510 exclusive pairs.
+time: 14, 102 facts and 464 exclusive pairs.
+time: 15, 102 facts and 434 exclusive pairs.
+time: 16, 104 facts and 507 exclusive pairs.
+time: 17, 105 facts and 547 exclusive pairs.
+time: 18, 105 facts and 537 exclusive pairs.
+time: 19, 105 facts and 531 exclusive pairs.
+time: 20, 105 facts and 524 exclusive pairs.
+time: 21, 105 facts and 520 exclusive pairs.
+time: 22, 105 facts and 516 exclusive pairs.
+time: 23, 105 facts and 515 exclusive pairs.
+time: 24, 105 facts and 515 exclusive pairs.
+5695 nodes created.
+
+----------------------------------------------------
+NO SOLUTION
+Problem not solvable: can't even reach non-mutex goals
+Search halted after 0 steps
+0 entries in hash table and 0 hits
+avg set size 0
+----------------------------------------------------
+
+####################################################
+Total elapsed time:   1.11 seconds
+Time in milliseconds: 1108
+
+####################################################
+
+
+************************************************************************************
+************************************************************************************
+Sokoban Problem 3
+************************************************************************************
+************************************************************************************
+====================================================================================
+FF - Vanilla
+====================================================================================
+got 97 facts
+
+Cueing down from goal distance:   20 into depth [1]
+19            [1]
+
+Enforced Hill-climbing failed !
+switching to Best-first Search now.
+	
+	advancing to distance :   20
+	19
+	18
+	17
+	16
+	13
+	12
+	11
+	10
+	9
+	6
+	5
+	4
+	3
+	2
+	1
+	0
+	
+	ff: found legal plan as follows
+	
+	step    0: MOVE-RIGHT PLAYER P9 P10
+	1: MOVE-DOWN PLAYER P10 P18
+	2: MOVE-DOWN PLAYER P18 P23
+	3: MOVE-RIGHT PLAYER P23 P24
+	4: MOVE-RIGHT PLAYER P24 P25
+	5: MOVE-UP PLAYER P25 P19
+	6: MOVE-UP PLAYER P19 P12
+	7: MOVE-BLOCK-LEFT PLAYER C P12 P11 P10
+	8: MOVE-BLOCK-LEFT PLAYER C P11 P10 P9
+	9: MOVE-RIGHT PLAYER P10 P11
+	10: MOVE-RIGHT PLAYER P11 P12
+	11: MOVE-DOWN PLAYER P12 P19
+	12: MOVE-DOWN PLAYER P19 P25
+	13: MOVE-RIGHT PLAYER P25 P26
+	14: MOVE-RIGHT PLAYER P26 P27
+	15: MOVE-UP PLAYER P27 P20
+	16: MOVE-UP PLAYER P20 P14
+	17: MOVE-UP PLAYER P14 P6
+	18: MOVE-UP PLAYER P6 P4
+	19: MOVE-UP PLAYER P4 P1
+	20: MOVE-RIGHT PLAYER P1 P2
+	21: MOVE-RIGHT PLAYER P2 P3
+	22: MOVE-DOWN PLAYER P3 P5
+	23: MOVE-DOWN PLAYER P5 P7
+	24: MOVE-DOWN PLAYER P7 P16
+	25: MOVE-BLOCK-LEFT PLAYER A P16 P15 P14
+	26: MOVE-RIGHT PLAYER P15 P16
+	27: MOVE-UP PLAYER P16 P7
+	28: MOVE-UP PLAYER P7 P5
+	29: MOVE-UP PLAYER P5 P3
+	30: MOVE-LEFT PLAYER P3 P2
+	31: MOVE-LEFT PLAYER P2 P1
+	32: MOVE-DOWN PLAYER P1 P4
+	33: MOVE-DOWN PLAYER P4 P6
+	34: MOVE-BLOCK-DOWN PLAYER A P6 P14 P20
+	35: MOVE-BLOCK-LEFT PLAYER B P14 P13 P12
+	36: MOVE-BLOCK-LEFT PLAYER B P13 P12 P11
+	37: MOVE-DOWN PLAYER P12 P19
+	38: MOVE-DOWN PLAYER P19 P25
+	39: MOVE-LEFT PLAYER P25 P24
+	40: MOVE-LEFT PLAYER P24 P23
+	41: MOVE-UP PLAYER P23 P18
+	42: MOVE-UP PLAYER P18 P10
+	43: MOVE-BLOCK-RIGHT PLAYER B P10 P11 P12
+	44: MOVE-BLOCK-RIGHT PLAYER B P11 P12 P13
+	45: MOVE-LEFT PLAYER P12 P11
+	46: MOVE-LEFT PLAYER P11 P10
+	47: MOVE-DOWN PLAYER P10 P18
+	48: MOVE-DOWN PLAYER P18 P23
+	49: MOVE-LEFT PLAYER P23 P22
+	50: MOVE-LEFT PLAYER P22 P21
+	51: MOVE-UP PLAYER P21 P17
+	52: MOVE-UP PLAYER P17 P8
+	53: MOVE-BLOCK-RIGHT PLAYER C P8 P9 P10
+	54: MOVE-BLOCK-RIGHT PLAYER C P9 P10 P11
+	55: MOVE-DOWN PLAYER P10 P18
+	56: MOVE-DOWN PLAYER P18 P23
+	57: MOVE-RIGHT PLAYER P23 P24
+	58: MOVE-RIGHT PLAYER P24 P25
+	59: MOVE-RIGHT PLAYER P25 P26
+	60: MOVE-RIGHT PLAYER P26 P27
+	61: MOVE-BLOCK-UP PLAYER A P27 P20 P14
+	62: MOVE-BLOCK-UP PLAYER A P20 P14 P6
+	63: MOVE-BLOCK-UP PLAYER A P14 P6 P4
+	64: MOVE-BLOCK-UP PLAYER A P6 P4 P1
+	65: MOVE-DOWN PLAYER P4 P6
+	66: MOVE-DOWN PLAYER P6 P14
+	67: MOVE-DOWN PLAYER P14 P20
+	68: MOVE-DOWN PLAYER P20 P27
+	69: MOVE-LEFT PLAYER P27 P26
+	70: MOVE-LEFT PLAYER P26 P25
+	71: MOVE-UP PLAYER P25 P19
+	72: MOVE-UP PLAYER P19 P12
+	73: MOVE-BLOCK-RIGHT PLAYER B P12 P13 P14
+	74: MOVE-LEFT PLAYER P13 P12
+	75: MOVE-DOWN PLAYER P12 P19
+	76: MOVE-DOWN PLAYER P19 P25
+	77: MOVE-LEFT PLAYER P25 P24
+	78: MOVE-LEFT PLAYER P24 P23
+	79: MOVE-UP PLAYER P23 P18
+	80: MOVE-UP PLAYER P18 P10
+	81: MOVE-BLOCK-RIGHT PLAYER C P10 P11 P12
+	82: MOVE-BLOCK-RIGHT PLAYER C P11 P12 P13
+	83: MOVE-DOWN PLAYER P12 P19
+	84: MOVE-DOWN PLAYER P19 P25
+	85: MOVE-RIGHT PLAYER P25 P26
+	86: MOVE-RIGHT PLAYER P26 P27
+	87: MOVE-UP PLAYER P27 P20
+	88: MOVE-BLOCK-UP PLAYER B P20 P14 P6
+	89: MOVE-BLOCK-UP PLAYER B P14 P6 P4
+	90: MOVE-DOWN PLAYER P6 P14
+	91: MOVE-DOWN PLAYER P14 P20
+	92: MOVE-DOWN PLAYER P20 P27
+	93: MOVE-LEFT PLAYER P27 P26
+	94: MOVE-LEFT PLAYER P26 P25
+	95: MOVE-UP PLAYER P25 P19
+	96: MOVE-UP PLAYER P19 P12
+	97: MOVE-BLOCK-RIGHT PLAYER C P12 P13 P14
+	98: MOVE-LEFT PLAYER P13 P12
+	99: MOVE-DOWN PLAYER P12 P19
+	100: MOVE-DOWN PLAYER P19 P25
+	101: MOVE-RIGHT PLAYER P25 P26
+	102: MOVE-RIGHT PLAYER P26 P27
+	103: MOVE-UP PLAYER P27 P20
+	104: MOVE-BLOCK-UP PLAYER C P20 P14 P6
+	
+	
+	time spent:    0.00 seconds instantiating 192 easy, 0 hard action templates
+	0.01 seconds reachability analysis, yielding 114 facts and 126 actions
+	0.00 seconds creating final representation with 97 relevant facts
+	0.00 seconds building connectivity graph
+	0.03 seconds searching, evaluating 752 states, to a max depth of 1
+	0.04 seconds total time
+	
+====================================================================================
+FF - Contingent
+====================================================================================
+Did not find solution in allotted time
+
+====================================================================================
+BlackBox (Standard Options)
+====================================================================================
+Loading domain file: ../cs-rip/sandbox/classical/sokoban-domain.pddl
+Loading fact file: ../cs-rip/sandbox/classical/sokoban-3.pddl
+Problem name: sokoban-3
+Facts loaded.
+time: 1, 98 facts and 3 exclusive pairs.
+time: 2, 104 facts and 42 exclusive pairs.
+time: 3, 106 facts and 58 exclusive pairs.
+time: 4, 108 facts and 75 exclusive pairs.
+time: 5, 109 facts and 82 exclusive pairs.
+time: 6, 111 facts and 102 exclusive pairs.
+time: 7, 113 facts and 129 exclusive pairs.
+time: 8, 120 facts and 275 exclusive pairs.
+time: 9, 123 facts and 345 exclusive pairs.
+time: 10, 131 facts and 571 exclusive pairs.
+time: 11, 132 facts and 577 exclusive pairs.
+time: 12, 133 facts and 522 exclusive pairs.
+time: 13, 136 facts and 587 exclusive pairs.
+time: 14, 139 facts and 642 exclusive pairs.
+time: 15, 144 facts and 793 exclusive pairs.
+time: 16, 148 facts and 894 exclusive pairs.
+time: 17, 152 facts and 1037 exclusive pairs.
+time: 18, 153 facts and 1018 exclusive pairs.
+time: 19, 153 facts and 943 exclusive pairs.
+time: 20, 155 facts and 959 exclusive pairs.
+time: 21, 157 facts and 1005 exclusive pairs.
+time: 22, 159 facts and 1037 exclusive pairs.
+time: 23, 161 facts and 1092 exclusive pairs.
+time: 24, 162 facts and 1081 exclusive pairs.
+time: 25, 163 facts and 1090 exclusive pairs.
+time: 26, 164 facts and 1085 exclusive pairs.
+time: 27, 167 facts and 1161 exclusive pairs.
+time: 28, 170 facts and 1226 exclusive pairs.
+time: 29, 170 facts and 1150 exclusive pairs.
+time: 30, 170 facts and 1047 exclusive pairs.
+time: 31, 171 facts and 995 exclusive pairs.
+time: 32, 172 facts and 931 exclusive pairs.
+time: 33, 172 facts and 857 exclusive pairs.
+time: 34, 172 facts and 809 exclusive pairs.
+time: 35, 173 facts and 828 exclusive pairs.
+time: 36, 174 facts and 852 exclusive pairs.
+time: 37, 175 facts and 888 exclusive pairs.
+Goals reachable at 37 steps but mutually exclusive.
+time: 38, 175 facts and 869 exclusive pairs.
+Goals reachable at 38 steps but mutually exclusive.
+time: 39, 175 facts and 858 exclusive pairs.
+Goals reachable at 39 steps but mutually exclusive.
+time: 40, 175 facts and 842 exclusive pairs.
+Goals reachable at 40 steps but mutually exclusive.
+time: 41, 175 facts and 823 exclusive pairs.
+Goals reachable at 41 steps but mutually exclusive.
+time: 42, 175 facts and 806 exclusive pairs.
+Goals reachable at 42 steps but mutually exclusive.
+time: 43, 175 facts and 795 exclusive pairs.
+Goals first reachable in 43 steps.
+16794 nodes created.
+
+####################################################
+goals at time 44:
+at_a_p1 has-block_p1 at_b_p4 has-block_p4 at_c_p6 
+has-block_p6 
+
+
+----------------------------------------------------
+Invoking solver graphplan
+Result is Unsat
+Iteration was 4
+
+----------------------------------------------------
+Can't solve in 43 steps
+time: 44, 175 facts and 788 exclusive pairs.
+476 new nodes added.
+
+####################################################
+goals at time 45:
+at_a_p1 has-block_p1 at_b_p4 has-block_p4 at_c_p6 
+has-block_p6 
+
+
+----------------------------------------------------
+Invoking solver graphplan
+Result is Unsat
+Iteration was 15
+
+----------------------------------------------------
+Can't solve in 44 steps
+time: 45, 175 facts and 781 exclusive pairs.
+476 new nodes added.
+
+####################################################
+goals at time 46:
+at_a_p1 has-block_p1 at_b_p4 has-block_p4 at_c_p6 
+has-block_p6 
+
+
+----------------------------------------------------
+Invoking solver graphplan
+Result is Unsat
+Iteration was 101
+
+----------------------------------------------------
+Can't solve in 45 steps
+time: 46, 175 facts and 779 exclusive pairs.
+476 new nodes added.
+
+####################################################
+goals at time 47:
+at_a_p1 has-block_p1 at_b_p4 has-block_p4 at_c_p6 
+has-block_p6 
+
+
+----------------------------------------------------
+Invoking solver graphplan
+Result is Unsat
+Iteration was 130
+
+----------------------------------------------------
+Can't solve in 46 steps
+time: 47, 175 facts and 778 exclusive pairs.
+476 new nodes added.
+
+####################################################
+goals at time 48:
+at_a_p1 has-block_p1 at_b_p4 has-block_p4 at_c_p6 
+has-block_p6 
+
+
+----------------------------------------------------
+Invoking solver graphplan
+Result is Unsat
+Iteration was 394
+
+----------------------------------------------------
+Can't solve in 47 steps
+time: 48, 175 facts and 778 exclusive pairs.
+476 new nodes added.
+
+####################################################
+goals at time 49:
+at_a_p1 has-block_p1 at_b_p4 has-block_p4 at_c_p6 
+has-block_p6 
+
+
+----------------------------------------------------
+Invoking solver graphplan
+Result is Unsat
+Iteration was 481
+
+----------------------------------------------------
+Can't solve in 48 steps
+time: 49, 175 facts and 778 exclusive pairs.
+476 new nodes added.
+
+####################################################
+goals at time 50:
+at_a_p1 has-block_p1 at_b_p4 has-block_p4 at_c_p6 
+has-block_p6 
+
+
+----------------------------------------------------
+Invoking solver graphplan
+Result is Unsat
+Iteration was 1223
+
+----------------------------------------------------
+Can't solve in 49 steps
+time: 50, 175 facts and 778 exclusive pairs.
+476 new nodes added.
+
+####################################################
+goals at time 51:
+at_a_p1 has-block_p1 at_b_p4 has-block_p4 at_c_p6 
+has-block_p6 
+
+
+----------------------------------------------------
+Invoking solver graphplan
+Result is Unsat
+Iteration was 1454
+
+----------------------------------------------------
+Can't solve in 50 steps
+
+----------------------------------------------------
+NO SOLUTION
+Problem not solvable: no solution exists in alloted time
+Search halted after 50 steps
+106 entries in hash table and 93 hits
+avg set size 22
+----------------------------------------------------
+
+####################################################
+Total elapsed time:   13.92 seconds
+Time in milliseconds: 13918
+
+####################################################
+
+====================================================================================
+BlackBox (Chaff)
+====================================================================================
+Loading domain file: ../cs-rip/sandbox/classical/sokoban-domain.pddl
+Loading fact file: ../cs-rip/sandbox/classical/sokoban-3.pddl
+Problem name: sokoban-3
+Facts loaded.
+time: 1, 98 facts and 3 exclusive pairs.
+time: 2, 104 facts and 42 exclusive pairs.
+time: 3, 106 facts and 58 exclusive pairs.
+time: 4, 108 facts and 75 exclusive pairs.
+time: 5, 109 facts and 82 exclusive pairs.
+time: 6, 111 facts and 102 exclusive pairs.
+time: 7, 113 facts and 129 exclusive pairs.
+time: 8, 120 facts and 275 exclusive pairs.
+time: 9, 123 facts and 345 exclusive pairs.
+time: 10, 131 facts and 571 exclusive pairs.
+time: 11, 132 facts and 577 exclusive pairs.
+time: 12, 133 facts and 522 exclusive pairs.
+time: 13, 136 facts and 587 exclusive pairs.
+time: 14, 139 facts and 642 exclusive pairs.
+time: 15, 144 facts and 793 exclusive pairs.
+time: 16, 148 facts and 894 exclusive pairs.
+time: 17, 152 facts and 1037 exclusive pairs.
+time: 18, 153 facts and 1018 exclusive pairs.
+time: 19, 153 facts and 943 exclusive pairs.
+time: 20, 155 facts and 959 exclusive pairs.
+time: 21, 157 facts and 1005 exclusive pairs.
+time: 22, 159 facts and 1037 exclusive pairs.
+time: 23, 161 facts and 1092 exclusive pairs.
+time: 24, 162 facts and 1081 exclusive pairs.
+time: 25, 163 facts and 1090 exclusive pairs.
+time: 26, 164 facts and 1085 exclusive pairs.
+time: 27, 167 facts and 1161 exclusive pairs.
+time: 28, 170 facts and 1226 exclusive pairs.
+time: 29, 170 facts and 1150 exclusive pairs.
+time: 30, 170 facts and 1047 exclusive pairs.
+time: 31, 171 facts and 995 exclusive pairs.
+time: 32, 172 facts and 931 exclusive pairs.
+time: 33, 172 facts and 857 exclusive pairs.
+time: 34, 172 facts and 809 exclusive pairs.
+time: 35, 173 facts and 828 exclusive pairs.
+time: 36, 174 facts and 852 exclusive pairs.
+time: 37, 175 facts and 888 exclusive pairs.
+Goals reachable at 37 steps but mutually exclusive.
+time: 38, 175 facts and 869 exclusive pairs.
+Goals reachable at 38 steps but mutually exclusive.
+time: 39, 175 facts and 858 exclusive pairs.
+Goals reachable at 39 steps but mutually exclusive.
+time: 40, 175 facts and 842 exclusive pairs.
+Goals reachable at 40 steps but mutually exclusive.
+time: 41, 175 facts and 823 exclusive pairs.
+Goals reachable at 41 steps but mutually exclusive.
+time: 42, 175 facts and 806 exclusive pairs.
+Goals reachable at 42 steps but mutually exclusive.
+time: 43, 175 facts and 795 exclusive pairs.
+Goals first reachable in 43 steps.
+16794 nodes created.
+
+####################################################
+goals at time 44:
+at_a_p1 has-block_p1 at_b_p4 has-block_p4 at_c_p6 
+has-block_p6 
+
+
+----------------------------------------------------
+** Turning off completeness check **
+Converting graph to wff
+number of action variables = 8586
+number of fluent variables = 5550
+total number variables = 14136
+number clauses = 323705
+Instance unsatisfiable
+Result is Unsat
+Iteration was 0
+
+----------------------------------------------------
+time: 44, 175 facts and 788 exclusive pairs.
+476 new nodes added.
+
+####################################################
+goals at time 45:
+at_a_p1 has-block_p1 at_b_p4 has-block_p4 at_c_p6 
+has-block_p6 
+
+
+----------------------------------------------------
+Converting graph to wff
+number of action variables = 8867
+number of fluent variables = 5707
+total number variables = 14574
+number clauses = 338465
+Instance unsatisfiable
+Result is Unsat
+Iteration was 0
+
+----------------------------------------------------
+Can't solve in 44 steps
+time: 45, 175 facts and 781 exclusive pairs.
+476 new nodes added.
+
+####################################################
+goals at time 46:
+at_a_p1 has-block_p1 at_b_p4 has-block_p4 at_c_p6 
+has-block_p6 
+
+
+----------------------------------------------------
+Converting graph to wff
+number of action variables = 9150
+number of fluent variables = 5864
+total number variables = 15014
+number clauses = 353297
+Instance unsatisfiable
+Result is Unsat
+Iteration was 0
+
+----------------------------------------------------
+Can't solve in 45 steps
+time: 46, 175 facts and 779 exclusive pairs.
+476 new nodes added.
+
+####################################################
+goals at time 47:
+at_a_p1 has-block_p1 at_b_p4 has-block_p4 at_c_p6 
+has-block_p6 
+
+
+----------------------------------------------------
+Converting graph to wff
+number of action variables = 9433
+number of fluent variables = 6021
+total number variables = 15454
+number clauses = 368204
+Instance unsatisfiable
+Result is Unsat
+Iteration was 0
+
+----------------------------------------------------
+Can't solve in 46 steps
+time: 47, 175 facts and 778 exclusive pairs.
+476 new nodes added.
+
+####################################################
+goals at time 48:
+at_a_p1 has-block_p1 at_b_p4 has-block_p4 at_c_p6 
+has-block_p6 
+
+
+----------------------------------------------------
+Converting graph to wff
+number of action variables = 9716
+number of fluent variables = 6178
+total number variables = 15894
+number clauses = 383127
+Instance unsatisfiable
+Result is Unsat
+Iteration was 0
+
+----------------------------------------------------
+Can't solve in 47 steps
+time: 48, 175 facts and 778 exclusive pairs.
+476 new nodes added.
+
+####################################################
+goals at time 49:
+at_a_p1 has-block_p1 at_b_p4 has-block_p4 at_c_p6 
+has-block_p6 
+
+
+----------------------------------------------------
+Converting graph to wff
+number of action variables = 9999
+number of fluent variables = 6335
+total number variables = 16334
+number clauses = 398070
+Instance unsatisfiable
+Result is Unsat
+Iteration was 0
+
+----------------------------------------------------
+Can't solve in 48 steps
+time: 49, 175 facts and 778 exclusive pairs.
+476 new nodes added.
+
+####################################################
+goals at time 50:
+at_a_p1 has-block_p1 at_b_p4 has-block_p4 at_c_p6 
+has-block_p6 
+
+
+----------------------------------------------------
+Converting graph to wff
+number of action variables = 10282
+number of fluent variables = 6492
+total number variables = 16774
+number clauses = 413023
+Instance unsatisfiable
+Result is Unsat
+Iteration was 0
+
+----------------------------------------------------
+Can't solve in 49 steps
+time: 50, 175 facts and 778 exclusive pairs.
+476 new nodes added.
+
+####################################################
+goals at time 51:
+at_a_p1 has-block_p1 at_b_p4 has-block_p4 at_c_p6 
+has-block_p6 
+
+
+----------------------------------------------------
+Converting graph to wff
+number of action variables = 10565
+number of fluent variables = 6649
+total number variables = 17214
+number clauses = 427993
+Instance unsatisfiable
+Result is Unsat
+Iteration was 0
+
+----------------------------------------------------
+Can't solve in 50 steps
+
+----------------------------------------------------
+NO SOLUTION
+Problem not solvable: no solution exists in alloted time
+Search halted after 50 steps
+0 entries in hash table and 0 hits
+avg set size 0
+----------------------------------------------------
+
+####################################################
+Total elapsed time:   18.52 seconds
+Time in milliseconds: 18516
+
+####################################################
+
+************************************************************************************
+************************************************************************************
+Sokoban Problem 4
+************************************************************************************
+************************************************************************************
+====================================================================================
+FF - Vanilla
+====================================================================================
+ff: parsing domain file
+domain 'SOKOBAN-DOMAIN' defined
+... done.
+ff: parsing problem file
+problem 'SOKOBAN-4' defined
+... done.
+
+
+got 114 facts
+
+Cueing down from goal distance:    7 into depth [1]
+6            [1]
+5            [1]
+4            [1]
+3            [1]
+2            [1]
+1            [1]
+0            
+
+Cueing down from goal distance:    6 into depth [1]
+5            [1]
+4            [1][2][3][4][5][6][7][8][9][10][11][12][13]
+
+Enforced Hill-climbing failed !
+switching to Best-first Search now.
+	
+	advancing to distance :   18
+	17
+	11
+	9
+	7
+	6
+	4
+	3
+	2
+	1
+	0
+	
+	ff: found legal plan as follows
+	
+	step    0: MOVE-LEFT PLAYER P9 P8
+	1: MOVE-LEFT PLAYER P8 P7
+	2: MOVE-DOWN PLAYER P7 P12
+	3: MOVE-LEFT PLAYER P12 P11
+	4: MOVE-LEFT PLAYER P11 P10
+	5: MOVE-UP PLAYER P10 P5
+	6: MOVE-BLOCK-RIGHT PLAYER B P5 P6 P7
+	7: MOVE-BLOCK-RIGHT PLAYER B P6 P7 P8
+	8: MOVE-DOWN PLAYER P7 P12
+	9: MOVE-DOWN PLAYER P12 P16
+	10: MOVE-DOWN PLAYER P16 P19
+	11: MOVE-LEFT PLAYER P19 P18
+	12: MOVE-BLOCK-UP PLAYER C P18 P15 P11
+	13: MOVE-RIGHT PLAYER P15 P16
+	14: MOVE-UP PLAYER P16 P12
+	15: MOVE-UP PLAYER P12 P7
+	16: MOVE-LEFT PLAYER P7 P6
+	17: MOVE-LEFT PLAYER P6 P5
+	18: MOVE-DOWN PLAYER P5 P10
+	19: MOVE-BLOCK-RIGHT PLAYER C P10 P11 P12
+	20: MOVE-DOWN PLAYER P11 P15
+	21: MOVE-RIGHT PLAYER P15 P16
+	22: MOVE-RIGHT PLAYER P16 P17
+	23: MOVE-UP PLAYER P17 P13
+	24: MOVE-RIGHT PLAYER P13 P14
+	25: MOVE-UP PLAYER P14 P9
+	26: MOVE-BLOCK-LEFT PLAYER B P9 P8 P7
+	27: MOVE-BLOCK-LEFT PLAYER B P8 P7 P6
+	28: MOVE-RIGHT PLAYER P7 P8
+	29: MOVE-DOWN PLAYER P8 P13
+	30: MOVE-DOWN PLAYER P13 P17
+	31: MOVE-LEFT PLAYER P17 P16
+	32: MOVE-LEFT PLAYER P16 P15
+	33: MOVE-UP PLAYER P15 P11
+	34: MOVE-BLOCK-RIGHT PLAYER C P11 P12 P13
+	35: MOVE-UP PLAYER P12 P7
+	36: MOVE-RIGHT PLAYER P7 P8
+	37: MOVE-UP PLAYER P8 P4
+	38: MOVE-UP PLAYER P4 P2
+	39: MOVE-LEFT PLAYER P2 P1
+	40: MOVE-BLOCK-DOWN PLAYER A P1 P3 P7
+	41: MOVE-BLOCK-DOWN PLAYER A P3 P7 P12
+	42: MOVE-BLOCK-DOWN PLAYER A P7 P12 P16
+	43: MOVE-LEFT PLAYER P12 P11
+	44: MOVE-LEFT PLAYER P11 P10
+	45: MOVE-UP PLAYER P10 P5
+	46: MOVE-BLOCK-RIGHT PLAYER B P5 P6 P7
+	47: MOVE-DOWN PLAYER P6 P11
+	48: MOVE-RIGHT PLAYER P11 P12
+	49: MOVE-BLOCK-UP PLAYER B P12 P7 P3
+	50: MOVE-RIGHT PLAYER P7 P8
+	51: MOVE-RIGHT PLAYER P8 P9
+	52: MOVE-DOWN PLAYER P9 P14
+	53: MOVE-BLOCK-LEFT PLAYER C P14 P13 P12
+	54: MOVE-DOWN PLAYER P13 P17
+	55: MOVE-BLOCK-LEFT PLAYER A P17 P16 P15
+	56: MOVE-DOWN PLAYER P16 P19
+	57: MOVE-LEFT PLAYER P19 P18
+	58: MOVE-BLOCK-UP PLAYER A P18 P15 P11
+	59: MOVE-RIGHT PLAYER P15 P16
+	60: MOVE-RIGHT PLAYER P16 P17
+	61: MOVE-UP PLAYER P17 P13
+	62: MOVE-UP PLAYER P13 P8
+	63: MOVE-LEFT PLAYER P8 P7
+	64: MOVE-LEFT PLAYER P7 P6
+	65: MOVE-BLOCK-DOWN PLAYER A P6 P11 P15
+	66: MOVE-BLOCK-RIGHT PLAYER C P11 P12 P13
+	67: MOVE-DOWN PLAYER P12 P16
+	68: MOVE-DOWN PLAYER P16 P19
+	69: MOVE-LEFT PLAYER P19 P18
+	70: MOVE-BLOCK-UP PLAYER A P18 P15 P11
+	71: MOVE-RIGHT PLAYER P15 P16
+	72: MOVE-UP PLAYER P16 P12
+	73: MOVE-UP PLAYER P12 P7
+	74: MOVE-RIGHT PLAYER P7 P8
+	75: MOVE-UP PLAYER P8 P4
+	76: MOVE-UP PLAYER P4 P2
+	77: MOVE-LEFT PLAYER P2 P1
+	78: MOVE-BLOCK-DOWN PLAYER B P1 P3 P7
+	79: MOVE-BLOCK-DOWN PLAYER B P3 P7 P12
+	
+	
+	time spent:    0.00 seconds instantiating 150 easy, 0 hard action templates
+	0.00 seconds reachability analysis, yielding 118 facts and 150 actions
+	0.00 seconds creating final representation with 114 relevant facts
+	0.00 seconds building connectivity graph
+	1.23 seconds searching, evaluating 51231 states, to a max depth of 13
+	1.23 seconds total time
+	
+====================================================================================
+FF - Contingent
+====================================================================================
+Failed to find a solution in the time allotted
+====================================================================================
+BlackBox (Standard Options)
+====================================================================================
+Failed to find a solution in the time allotted
+====================================================================================
+BlackBox (Chaff)
+====================================================================================
+Failed to find a solution in the time allotted
