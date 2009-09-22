@@ -124,6 +124,9 @@ See attached \textit{hanoi\_plans.txt}.
 Yes, the plans have long spans where a large number of disks are ``shuffled" from one peg to another, inverting all but one of the disks in a tower.  To improve the efficiency of the planner, a move could be introduced to move all but one disk from one peg to another. This new move corresponds to one of the steps in the well-known Hanoi solving algorithm \cite{cutTheKnotHanoiAlgorithm}, which has been shown to be optimal (in terms of efficiency, and optimality.)
 
 \item{\textit{In a paragraph or two, explain a general planning strategy that would take advantage of problem structure. Make sure your strategy applies to problems other than Towers of Hanoi. Would such a planner still be complete?\\}}
+One strategy would be to locate sub-plans in an on-line method, and add the sub-plans as moves for the remainder of the plan.  Consider the Hanoi problem: if the planner could recognize that portions of towers were frequently being inverted, a ``meta-move" of \textit{invert-partial-tower} could be added to the available moves, which would make future planning much more efficient by allowing one move to jump several steps ahead in the plan.  In the case of an incorrect meta-move, the algorithm would simply determine that the meta-move was incorrect, and would continue searching using it's other moves.  This strategy would still be complete, as the algorithm could always fall back onto it's previous strategy.
+
+
 \end{enumerate}
 
 \bibliographystyle{plain}
