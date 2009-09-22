@@ -4,7 +4,7 @@
  * This header file contains declerations of four classes
  *
  * 1) Tree_Element: A-star search tree is kept as a tree where
- *    each node has a pointer to its parent. This class is the 
+ *    each node has a pointer to its parent. This class is the
  *    node class of the search three.
  *
  * 2) Queue_Element: This class the basic block to be used in
@@ -15,7 +15,7 @@
  *    with that class.
  *
  * 3) Prioritize_Queue_Elements: This is a friend class of Queue_Element
- *    to be used as a sorting function class in "priority_queue" that 
+ *    to be used as a sorting function class in "priority_queue" that
  *    has an instant in the A_Star class.
  *
  * 4) A_Star: This class keeps a pointer to the A-star search tree, an instant
@@ -45,7 +45,7 @@ class Tree_Element{
 		State state;
 	public:
 		Tree_Element();
-		Tree_Element(State_Base*, Tree_Element*);
+		Tree_Element(State*, Tree_Element*);
 		~Tree_Element();
 
 		void set_parent(Tree_Element *prnt);	/* set-get functions */
@@ -68,11 +68,13 @@ class Queue_Element{
 
 
 class Prioritize_Queue_Elements
-	{ public: int operator()(Queue_Element &x, Queue_Element &y); }; 
+	{ public: int operator()(Queue_Element &x, Queue_Element &y); };
 
 class A_Star{
 	private:
 		priority_queue <Queue_Element, vector<Queue_Element>, Prioritize_Queue_Elements> Q;
+		std::vector <Tree_Element*> closedSet;
+
 		Tree_Element *root;			/* root of the A-star tree */
 		Tree_Element *solution_leaf;/* keeps the solution leaf after solve is called */
 		State *solution;			/* This array is allocated when solve is called */

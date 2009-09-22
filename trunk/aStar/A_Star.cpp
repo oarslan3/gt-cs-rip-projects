@@ -7,9 +7,9 @@ using namespace std;
 
 Tree_Element::Tree_Element() : parent(NULL) {}
 
-Tree_Element::Tree_Element(State_Base *st, Tree_Element *prnt=NULL) {
+Tree_Element::Tree_Element(State *st, Tree_Element *prnt=NULL) {
 	if(st!=NULL){
-		set_state(*static_cast<State*>(st));
+		set_state(*st);
 		set_parent(prnt);
 	}
 	else{
@@ -77,10 +77,39 @@ State* A_Star::solve(State* initial_state, int& solution_n){
 		}
 
 		int new_states_n;
-		State_Base** branched_states = ((q_tmp.get_t_element())->get_state()).Branch(new_states_n);
 
-		for(int i=0; i<new_states_n; i++){
-			if(branched_states[i]!=NULL){
+		State** branched_states = ((q_tmp.get_t_element())->get_state()).Branch(new_states_n);
+
+		for(int i = 0; i < new_states_n; i++){
+			if(branched_states[i]!= NULL){
+
+				bool already_visited = false;
+
+				std::vector<Tree_Element*>::iterator it;
+				for (it = closedSet.begin(); it != closedSet.end(); ++it)
+				{
+				//	if ( it->get_state() == branched_states[i] ) //which means the branched_states[i] is already visited
+					{	already_visited = true;
+						break;
+					}
+				}
+
+				if (already_visited)
+				{
+					// add memory freeing function
+					continue;
+				}
+
+
+			//	std::priority_queue <Queue_Element, vector<Queue_Element>, Prioritize_Queue_Elements>::iterator pit;
+
+			//	for (pit = Q.begin(); pit != Q.end() ; ++pit)
+				{
+					if (pit->get_t_element.get_state() == branched_states[i])
+						;
+				}
+
+
 				Tree_Element *t_tmp = new Tree_Element(branched_states[i],(q_tmp.get_t_element()));
 				Queue_Element *qe = new Queue_Element(t_tmp);
 				Q.push(*qe);
