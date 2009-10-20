@@ -124,11 +124,10 @@ void RRT::stepRandom()
 	 * Take a step in a random direction (hint: wraps getRandomRstate,
 	 * getNearestNeighbor, and tryStep)
 	 */
-	
-	/*
-	 Your code here
-	 */
 
+	rstate &randomState = getRandomRstate();
+	int nearestNeighborIndex = getNearestNeighbor(randomState);
+	tryStep(randomState, nearestNeighborIndex);
 }
 
 void RRT::stepGreedy(rstate &target)
@@ -136,21 +135,32 @@ void RRT::stepGreedy(rstate &target)
 	/*
 	 * Implement this to take a step towards a specific configuration 
 	 */
-	
-	/*
-	 Your code here
-	 */
 
+	int nearestNeighborIndex = getNearestNeighbor(target);
+	tryStep(target, nearestNeighborIndex);
 }
 
 void RRT::connect(rstate &target) {
-	/* The RRT connect algorithm 
+	/*
+	 * The RRT connect algorithm 
 	 * Grow along a single vector until a collision is hit
 	 */
 
-	/*
-	 Your code here
-	 */
+	// I'm not entirely sure if this works yet... I tested it but it
+	// doesn't seem to perform well. - Philip
+	unsigned int numStates = rstateVector.size();
+
+	int nearestNeighborIndex = getNearestNeighbor(target);
+	tryStep(target, nearestNeighborIndex);
+
+	while (rstateVector.size() > numStates){
+		numStates = rstateVector.size();
+		tryStep(target, numStates-1);
+
+		if (bestSD <= pow(step_size, 2)){ // break if at goal
+			break;
+		}
+	}
 }
 
 
