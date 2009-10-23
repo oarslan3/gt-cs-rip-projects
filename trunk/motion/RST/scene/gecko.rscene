@@ -1,0 +1,17 @@
+#####	ROBOTS	#####
+
+##### ROBOT 1	#####
+
+>	ROBOT	GECKO	gecko.rsdh
+>	POSITION	-0.114	1.316	1.042
+>	ORIENTATION	0	0	-1	2.728
+
+#####	INITIAL ANGLES	#####
+> 	INIT LA2 -0.5
+> 	INIT LA4 -0.5
+> 	INIT LB2 +0.5
+> 	INIT LB4 +0.5
+> 	INIT LC2 +0.5
+> 	INIT LC4 +0.5
+> 	INIT LD2 -0.5
+> 	INIT LD4 -0.5

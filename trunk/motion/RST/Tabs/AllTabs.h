@@ -28,14 +28,12 @@
 #include "PlanningTab.h"
 #include "TrajectoryTab.h"
 #include "TemplateTab.h"
-#include "WalkPlanTab.h"
 
 void addAllTabs() {
 	ADD_TAB(InspectorTab,wxT("Inspector"))
 	ADD_TAB(PlanningTab,wxT("Planning"))
 	ADD_TAB(TrajectoryTab,wxT("Trajectory"))
 	ADD_TAB(TemplateTab,wxT("Tab Template"))
-	ADD_TAB(WalkPlanTab,wxT("Walker Planner"))
 
 	tabView->SetSelection(0);
 }
