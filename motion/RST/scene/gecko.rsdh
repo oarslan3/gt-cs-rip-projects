@@ -1,0 +1,86 @@
+# LINKS
+
+> LINK BASE			NOMODEL
+> LINK TRANSX		NOMODEL
+> LINK TRANSY		NOMODEL
+> LINK TRANSZ		NOMODEL
+> LINK ROTZ			NOMODEL
+> LINK BODY			gecko/body.3ds
+
+> LINK LA0			schunk/l0.3ds
+> LINK LA1			schunk/l1.3ds
+> LINK LA2			schunk/l2.3ds
+> LINK LA3			schunk/l3.3ds
+> LINK LA4			schunk/l4.3ds
+> LINK LA5			schunk/l5.3ds
+> LINK LA6			schunk/l6.3ds
+
+> LINK LB0			schunk/l0.3ds
+> LINK LB1			schunk/l1.3ds
+> LINK LB2			schunk/l2.3ds
+> LINK LB3			schunk/l3.3ds
+> LINK LB4			schunk/l4.3ds
+> LINK LB5			schunk/l5.3ds
+> LINK LB6			schunk/l6.3ds
+
+> LINK LC0			schunk/l0.3ds
+> LINK LC1			schunk/l1.3ds
+> LINK LC2			schunk/l2.3ds
+> LINK LC3			schunk/l3.3ds
+> LINK LC4			schunk/l4.3ds
+> LINK LC5			schunk/l5.3ds
+> LINK LC6			schunk/l6.3ds
+
+> LINK LD0			schunk/l0.3ds
+> LINK LD1			schunk/l1.3ds
+> LINK LD2			schunk/l2.3ds
+> LINK LD3			schunk/l3.3ds
+> LINK LD4			schunk/l4.3ds
+> LINK LD5			schunk/l5.3ds
+> LINK LD6			schunk/l6.3ds
+
+
+# CONNECTIVITY
+ CON  FROM         TO         X     Y     Z     ROL   PIT   YAW  AXIS    TYPE         RANGE
+#---------------------------------------------------------------------------------------------------------------
+> CON WORLD BASE			0.0	0.0	0.0	0.0	0.0	0.0	PX	FREE		-5 5
+> CON BASE TRANSX			0.0	0.0	0.0	0.0	0.0	0.0	PX	PRISM		-5 5
+> CON TRANSX TRANSY		0.0	0.0	0.0	0.0	0.0	0.0	PY	PRISM		-5 5
+> CON TRANSY TRANSZ		0.0	0.0	0.0	0.0	0.0	0.0	PZ	PRISM		-.3 .3
+> CON TRANSZ ROTZ			0.0	0.0	0.0	0.0	0.0	0.0	PZ	REVOL		-3.14 3.14
+> CON ROTZ BODY 			0.0	0.0	0.0	90	0.0	0.0	PY	FIXED		-3.14 3.14
+
+> CON BODY         LA0		0.80	-0.23	0.50	125	0.0	0.0	PX	FIXED
+> CON	LA0            LA1		0.0	0.3	0.0	0.0	0.0	0.0	NY	REVOL		-3.14	3.14
+> CON	LA1            LA2		0.0   0.0	0.0	0.0	0.0	180	PX	REVOL		-2.14	2.14
+> CON	LA2            LA3	      0.0  -0.328	0.0	180	0.0	0.0	NY	REVOL       -3.14	3.14
+> CON	LA3            LA4	      0.0	0	0.0 	0.0	0.0	180	NX	REVOL		-2.14	2.14
+> CON	LA4            LA5	      0.0 -0.2765	0.0	0.0	0.0	180	NY	REVOL	      -3.14 3.14
+> CON	LA5            LA6	      0.0	0.0	0.0	0.0	0.0	180	NX	REVOL		-2.14	2.14
+
+> CON BODY         LB0		-0.80	-0.23	-0.50	-125	0.0	0.0	PX	FIXED
+> CON	LB0            LB1		0.0	0.3	0.0	0.0	0.0	0.0	NY	REVOL		-3.14	3.14
+> CON	LB1            LB2		0.0   0.0	0.0	0.0	0.0	180	PX	REVOL		-2.14	2.14
+> CON	LB2            LB3	      0.0  -0.328	0.0	180	0.0	0.0	NY	REVOL       -3.14	3.14
+> CON	LB3            LB4	      0.0	0	0.0 	0.0	0.0	180	NX	REVOL		-2.14	2.14
+> CON	LB4            LB5	      0.0 -0.2765	0.0	0.0	0.0	180	NY	REVOL	      -3.14 3.14
+> CON	LB5            LB6	      0.0	0.0	0.0	0.0	0.0	180	NX	REVOL		-2.14	2.14
+
+> CON BODY         LC0		0.80	-0.23	-0.50	-125	0.0	0.0	PX	FIXED
+> CON	LC0            LC1		0.0	0.3	0.0	0.0	0.0	0.0	NY	REVOL		-3.14	3.14
+> CON	LC1            LC2		0.0   0.0	0.0	0.0	0.0	180	PX	REVOL		-2.14	2.14
+> CON	LC2            LC3	      0.0  -0.328	0.0	180	0.0	0.0	NY	REVOL       -3.14	3.14
+> CON	LC3            LC4	      0.0	0	0.0 	0.0	0.0	180	NX	REVOL		-2.14	2.14
+> CON	LC4            LC5	      0.0 -0.2765	0.0	0.0	0.0	180	NY	REVOL	      -3.14 3.14
+> CON	LC5            LC6	      0.0	0.0	0.0	0.0	0.0	180	NX	REVOL		-2.14	2.14
+
+> CON BODY         LD0		-0.80	-0.23	0.50	125	0.0	0.0	PX	FIXED
+> CON	LD0            LD1		0.0	0.3	0.0	0.0	0.0	0.0	NY	REVOL		-3.14	3.14
+> CON	LD1            LD2		0.0   0.0	0.0	0.0	0.0	180	PX	REVOL		-2.14	2.14
+> CON	LD2            LD3	      0.0  -0.328	0.0	180	0.0	0.0	NY	REVOL       -3.14	3.14
+> CON	LD3            LD4	      0.0	0	0.0 	0.0	0.0	180	NX	REVOL		-2.14	2.14
+> CON	LD4            LD5	      0.0 -0.2765	0.0	0.0	0.0	180	NY	REVOL	      -3.14 3.14
+> CON	LD5            LD6	      0.0	0.0	0.0	0.0	0.0	180	NX	REVOL		-2.14	2.14
+
+# INITIAL_ANGLES
+
