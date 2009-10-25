@@ -1,0 +1,16 @@
+##### ROBOTS #####
+
+##### ROBOT 1 #####
+
+> 	ROBOT MOUSE mouse.rsdh
+> 	POSITION -0.114 1.316 0.2
+> 	ORIENTATION 0 -0 -1
+
+##### INITIAL ANGLES #####
+
+> 	INIT BASE 0
+> 	INIT TRANSX 0
+> 	INIT TRANSY 0
+> 	INIT ROTZ 0
+> 	INIT BODY 0
+
