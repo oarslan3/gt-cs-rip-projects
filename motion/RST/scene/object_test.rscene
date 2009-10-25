@@ -1,0 +1,23 @@
+#####	OBJECT test file	#####
+
+Note that only lines with a greater-than sign are processed.  
+
+Add as many objects as is necessary to a file, and then resave the scene
+after moving objects to better locations.  These objects should be enough to build some simple 
+mazes and obstacles. 	
+
+>	OBJECT	wall1	obstacles/wall1.3ds
+>	POSITION	-1.14	0.789	0
+>	ORIENTATION	90 0 0
+
+>	OBJECT	cube1	obstacles/cube1.3ds
+>	POSITION	1.14	-0.789	0
+>	ORIENTATION	90 0 0
+
+>	OBJECT	floorSm1	obstacles/floorSm1.3ds
+>	POSITION	1.14	-0.789	2
+>	ORIENTATION	90 0 0
+
+>	OBJECT	floorLg1	obstacles/floorLg1.3ds
+>	POSITION	1.14	-0.789 -1
+>	ORIENTATION	90 0 0
