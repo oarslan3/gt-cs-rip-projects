@@ -1,0 +1,40 @@
+Example where the bidirectional rrt solves a problem much quicker
+general scenario: collissions: on, rrt greedy, scene: shunk final,
+                  start state is shunk arm straight up, goal state is shunk end effector wrapped around the lamp.
+
+Reason: Uni-directional RRT gets "stuck" at a local minimum trying to get the arm past the "trap" at the lamp's base.
+        Bi-directional RRT gets around this because the second tree quickly grows out of the "trap" at the lamp's base.
+
+
+
+*** Bi-directional RRT: (I've removed some "achieved best..." lines for brevity):
+achieved best SD: 7.95359 (treesize=2)
+achieved best SD: 7.67407 (treesize=2)
+achieved best SD: 7.39955 (treesize=3)
+achieved best SD: 7.13003 (treesize=4)
+achieved best SD: 6.86551 (treesize=5)
+0 Best configuration: -1.07811 -1.68825 -1.7059 -0.00126352 0.000180214 -0.000735964 -0.00106169  Dist: 6.86551(tree size = 5)
+achieved best SD: 7.89667 (treesize=4)
+achieved best SD: 7.79817 (treesize=5)
+....
+achieved best SD: 0.0070076 (treesize=59)
+achieved best SD: 0.00113646 (treesize=60)
+SOLVED!
+Path Length = 61(14 iterations, 60 nodes in tree)
+
+
+
+
+
+
+*** Uni-directional RRT: (I've removed some "achieved best..." lines for brevity):
+rrtStyle = 0
+achieved best SD: 7.73425 (treesize=2)
+achieved best SD: 7.45865 (treesize=3)
+achieved best SD: 7.18804 (treesize=4)
+achieved best SD: 6.92244 (treesize=5)
+...
+achieved best SD: 0.00103316 (treesize=6433)
+SOLVED!
+Path Length = 60(8005 iterations, 6433 nodes in tree)
+Updating Timeline - Increment: 0.0833333 Total T: 5 Steps: 60
