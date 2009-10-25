@@ -1,0 +1,18 @@
+LINKS
+> LINK BASE			NOMODEL
+> LINK TRANSX		NOMODEL
+> LINK TRANSY		NOMODEL
+> LINK ROTZ			NOMODEL
+> LINK BODY  obstacles/cubeBlueSm.3ds
+
+
+CONNECTIVITY
+
+ CON  FROM         TO         X     Y     Z     ROL   PIT   YAW  AXIS    TYPE         RANGE
+----------------------------------------------------------------------------------------------
+> CON WORLD BASE			0.0	0.0	0.0	0.0	0.0	0.0	PX	FREE		-5 5
+> CON BASE TRANSX			0.0	0.0	0.0	0.0	0.0	0.0	PX	PRISM		-5 5
+> CON TRANSX TRANSY			0.0	0.0	0.0	0.0	0.0	0.0	PY	PRISM		-5 5
+> CON TRANSY ROTZ			0.0	0.0	0.0	0.0	0.0	0.0	PZ	PRISM		-.3 .3
+> CON ROTZ BODY 			0.0	0.0	0.0	90	0.0	0.0	PY	FIXED		-3.14 3.14
+
