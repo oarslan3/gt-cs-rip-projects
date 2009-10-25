@@ -83,6 +83,8 @@ Planner::~Planner()
 //	delete pworld;
 	if (rrt != NULL)
 		delete rrt;
+	if(rrtb != NULL)
+		delete rrtb;
 }
 
  void Planner::getBestConf()
@@ -114,6 +116,12 @@ bool Planner::Plan()
 	rrt->setWorld(pworld, pworld->findRobot(probot->name));
 	rrt->initialize(startConf, goalConf, lowBounds, highBounds);
 
+	if(rrtStyle == 1){ // if bi-directional RRT, initialize second RRT
+		rrtb = new RSTRRT();
+		rrtb->setWorld(pworld, pworld->findRobot(probot->name));
+		rrtb->initialize(goalConf, startConf, lowBounds, highBounds);
+	}
+
 	int greediness = GREEDINESS;
 
 	int pass;
@@ -132,6 +140,28 @@ bool Planner::Plan()
 		if ( rrt->bestSD <= pow(rrt->step_size,2) ) {
 			solved = true;
 			break;
+		}
+
+		if(rrtStyle == 1){ // if using bi-directional RRT
+			RSTRRT* Ta = rrt;
+			RSTRRT* Tb = rrtb;
+			if(Ta->extended){ // if Ta was able to extend
+				rstate xNew = Ta->rstateVector[Ta->frontierNodeIDX]; // get xNew
+				if(connectMode)
+					Tb->connect(xNew); // extend Tb towards new node in Ta
+				else
+					Tb->stepGreedy(xNew); // extend Tb towards new node in Ta
+
+				// Check if goal was reached
+				if(Tb->bestSD <= pow(Tb->step_size,2)){
+					solved = true;
+					break;
+				}
+			}
+			// switch Ta and Tb
+			RSTRRT* Ttmp = rrt;
+			rrt = rrtb;
+			rrtb = Ttmp;
 		}
 
 		// To visualize arm states as they're added:
