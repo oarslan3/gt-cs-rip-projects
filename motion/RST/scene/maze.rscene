@@ -21,13 +21,11 @@
 > 	INIT L4 0
 > 	INIT L5 0
 > 	INIT L6 0
-> 	INIT FT 0.0312848
-
-##### OBJECTS #####
+> 	INIT FT 0
 
 ##### OBJECT 1 #####
 
-> 	OBJECT mazescene maze/mazescene.3ds
+> 	OBJECT mazescene maze/mazescene_window.3ds
 > 	POSITION 0 0 0
 > 	ORIENTATION 90 -0 0
 
