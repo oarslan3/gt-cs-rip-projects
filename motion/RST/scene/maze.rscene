@@ -16,12 +16,37 @@
 > 	INIT BASE 0
 > 	INIT L0 0
 > 	INIT L1 0
-> 	INIT L2 0
+> 	INIT L2 0.881854
 > 	INIT L3 0
-> 	INIT L4 0
+> 	INIT L4 0.771619
 > 	INIT L5 0
 > 	INIT L6 0
 > 	INIT FT 0
+
+##### ROBOT 2 #####
+
+> 	ROBOT aMazeHelicopter aMazeHelicopter.rsdh
+> 	POSITION 0.904802 -0.04 0.666
+> 	ORIENTATION 2.26034e-15 1.24711e-16 2.55858e-16
+
+##### INITIAL ANGLES #####
+
+> 	INIT HeliTRANSBASE 0
+> 	INIT HeliTRANSX 1.0472
+> 	INIT HeliTRANSY 0
+> 	INIT HeliTRANSZ 0
+> 	INIT HeliROTZ 0
+> 	INIT HeliBASE 0
+> 	INIT HeliL0 0
+> 	INIT HeliL1 0.0551175
+> 	INIT HeliL2 1.0472
+> 	INIT HeliL3 -0.716501
+> 	INIT HeliL4 0.49604
+> 	INIT HeliL5 0
+> 	INIT HeliL6 0
+> 	INIT HeliFT 0
+
+##### OBJECTS #####
 
 ##### OBJECT 1 #####
 
