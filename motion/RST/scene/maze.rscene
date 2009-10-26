@@ -1,0 +1,33 @@
+##### ROBOTS #####
+
+##### ROBOT 1 #####
+
+> 	ROBOT aMazeRobot aMazeRobot.rsdh
+> 	POSITION 0 0 0.245
+> 	ORIENTATION 0 -0 0
+
+##### INITIAL ANGLES #####
+
+> 	INIT TRANSBASE 0
+> 	INIT TRANSX 0
+> 	INIT TRANSY 0
+> 	INIT TRANSZ 0
+> 	INIT ROTZ 0
+> 	INIT BASE 0
+> 	INIT L0 0
+> 	INIT L1 0
+> 	INIT L2 0
+> 	INIT L3 0
+> 	INIT L4 0
+> 	INIT L5 0
+> 	INIT L6 0
+> 	INIT FT 0.0312848
+
+##### OBJECTS #####
+
+##### OBJECT 1 #####
+
+> 	OBJECT mazescene maze/mazescene.3ds
+> 	POSITION 0 0 0
+> 	ORIENTATION 90 -0 0
+
