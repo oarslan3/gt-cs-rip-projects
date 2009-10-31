@@ -17,7 +17,7 @@ using namespace std;
 #include "../Tools/Link.h"
 #include "../Tools/Object.h"
 #include "../Tools/Constants.h"
-
+#include "PlanningTab.h"
 
 #include "OptimizationTab.h"
 
@@ -55,18 +55,53 @@ void OptimizationTab::OnButton(wxCommandEvent &evt) {
 	switch (button_num) {
 	case button_ExecuteOptimization:
 		// perform optimization
-		cout << "Performing Optimization..." << endl;
+		executeOptimize();
 		break;
 	case button_SetOptimizedPath:
 		// swap the path in the planner with the optimized path
-		cout << "Current path is now the optimized path" << endl;
+		setOptimizedPath();
 		break;
 	case button_SetOriginalPath:
 		// swap the current path with the optimized path
-		cout << "Current path is now the original path" << endl;
+		setOriginalPath();
 		break;
 	}
 }
+
+void OptimizationTab::executeOptimize() {
+	cout << "Performing Optimization..." << endl;
+	if (planner == NULL || planner->rrt == NULL) {
+		cout << "Must perform planning before attempting to optimize!" << endl;
+		return;
+	}
+	// fetch the path from planner
+	vector<vector<double> >& path = planner->rrt->path;
+
+	// use optimization function
+	if (optimizer.optimize(path))
+		cout << "Optimization complete!" << endl;
+	else
+		cout << "Optimization failed!" << endl;
+}
+
+void OptimizationTab::setOriginalPath() {
+	if (planner == NULL || planner->rrt == NULL) {
+		cout << "Must perform planning before attempting to optimize!" << endl;
+		return;
+	}
+	planner->rrt->path = optimizer.getOriginal();
+	cout << "Current path is now the original path" << endl;
+}
+
+void OptimizationTab::setOptimizedPath() {
+	if (planner == NULL || planner->rrt == NULL) {
+		cout << "Must perform planning before attempting to optimize!" << endl;
+		return;
+	}
+	planner->rrt->path = optimizer.getOptimized();
+	cout << "Current path is now the optimized path" << endl;
+}
+
 
 // This function is called when an object is selected in the Tree View or other
 // global changes to the RST world. Use this to capture events from outside the tab.
