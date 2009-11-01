@@ -205,9 +205,9 @@ PlanningTab::PlanningTab(wxWindow *parent, const wxWindowID id,
 // Handle Radio toggle
 void PlanningTab::OnRadio(wxCommandEvent &evt) {
 	// Add code here to implement a bi-directional RRT
+
 	rrtStyle = evt.GetSelection();
-	//planner->rrtStyle = rrtStyle; // this is commented out b/c planner may not exist yet. 
-									// the variable is set for when it is though.
+	planner->rrtStyle = rrtStyle;
 	cout << "rrtStyle = " << rrtStyle << endl;
 }
 

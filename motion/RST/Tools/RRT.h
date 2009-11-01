@@ -26,6 +26,7 @@
 #include "ANN/ANN.h"
 #include <vector>
 #include <stdlib.h>
+#include <cstdio>
 
 using namespace std;
 
@@ -89,9 +90,6 @@ public:
 	int max_nodes;
 	int linear_limit;
 	double ANNeps;
-
-	bool extended; // true if last extend operation was successfull (created a new node)
-	int frontierNodeIDX; // index of "freshest" extension of tree
 
 	rstate initRstate; // Container for starting configuration
 	rstate goalRstate; // Container for goal configuration
