@@ -20,8 +20,6 @@ bool Optimizer::optimize(const std::vector<std::vector<double> >& init_path) {
 	original_ = init_path;
 
 	// insert optimization code here and write optimized path to optimized_
-	//TODO  write this code
-	// placeholder for now
 	optimized_ = init_path;
 }
 

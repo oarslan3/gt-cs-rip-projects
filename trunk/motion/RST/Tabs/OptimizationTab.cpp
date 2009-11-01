@@ -68,12 +68,21 @@ void OptimizationTab::OnButton(wxCommandEvent &evt) {
 	}
 }
 
+// true if data is available
+bool checkPlanner() {
+	if (planner == NULL) {
+		cout << "Planner is NULL" << endl;
+		return false;
+	} else if (planner->rrt == NULL) {
+		cout << "RRT is NULL!" << endl;
+		return false;
+	}
+	return true;
+}
+
 void OptimizationTab::executeOptimize() {
 	cout << "Performing Optimization..." << endl;
-	if (planner == NULL || planner->rrt == NULL) {
-		cout << "Must perform planning before attempting to optimize!" << endl;
-		return;
-	}
+	if(!checkPlanner()) return;
 	// fetch the path from planner
 	vector<vector<double> >& path = planner->rrt->path;
 
@@ -85,19 +94,13 @@ void OptimizationTab::executeOptimize() {
 }
 
 void OptimizationTab::setOriginalPath() {
-	if (planner == NULL || planner->rrt == NULL) {
-		cout << "Must perform planning before attempting to optimize!" << endl;
-		return;
-	}
+	if(!checkPlanner()) return;
 	planner->rrt->path = optimizer.getOriginal();
 	cout << "Current path is now the original path" << endl;
 }
 
 void OptimizationTab::setOptimizedPath() {
-	if (planner == NULL || planner->rrt == NULL) {
-		cout << "Must perform planning before attempting to optimize!" << endl;
-		return;
-	}
+	if(!checkPlanner()) return;
 	planner->rrt->path = optimizer.getOptimized();
 	cout << "Current path is now the optimized path" << endl;
 }
