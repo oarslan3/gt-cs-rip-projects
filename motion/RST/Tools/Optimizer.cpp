@@ -12,6 +12,7 @@
 #include "World.h"
 #include "Robot.h"
 #include "Optimizer.h"
+#include "Trajectory.h"
 
 using namespace std;
 typedef std::vector<double> rstate;
@@ -165,5 +166,6 @@ Path_t Optimizer::evalPath(Path_iterator it_start, Path_iterator it_end) {
 }
 
 void Optimizer::splineSmooting() {
-
+	// create a spline trajectory smoother
+	// setup and create a new path
 }
