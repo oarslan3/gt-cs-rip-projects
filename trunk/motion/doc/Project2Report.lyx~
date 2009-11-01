@@ -71,7 +71,15 @@ Describe how the implementations work here
 \end_layout
 
 \begin_layout Subsection
-Goal-Biased RRT
+Goal-Biased RRT (
+\begin_inset Quotes eld
+\end_inset
+
+Greedy
+\begin_inset Quotes erd
+\end_inset
+
+)
 \end_layout
 
 \begin_layout Standard
@@ -121,16 +129,663 @@ Randomized Kinodynamic Planning
  by LaValle and Kuffner.
  The extension to the classical RRT is to grow two trees towards each other.
  We do this by growing one tree (randomly, greedily, or using RRT Connect)
- and then grow the second tree towards the newest branch of the first tree.
- We then do the same procedure, but starting with the second RRT, instead
+ and then grow the second tree towards the newest branch of the first tree
+ (the 
+\begin_inset Quotes eld
+\end_inset
+
+frontier
+\begin_inset Quotes erd
+\end_inset
+
+.) We then do the same procedure, but starting with the second RRT, instead
  of the first.
  Because we have the option to use RRT Connect, our algorithm slightly differs
- from the bi-directional RRT presented by LaValle and Kuffner, which we
- found to work better in scenarios where there are no or few obstacles.
+ from the bi-directional RRT presented by LaValle and Kuffner.
+ As expected, we found the RRT Connect variant to perform well in scenarios
+ where there are no or few obstacles.
 \end_layout
 
 \begin_layout Section
 Results
+\end_layout
+
+\begin_layout Standard
+Below are the results for our RTT experiment 
+\begin_inset Quotes eld
+\end_inset
+
+ChairLamp
+\begin_inset Quotes erd
+\end_inset
+
+ (DESKTOP-ARM-FINAL.rscene):
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="6">
+<features>
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Greedy
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Connect
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Bi-Dir
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Path Length
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Iterations
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Tree Size
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Yes
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Yes
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Yes
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+67/67/67
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0/0/0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+67/67/67
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Yes
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+No
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Yes
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+83/90/87
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+52/57/54
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+54/58/53
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Yes
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Yes
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+No
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+66/66/66
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0/0/0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+67/67/67
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Yes
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+No
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+No
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+93/91/90
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+235/240/240
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+237/242/242
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename chairlamp.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Below are the results for our RTT experiment 
+\begin_inset Quotes eld
+\end_inset
+
+FeedBear
+\begin_inset Quotes erd
+\end_inset
+
+ (maze3.rscene):
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="6">
+<features>
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Greedy
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Connect
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Bi-Dir
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Path Length
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Iterations
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Tree Size
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Yes
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Yes
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Yes
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+137/139/139
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+877/1586/809
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+240/327/181
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Yes
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+No
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Yes
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+147/245/142
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1372/1851/1041
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+230/373/165
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Yes
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Yes
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+No
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+120/DNS/120
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+860/DNS/1610
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+281/DNS/535
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Yes
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+No
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+No
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+DNS/DNS/DNS
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+DNS/DNS/DNS
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+DNS/DNS/DNS
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename feedbear.png
+	width 100text%
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -138,16 +793,30 @@ Performance
 \end_layout
 
 \begin_layout Standard
-In terms of finding a solution at all, the bi-directional RRT is superior
- to the goal-based RRT in all of our tests.
+In general, our results show that the bi-directional RRT which uses RRT
+ Connect is superior to all other variants.
+ Without RRT Connect, the bi-directional approach is still the winner, on
+ average.
+\end_layout
+
+\begin_layout Standard
+In terms of finding a solution at all, the bi-directional variant seems
+ to be the most important.
  In particular, the bi-directional RRT is able to find plans in scenarios
- where the goal is blocked by obstacles; a situation where the goal-based
- RRT may not find a solution.
- Because our bi-directional RRT contains the goal-based algorithm, it is
- not surprising that we did not observe a case where the bi-directional
- RRT performed worse than the goal-based RRT.
- The bi-directional RRT is able to find solutions when the goal-based RRT
- does not because the bi-directional RRT can grow 
+ where the goal is blocked by an obstacle; a situation where the goal-baised
+ RRT may not find a solution at all.
+ One interesting point we noticed is that the non-bi-directional RRT iteration
+ level was very sporatic in the FeedBear experiment: if it got 
+\begin_inset Quotes eld
+\end_inset
+
+lucky
+\begin_inset Quotes erd
+\end_inset
+
+ initially, a plan was easy to find, but if it didn't get lucky, no solution
+ would be found.
+ We think this is because the bi-directional RRT is better at growing 
 \begin_inset Quotes eld
 \end_inset
 
@@ -155,9 +824,17 @@ around
 \begin_inset Quotes erd
 \end_inset
 
- an obstacle; consider an example of the C shaped obstacle below, where
- the goal-based RRT does not reach the goal, but the bi-directional RRT
- does:
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+out
+\begin_inset Quotes erd
+\end_inset
+
+ of obstacles than a vanilla RRT.
+ Consider the example below, that shows a goal-biased RRT and a bi-directional
+ RRT:
 \end_layout
 
 \begin_layout Standard
@@ -171,8 +848,8 @@ around
 \end_layout
 
 \begin_layout Standard
-Below is an example where the goal-based RRT is trapped, even with a low
- greediness parameter:
+For a real example of the above scenario, we built the following scenario
+ which the non-bi-directional RRTs were not able to solve:
 \end_layout
 
 \begin_layout Standard
@@ -186,27 +863,11 @@ Below is an example where the goal-based RRT is trapped, even with a low
 \end_layout
 
 \begin_layout Standard
-In terms of the speed of the planner, the bi-directional RRT is also superior
- to the goal-based RRT in all of our tests.
- We suspect this is because when an obstacle is between the two RRTs, the
- bi-directional (in the random step) is able to randomly explore two methods
- of getting around the obstacle (one RRT explores from the 
-\begin_inset Quotes eld
-\end_inset
-
-outside
-\begin_inset Quotes erd
-\end_inset
-
- and one from the 
-\begin_inset Quotes eld
-\end_inset
-
-inside
-\begin_inset Quotes erd
-\end_inset
-
-) which leads to faster solutions.
+In terms of the speed of the planner (number of iterations), the bi-directional
+ RRT is similar to the goal-baised RRT, except when the goal-baised RRT
+ cannot find a solution.
+ This is somewhat to be expected, as the bi-directional approach is similar
+ to the goal-biased, except that it grows from two trees.
 \end_layout
 
 \begin_layout Standard
@@ -229,26 +890,39 @@ Solution Quality
 \end_layout
 
 \begin_layout Standard
-In our tests, the bi-directional planner produces better solutions, in general.
- The bi-directional paths are generated quicker, with equal or less unnecessary
- 
+One measure of the quality of the plan generated (beyond being able to generate
+ a plan at all) is the path length.
+ The rationale behind this is that longer paths are wasteful and less 
 \begin_inset Quotes eld
 \end_inset
 
-breadth
+direct.
 \begin_inset Quotes erd
 \end_inset
 
-, and is able to find solutions in cases when the goal-based RRT does not.
- While not complete (only probabilistically complete), the bi-directional
- RRT is more efficient.
+ In our tests, the use of RRT Connect was one of the largest factors, where
+ RRT Connect generally reduced the path length.
+ It is interesting to note that the bi-directional RRT generally produced
+ poorer paths than the goal-biased RRT.
+ We think that this may be because the one of the bi-directional trees would
+ sometimes grow away from the line-of-site solution, but the RRT would find
+ a complete path using the second tree.
 \end_layout
 
 \begin_layout Standard
-The reason for this performance benefit is that the bi-directional approach
- appears to cost nothing in terms of the quality of the path (such as scenarios
- with no obstacles) but offers a better method of getting around obstacles,
- compared to the goal-based RRT.
+A second measure of the quality of the plan generated is the smoothness
+ of the path.
+ This is more quantitative, but RRT Connect strongly determined how 
+\begin_inset Quotes eld
+\end_inset
+
+straight
+\begin_inset Quotes erd
+\end_inset
+
+ the plan is.
+ The bi-directional RRT seemed to produce very jerky paths.
+ We expand on the smoothness of paths in Part II, below.
 \end_layout
 
 \begin_layout Standard
@@ -357,6 +1031,16 @@ Our task is to solve mazes using RRTs which involve both the mobile robot
  window.) 
 \end_layout
 
+\begin_layout Standard
+\begin_inset Graphics
+	filename solvemaze.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 Path Optimization
 \end_layout
@@ -455,6 +1139,24 @@ Results
 
 \begin_layout Section
 Conclusions
+\end_layout
+
+\begin_layout Standard
+A difficulty for using RTTs to solve mazes is that obstacles in configuration
+ space are very different from obstacles in joint space.
+ We noticed that the RTTs would get 
+\begin_inset Quotes eld
+\end_inset
+
+stuck
+\begin_inset Quotes erd
+\end_inset
+
+ on long, thin walls no matter which variant of the RTT we used.
+ This is because a goal on one side of the wall is very similar to a goal
+ on the other, and the RTTs take a very long time (if ever) to determine
+ that one of the translational prismatic joints must be moved way up, then
+ way down to get around the obstacle.
 \end_layout
 
 \end_body

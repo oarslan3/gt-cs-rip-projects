@@ -1,0 +1,38 @@
+##### ROBOTS #####
+
+##### ROBOT 2 #####
+
+> 	ROBOT aMazeHelicopter aMazeHelicopter.rsdh
+> 	POSITION 0.904802 1.54 0.666
+> 	ORIENTATION 2.26034e-15 1.24711e-16 2.55858e-16
+
+##### INITIAL ANGLES #####
+
+> 	INIT HeliTRANSBASE 0
+> 	INIT HeliTRANSX 1.0472
+> 	INIT HeliTRANSY 0
+> 	INIT HeliTRANSZ 0
+> 	INIT HeliROTZ 0
+> 	INIT HeliBASE 0
+> 	INIT HeliL0 0
+> 	INIT HeliL1 0.0551175
+> 	INIT HeliL2 1.0472
+> 	INIT HeliL3 -0.716501
+> 	INIT HeliL4 0.49604
+> 	INIT HeliL5 0
+> 	INIT HeliL6 0
+> 	INIT HeliFT 0
+
+##### OBJECTS #####
+
+##### OBJECT 1 #####
+
+> 	OBJECT mazescene maze/mazescene3.3ds
+> 	POSITION 0 0 -0.1
+> 	ORIENTATION 90 -0 0
+
+##### OBJECT 6	#####
+ 30.00  0.00
+>	OBJECT	MONSTER	polarbear/polarbear.3ds
+>	POSITION	-0.21   2.68    0.32
+>	ORIENTATION	90 0 35
