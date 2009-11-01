@@ -124,7 +124,7 @@ RSTFrame::RSTFrame(const wxString& title) : wxFrame(NULL, wxID_ANY, title)
 
 
 	optionbar = new wxToolBar(this,ID_TOOLBAR,wxPoint(0, 0), wxSize(prefTreeViewWidth, toolBarHeight), wxTB_HORIZONTAL);
-	//wxBitmap optionBarBitmaps[2];
+	wxBitmap optionBarBitmaps[2];
 	optionbar->SetToolBitmapSize(wxSize(16, 16));
     optionbar->AddTool(Tool_linkorder, _T("Link Order"),toolBarBitmaps[3], toolBarBitmaps[3], wxITEM_CHECK, _T("Fix link position"));
     optionbar->AddTool(Tool_checkcollisions, _T("Check Collisions"),toolBarBitmaps[4], toolBarBitmaps[4], wxITEM_CHECK, _T("Click to toggle collision detection"));
@@ -204,7 +204,7 @@ RSTFrame::RSTFrame(const wxString& title) : wxFrame(NULL, wxID_ANY, title)
 void RSTFrame::OnSaveScene(wxCommandEvent& event) {
 	wxString filepath;
 	string filename;
-	int endpath; // size_t
+	size_t endpath;
 	wxFileDialog *SaveDialog = new wxFileDialog(this, _("Save File As"), wxT("../scene/"), wxT(""),
 			_("*.rscene"), wxFD_SAVE | wxFD_OVERWRITE_PROMPT, wxDefaultPosition);
 
@@ -297,23 +297,24 @@ void RSTFrame::OnToolCheckColl(wxCommandEvent& event){
 }
 
 void RSTFrame::OnToolMovie(wxCommandEvent& event){
-	wxString dirname = wxDirSelector(wxT("Choose input directory")); // , "", wxDD_DEFAULT_STYLE | wxDD_DIR_MUST_EXIST
-
-	if ( dirname.empty() ){ // filename
+	wxString filename = wxFileSelector(wxT("Create a directory for movie:"),wxT("./"),wxT(""),wxT(""));//, // -- default extension
+	if ( filename.empty() ){
 		cout << "No Directory Selected" << endl;
 		return;
 	}
 
-	string path = string(dirname.mb_str());
+	string name = string(filename.mb_str());
+	string shotname;
 
-	char *buf = new char[1000];
+	char *buf = new char[10000];  // too big for stack local allocation, also ugly
+	//int shotnum=0;
 	int w,h;
 
 	double step = .03333/tIncrement;
 	int count = 0;
 
 #ifdef WIN32
-	::CreateDirectory(path.c_str(),NULL);
+	::CreateDirectory(name.c_str(),NULL);
 #else
 
 #endif
@@ -330,40 +331,27 @@ void RSTFrame::OnToolMovie(wxCommandEvent& event){
 		wxMemoryDC memDC;
 		wxBitmap memBmp(w, h);
 		memDC.SelectObject(memBmp);
- 
-#ifdef WIN32
-		// The fast way (currently only works in windowsXP) :
 		memDC.Blit(0,0, w,h, &dc, 0,0);
-#else
-		// The slow way:
-		unsigned char* imageData = (unsigned char*)malloc(w*h*3);
-		glReadPixels(0, 0, w-1, h-1, GL_RGB, GL_UNSIGNED_BYTE, imageData);
-
-		int wIndex = 0;
-		int hIndex = 0;
-		for (int i=0; i < w*h*3; i+=3, ++wIndex) {
-			if(wIndex >= w)	{
-				wIndex=0;
-				hIndex++;
-			}
-			// vertically flip the image
-			int hout = -hIndex+h-1;
-
-			memDC.SetPen(wxPen(wxColor((int)imageData[i], (int)imageData[i+1], (int)imageData[i+2]), 1));
-			memDC.DrawCircle(wIndex, hout, 1);
-		}
-		free(imageData);
-#endif
-
 		memDC.SelectObject(wxNullBitmap);
-		sprintf(buf, "%s/%06d.png",path.c_str(),count);
 
+		sprintf(buf, "%s/%06d.png",name.c_str(),count);
 		wxString fname = wxString(buf,wxConvUTF8);
 		cout << "Saving:" << buf << ":" << endl;
 		memBmp.SaveFile(fname, wxBITMAP_TYPE_PNG);
 
 		count++;
+
+		/*wxClientDC dc2(this);
+		dc2.GetSize(&w, &h);
+		wxMemoryDC memDC2;
+		wxBitmap memBmp2(w, h);
+		memDC2.SelectObject(memBmp2);
+		memDC2.Blit(0,0, w,h, &dc2, 0,0);
+		memDC2.SelectObject(wxNullBitmap);
+		wxString fname2(wxT("screen.png"));
+		memBmp2.SaveFile(fname2, wxBITMAP_TYPE_PNG);*/
 	}
+
 
     delete buf;
 	event.Skip();
@@ -373,54 +361,23 @@ void RSTFrame::OnToolScreenshot(wxCommandEvent& event){
 	wxYield();
 	int w,h;
 
-	// Draw Full window pixels first
+	wxClientDC dc(viewer);
+	dc.GetSize(&w, &h);
+	wxMemoryDC memDC;
+	wxBitmap memBmp(w, h);
+	memDC.SelectObject(memBmp);
+	memDC.Blit(0,0, w,h, &dc, 0,0);
+    memDC.SelectObject(wxNullBitmap);
+	wxString fname(wxT("screenGL.png"));
+	memBmp.SaveFile(fname, wxBITMAP_TYPE_PNG);
+
 	wxClientDC dc2(this);
 	dc2.GetSize(&w, &h);
 	wxMemoryDC memDC2;
 	wxBitmap memBmp2(w, h);
 	memDC2.SelectObject(memBmp2);
 	memDC2.Blit(0,0, w,h, &dc2, 0,0);
-
-	// Then draw viewer pixels, in case we're looping
-	wxClientDC dc(viewer);
-	dc.GetSize(&w, &h);
-	wxMemoryDC memDC;
-	wxBitmap memBmp(w, h);
-	memDC.SelectObject(memBmp);
-
-
-#ifdef WIN32
-	// The fast way (currently only works in windowsXP) :
-	memDC.Blit(0,0, w,h, &dc, 0,0);
-#else
-	// The slow way:
-	unsigned char* imageData = (unsigned char*) malloc(w * h * 3);
-	glReadPixels(0, 0, w - 1, h - 1, GL_RGB, GL_UNSIGNED_BYTE, imageData);
-
-	int wIndex = 0;
-	int hIndex = 0;
-	for (int i = 0; i < w * h * 3; i += 3, ++wIndex) {
-		if (wIndex >= w) {
-			wIndex = 0;
-			hIndex++;
-		}
-		// vertically flip the image
-		int hout = -hIndex + h - 1;
-
-		memDC.SetPen(wxPen(wxColor((int) imageData[i], (int) imageData[i + 1], (int) imageData[i + 2]), 1));
-		memDC.DrawCircle(wIndex, hout, 1);
-		memDC2.SetPen(wxPen(wxColor((int) imageData[i], (int) imageData[i + 1], (int) imageData[i + 2]), 1));
-		memDC2.DrawCircle(wIndex, hout, 1);
-	}
-	free(imageData);
-#endif
-
-    memDC.SelectObject(wxNullBitmap);
-    memDC2.SelectObject(wxNullBitmap);
-
-	wxString fname(wxT("screenGL.png"));
-	memBmp.SaveFile(fname, wxBITMAP_TYPE_PNG);
-
+	memDC2.SelectObject(wxNullBitmap);
 	wxString fname2(wxT("screen.png"));
 	memBmp2.SaveFile(fname2, wxBITMAP_TYPE_PNG);
 
@@ -495,6 +452,8 @@ void RSTFrame::updateAllTabs(){
 		tab->RSTStateChange();
 	}
 }
+
+
 
 void RSTFrame::setTimeValue(double value, bool sendSignal){
 	tCurrent = value;

@@ -26,7 +26,6 @@
 #include "ANN/ANN.h"
 #include <vector>
 #include <stdlib.h>
-#include <cstdio>
 
 using namespace std;
 
@@ -42,8 +41,8 @@ static inline double rstateSub(rstate &a, rstate &b, rstate &c){
 	/* Computes difference vector and its magnitude WITHOUT
 	 * taking sqrt (for speed)
 	 */
-	if ((a.size() != b.size()) && (a.size() != c.size()))
-		perror("vector sizes do not match");
+	//if ((a.size() != b.size()) && (a.size() != c.size()))
+		//perror("vector sizes do not match");
 
 	double sd=0;
 	for (int i = 0; i < (int)a.size(); ++i) {
@@ -59,8 +58,8 @@ static inline double rstateSD(rstate &a, rstate &b){
 	 * taking sqrt, for speed)
 	 */
 
-	if (a.size() != b.size())
-		perror("vector sizes do not match");
+	//if (a.size() != b.size())
+		//perror("vector sizes do not match");
 
 	double sd = 0;
 	for (int i = 0; i < (int)a.size(); ++i) {
@@ -90,6 +89,9 @@ public:
 	int max_nodes;
 	int linear_limit;
 	double ANNeps;
+
+	bool extended; // true if last extend operation was successfull (created a new node)
+	int frontierNodeIDX; // index of "freshest" extension of tree
 
 	rstate initRstate; // Container for starting configuration
 	rstate goalRstate; // Container for goal configuration

@@ -1,28 +1,5 @@
 ##### ROBOTS #####
 
-##### ROBOT 1 #####
-
-> 	ROBOT aMazeRobot aMazeRobot.rsdh
-> 	POSITION 0 0 0.245
-> 	ORIENTATION 0 -0 0
-
-##### INITIAL ANGLES #####
-
-> 	INIT TRANSBASE 0
-> 	INIT TRANSX 0
-> 	INIT TRANSY 0
-> 	INIT TRANSZ 0
-> 	INIT ROTZ 0
-> 	INIT BASE 0
-> 	INIT L0 0
-> 	INIT L1 0
-> 	INIT L2 0.881854
-> 	INIT L3 0
-> 	INIT L4 0.771619
-> 	INIT L5 0
-> 	INIT L6 0
-> 	INIT FT 0
-
 ##### ROBOT 2 #####
 
 > 	ROBOT aMazeHelicopter aMazeHelicopter.rsdh
