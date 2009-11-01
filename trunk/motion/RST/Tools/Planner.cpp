@@ -186,10 +186,17 @@ bool Planner::Plan()
 
 				int worldR = world->findRobot(probot->name);
 				world->robots[worldR]->setConf(rrt->bestRstate);
-				//world->robots[worldR]->setConf(rrt->rstateVector[rrt->rstateVector.size()-1]); // to make sure the tree works!
 				world->updateRobot(world->robots[worldR]);
 				viewer->UpdateCamera();
 			}
+			
+			// to show debug updates of the tree
+			// will display every state! only for debugging
+			// this should be commented out otherwise.
+		    int worldR = world->findRobot(probot->name);
+		    world->robots[worldR]->setConf(rrt->rstateVector[rrt->rstateVector.size()-1]); // to make sure the tree works!
+			world->updateRobot(world->robots[worldR]);
+			viewer->UpdateCamera();
 		}
 
 		if (pass%1000 == 0) {
