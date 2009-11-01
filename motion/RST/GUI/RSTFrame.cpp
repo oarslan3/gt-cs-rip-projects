@@ -198,6 +198,9 @@ RSTFrame::RSTFrame(const wxString& title) : wxFrame(NULL, wxID_ANY, title)
 	viewer->Freeze();
 	viewer->InitGL();
 	viewer->Thaw();
+
+	viewer->setClearColor(1,1,1,1);
+	viewer->UpdateCamera();
 }
 
 // Checks if the input file is a .rscene file or not and then writes the scene to it.

@@ -30,6 +30,7 @@ bool Optimizer::optimize(const std::vector<std::vector<double> >& init_path) {
 	// insert optimization code here
 	simpleSearchOptimize();
 	splineSmooting();
+	return true;
 }
 
 std::vector<std::vector<double> >  Optimizer::getOriginal() const {
@@ -167,5 +168,6 @@ Path_t Optimizer::evalPath(Path_iterator it_start, Path_iterator it_end) {
 
 void Optimizer::splineSmooting() {
 	// create a spline trajectory smoother
+
 	// setup and create a new path
 }

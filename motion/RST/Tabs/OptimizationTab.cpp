@@ -24,8 +24,8 @@ using namespace std;
 // Control IDs (used for event handling - be sure to start with a non-conflicted id)
 enum optimizationTabEvents {
 	button_ExecuteOptimization = 45100,
-			button_SetOriginalPath,
-			button_SetOptimizedPath
+	button_SetOriginalPath,
+	button_SetOptimizedPath
 };
 
 //Add a handler for slider changes
@@ -52,6 +52,7 @@ OptimizationTab::OptimizationTab(wxWindow *parent, const wxWindowID id,
 
 void OptimizationTab::OnButton(wxCommandEvent &evt) {
 	int button_num = evt.GetId();
+	cout << "Got button-push" << endl;
 	switch (button_num) {
 	case button_ExecuteOptimization:
 		// perform optimization
