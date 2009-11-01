@@ -19,6 +19,7 @@
 World*		world=0;
 Robot*		robot=0;
 Trajectory*	trajectory=0;
+Planner*    planner=NULL;
 
 RSTFrame*	frame=0;
 Viewer*		viewer=0;

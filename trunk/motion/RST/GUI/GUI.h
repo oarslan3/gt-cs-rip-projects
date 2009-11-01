@@ -27,6 +27,7 @@
 class Trajectory;
 class Robot;
 class World;
+class Planner;
 
 class RSTFrame;
 class Viewer;
@@ -40,6 +41,7 @@ class TemplateTab;
 extern World*		world;
 extern Robot*		robot;
 extern Trajectory*	trajectory;
+extern Planner*     planner;
 
 extern RSTFrame*	frame;
 extern Viewer*		viewer;
