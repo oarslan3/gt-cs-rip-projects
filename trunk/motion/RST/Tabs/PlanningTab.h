@@ -14,7 +14,6 @@
 #ifndef PLANNING_TAB
 #define PLANNING_TAB
 
-#include "../GUI/GUI.h"
 #include "RSTTab.h"
 #include "../Tools/Matrix.h"
 #include "../Tools/Robot.h"
@@ -34,7 +33,7 @@ public:
 	bool greedyMode;
 	bool connectMode;
 	bool showProg;
-	//Planner *planner;
+	Planner *planner;
 
 	int robotID;
 

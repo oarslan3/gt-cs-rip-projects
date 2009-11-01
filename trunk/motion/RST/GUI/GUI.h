@@ -23,7 +23,7 @@
 
 #include <wx/notebook.h>
 
-class Planner;
+//class Planner;
 class Trajectory;
 class Robot;
 class World;
@@ -45,7 +45,6 @@ extern RSTFrame*	frame;
 extern Viewer*		viewer;
 extern TreeView*	treeView;
 extern wxNotebook*	tabView;
-extern Planner*     planner;
 
 extern TreeViewReturn* selectedTreeNode;
 
