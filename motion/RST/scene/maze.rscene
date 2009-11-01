@@ -28,6 +28,6 @@
 ##### OBJECT 1 #####
 
 > 	OBJECT mazescene maze/mazescene_window.3ds
-> 	POSITION 0 0 0
+> 	POSITION 0 0 -0.1
 > 	ORIENTATION 90 -0 0
 
