@@ -124,11 +124,10 @@ void RRT::stepRandom()
 	 * Take a step in a random direction (hint: wraps getRandomRstate,
 	 * getNearestNeighbor, and tryStep)
 	 */
-	
-	/*
-	 Your code here
-	 */
 
+	rstate &randomState = getRandomRstate();					// pick a random state, Xrand
+	int nearestNeighborIndex = getNearestNeighbor(randomState);	// select the closest neighbor on T to Xrand
+	tryStep(randomState, nearestNeighborIndex);					// extend T to Xrand
 }
 
 void RRT::stepGreedy(rstate &target)
@@ -136,21 +135,33 @@ void RRT::stepGreedy(rstate &target)
 	/*
 	 * Implement this to take a step towards a specific configuration 
 	 */
-	
-	/*
-	 Your code here
-	 */
 
+	int nearestNeighborIndex = getNearestNeighbor(target);	// select the closest neighbor on T to Xtarget
+	tryStep(target, nearestNeighborIndex);					// extend T to Xtarget
 }
 
 void RRT::connect(rstate &target) {
-	/* The RRT connect algorithm 
+	/*
+	 * The RRT connect algorithm 
 	 * Grow along a single vector until a collision is hit
 	 */
 
-	/*
-	 Your code here
-	 */
+	unsigned int numStates = rstateVector.size();
+
+	int nearestNeighborIndex = getNearestNeighbor(target);
+	tryStep(target, nearestNeighborIndex);
+
+	// Basically, we keep growing towards the target until:
+	// a.) tryStep fails to add a new node (collides, etc.)
+	// b.) we reach our goal
+	while(rstateVector.size() > numStates){
+		numStates = rstateVector.size();
+		tryStep(target, numStates-1);
+
+		if (bestSD <= pow(step_size, 2)){ // break if at goal
+			break;
+		}
+	}
 }
 
 
@@ -160,6 +171,8 @@ void RRT::tryStep(rstate qtry, int NNidx)
 	 * Calculates a new node to grow towards qtry, checks for collisions, and adds
 	 * * also maintains distance to goalRstate
 	 */
+
+	extended = false;
 
 	rstate qnear(ndim);
 	rstate qnew(ndim);
@@ -176,7 +189,6 @@ void RRT::tryStep(rstate qtry, int NNidx)
 	}
 
 	if (!checkCollisions(qnew)) {
-
 		addNode(qnew, NNidx);
 
 		double sd = rstateSD(qnew, goalRstate);
@@ -187,6 +199,8 @@ void RRT::tryStep(rstate qtry, int NNidx)
 			bestRstate = rstateVector[bestRstateIDX];
 			cout << "achieved best SD: " << bestSD << " (treesize=" << rstateVector.size() << ")" << endl;
 		}
+
+		extended = true; // extend operation was a success (a new node is added)
 	}
 }
 
@@ -200,6 +214,7 @@ void RRT::addNode(rstate &qnew, int parentID)
 	// Update graph vectors
 		rstateVector.push_back(qnew);
 		parentVector.push_back(parentID);
+		frontierNodeIDX = rstateVector.size()-1; // set "freshest" extension of tree
 
 		// add points to ANN data set
 		for(int i=0; i<ndim; i++)

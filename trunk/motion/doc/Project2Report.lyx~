@@ -357,16 +357,6 @@ Our task is to solve mazes using RRTs which involve both the mobile robot
  window.) 
 \end_layout
 
-\begin_layout Standard
-\begin_inset Graphics
-	filename solvemaze.png
-	width 100text%
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Subsection
 Path Optimization
 \end_layout

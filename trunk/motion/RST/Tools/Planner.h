@@ -50,6 +50,7 @@ public:
 	Robot* probot;
 	World* pworld;
 	RSTRRT* rrt;
+	RSTRRT* rrtb; // for bidirectional RRT
 
 	void setStart(World* world);
 	void setGoal(World* world);

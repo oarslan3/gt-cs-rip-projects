@@ -83,6 +83,8 @@ Planner::~Planner()
 //	delete pworld;
 	if (rrt != NULL)
 		delete rrt;
+	if(rrtb != NULL)
+		delete rrtb;
 }
 
  void Planner::getBestConf()
@@ -114,24 +116,65 @@ bool Planner::Plan()
 	rrt->setWorld(pworld, pworld->findRobot(probot->name));
 	rrt->initialize(startConf, goalConf, lowBounds, highBounds);
 
+	if(rrtStyle == 1){ // if bi-directional RRT, initialize second RRT
+		rrtb = new RSTRRT();
+		rrtb->setWorld(pworld, pworld->findRobot(probot->name));
+		rrtb->initialize(goalConf, startConf, lowBounds, highBounds);
+	}
+
 	int greediness = GREEDINESS;
 
+	RSTRRT* Ta;
+	RSTRRT* Tb;
 	int pass;
 	for(pass = 0; pass < MAX_POINTS; ++pass){
 
-		if (greedyMode && (pass % greediness == 0)) { //greediness
-			if (connectMode)
-				rrt->connect(goalConf);
-			else
-				rrt->stepGreedy(goalConf);
-		} else {
-			rrt->stepRandom();
-		}
+		if(rrtStyle == 0){ // uni-directional RRT
+			if (greedyMode && (pass % greediness == 0)) { //greediness
+				if (connectMode)
+					rrt->connect(goalConf);
+				else
+					rrt->stepGreedy(goalConf);
+			} else {
+				rrt->stepRandom();
+			}
 
-		// Check if goal was reached
-		if ( rrt->bestSD <= pow(rrt->step_size,2) ) {
-			solved = true;
-			break;
+			// Check if goal was reached
+			if ( rrt->bestSD <= pow(rrt->step_size,2) ) {
+				solved = true;
+				break;
+			}
+		}else if(rrtStyle == 1){ // if using bi-directional RRT
+
+			// The following is largely based on the paper:
+			// S. LaValle, J. Kuffner Randomized Kinodynamic Planning International Journal of Robotics Research, 20(5):378-400, 2001.
+			// A modification was made so that if connect mode is on, the second tree can use RRTConnect, rather than a greedy RRT.
+			// We tried using the uni-directional RRT, instead of a random step, and the results were not as good as
+			// the even-odd approach (one tree selects random node, the opposite tree grows towards that node) suggested by LaValle and Kuffner.
+			// An attempt was made to use variable names consistent with the paper.
+
+			Ta = rrt;
+			Tb = rrtb;
+
+			Ta->stepRandom(); // grow Ta towards a random state
+
+			if(Ta->extended){ // if Ta was able to extend
+				rstate xNew = Ta->rstateVector[Ta->frontierNodeIDX]; // get xNew
+				Tb->goalRstate = xNew;
+				if(connectMode)
+					Tb->connect(xNew); // extend Tb towards new node in Ta (RRT Connect)
+				else
+					Tb->stepGreedy(xNew); // extend Tb towards new node in Ta (RRT Greedy)
+				
+				if(Tb->bestSD <= pow(Tb->step_size,2)){ // Check if goal was reached
+					solved = true;
+					break;
+				}
+			}
+			// switch Ta and Tb ("even-odd")
+			RSTRRT* Ttmp = rrt;
+			rrt = rrtb;
+			rrtb = Ttmp;
 		}
 
 		// To visualize arm states as they're added:
@@ -143,6 +186,7 @@ bool Planner::Plan()
 
 				int worldR = world->findRobot(probot->name);
 				world->robots[worldR]->setConf(rrt->bestRstate);
+				//world->robots[worldR]->setConf(rrt->rstateVector[rrt->rstateVector.size()-1]); // to make sure the tree works!
 				world->updateRobot(world->robots[worldR]);
 				viewer->UpdateCamera();
 			}
@@ -164,10 +208,21 @@ bool Planner::Plan()
 
 	cerr << "SOLVED!" << endl;
 	// Read tree forward:
-	rrt->tracePath();
+	if(rrtStyle==0){
+		rrt->tracePath();
+	}else if(rrtStyle==1){
+		Tb->tracePath();
+		int x = Ta->frontierNodeIDX;
+		while(Ta->parentVector[x] != -1){
+			Tb->path.push_back(Ta->rstateVector[x]);
+			x = Ta->parentVector[x];
+		}
+		rrt = Tb;
+	}
 
 	cout << "Path Length = " << rrt->path.size();
 	cout << "(" << pass << " iterations, ";
 	cout << rrt->rstateVector.size() << " nodes in tree)" << endl;
+	init_path = rtt->path;
 	return true;
 }
