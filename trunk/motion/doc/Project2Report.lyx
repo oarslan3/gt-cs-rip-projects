@@ -36,6 +36,7 @@
 \tracking_changes false
 \output_changes false
 \author "" 
+\author "" 
 \end_header
 
 \begin_body
@@ -73,8 +74,59 @@ Describe how the implementations work here
 Goal-Biased RRT
 \end_layout
 
+\begin_layout Standard
+In our goal-based RRT, we grow the tree in two ways: 
+\end_layout
+
+\begin_layout Enumerate
+Random tree growth, as the classic RRT performs.
+ New branches are created in random directions.
+\end_layout
+
+\begin_layout Enumerate
+Biased tree growth, where new branches are made in the direction of the
+ goal
+\end_layout
+
+\begin_layout Standard
+The tradeoff between these two steps is governed by a greediness parameter,
+ where higher values reduce the 
+\begin_inset Quotes eld
+\end_inset
+
+bredth
+\begin_inset Quotes erd
+\end_inset
+
+ of the tree in exchange for a tree grown directly towards the goal.
+ Tuning this greediness parameter is important, as a high value may become
+ trapped at an obstacle, but lower values are wasteful in that they may
+ not grow towards the goal at every step.
+\end_layout
+
 \begin_layout Subsection
 Bi-Directional RRT
+\end_layout
+
+\begin_layout Standard
+Our bi-directional RRT is heavily based on the bi-directional algorithm
+ presented in 
+\begin_inset Quotes eld
+\end_inset
+
+Randomized Kinodynamic Planning
+\begin_inset Quotes erd
+\end_inset
+
+ by LaValle and Kuffner.
+ The extension to the classical RRT is to grow two trees towards each other.
+ We do this by growing one tree (randomly, greedily, or using RRT Connect)
+ and then grow the second tree towards the newest branch of the first tree.
+ We then do the same procedure, but starting with the second RRT, instead
+ of the first.
+ Because we have the option to use RRT Connect, our algorithm slightly differs
+ from the bi-directional RRT presented by LaValle and Kuffner, which we
+ found to work better in scenarios where there are no or few obstacles.
 \end_layout
 
 \begin_layout Section
@@ -83,6 +135,71 @@ Results
 
 \begin_layout Subsection
 Performance
+\end_layout
+
+\begin_layout Standard
+In terms of finding a solution at all, the bi-directional RRT is superior
+ to the goal-based RRT in all of our tests.
+ In particular, the bi-directional RRT is able to find plans in scenarios
+ where the goal is blocked by obstacles; a situation where the goal-based
+ RRT may not find a solution.
+ Because our bi-directional RRT contains the goal-based algorithm, it is
+ not suprising that we did not observe a case where the bi-directional RRT
+ performed worse than the goal-based RRT.
+ The bi-directional RRT is able to find solutions when the goal-based RRT
+ does not because the bi-directional RRT can grow 
+\begin_inset Quotes eld
+\end_inset
+
+around
+\begin_inset Quotes erd
+\end_inset
+
+ an obstacle; consider an example of a U shaped obstacle where one RRT is
+ stuck inside the U, and the second RRT is outside.
+ If the goal-based RRT is inside the U, it must randomly grow a tree outside
+ the U, which may take a long time.
+ On the other hand, the bi-directional RRT is at an advantage because the
+ RRT that is outside the U is able to explore around the obstacle, giving
+ the RRT inside a better goal to grow towards.
+\end_layout
+
+\begin_layout Standard
+[inkscape diagram of this]
+\end_layout
+
+\begin_layout Standard
+Below is an example (see MOVIEFILENAME.MPEG) where the goal-based RRT is
+ not able to find a plan around the obstacle near the goal, even with a
+ very low greediness parameter:
+\end_layout
+
+\begin_layout Standard
+[IMG OF SHUNK ARM TRYING TO GET TO A GOAL STATE WRAPPED AROUND THE LAMP]
+\end_layout
+
+\begin_layout Standard
+In terms of the speed of the planner, the bi-directional RRT is also superior
+ to the goal-based RRT in all of our tests.
+ We suspect this is because when an obstacle is between the two RRTs, the
+ bi-directional (in the random step) is able to randomly explore two methods
+ of getting around the obstacle (one RRT explores from the 
+\begin_inset Quotes eld
+\end_inset
+
+outside
+\begin_inset Quotes erd
+\end_inset
+
+ and one from the 
+\begin_inset Quotes eld
+\end_inset
+
+inside
+\begin_inset Quotes erd
+\end_inset
+
+) which leads to faster solutions.
 \end_layout
 
 \begin_layout Standard
@@ -102,6 +219,33 @@ On similarly constructed problems, compare the performance of goal-biased
 
 \begin_layout Subsection
 Solution Quality
+\end_layout
+
+\begin_layout Standard
+In our tests, the bi-directional planner produces better solutions.
+ The bi-directional paths are generated quicker, with equal or less unnecessary
+ 
+\begin_inset Quotes eld
+\end_inset
+
+bredth
+\begin_inset Quotes erd
+\end_inset
+
+, and is able to find solutions in cases when the goal-based RRT does not.
+ While not complete (only probabilistically complete), the bi-directional
+ RRT is more optimal.
+\end_layout
+
+\begin_layout Standard
+The reason for this performance benefit is that the bi-directional approach
+ appears to cost nothing in terms of the quality of the path (such as scenarios
+ with no obstacles) but offers a better method of getting around obstacles,
+ compared ot the goal-based RRT.
+\end_layout
+
+\begin_layout Standard
+[SCREENSHOTS OF MOVIES, LINKS TO MOVIES]
 \end_layout
 
 \begin_layout Standard
@@ -129,20 +273,157 @@ Broader Goals in Motion Planning
 Overview
 \end_layout
 
+\begin_layout Standard
+Our final goal is to develop a maze-solving robot using RRTs, and compare
+ the results of our various RRT variants (goal-based RRT, bi-directional
+ RRT, RRT Connect).
+ To achieve this goal, we implemented three of the suggested subprojects
+ of the assignment:
+\end_layout
+
+\begin_layout Enumerate
+Robot Construction: We created two new robots for solving our mazes.
+\end_layout
+
+\begin_layout Enumerate
+Mobile Manipulation: Our two robots are going places and doing stuff! Our
+ mazes require more than just getting the robot from one place to another:
+ we use both the robot's movement, and the robot's manipulators to reach
+ a goal.
+\end_layout
+
+\begin_layout Enumerate
+Path Optimization: The paths generated in our mazes are not smooth.
+ We implemented two methods to optimize the paths: path shortening, and
+ spline-based smoothing.
+\end_layout
+
 \begin_layout Subsection
 Robot Construction
+\end_layout
+
+\begin_layout Standard
+We built two maze solving robots: AMazeBot and AMazeHelicopter.
+ In addition, we built a variety of mazes for them to solve, which include
+ dead ends and places that only the manipulators can reach.
+\end_layout
+
+\begin_layout Standard
+AMazeBot [Image]
+\end_layout
+
+\begin_layout Standard
+AMazeBot is a Schunk arm bolted to a segway base.
+ It has two prismatic joints, which do not correctly model the physics of
+ the robot, but which can be used to generate paths.
+ The paths generated using AMazeBot show situations where the robot moves
+ horizontally (against the direction of the wheels) which is something we
+ would fix if we had additional time.
+\end_layout
+
+\begin_layout Standard
+AMazeHelicopter [Image]
+\end_layout
+
+\begin_layout Standard
+MIT recently showed the indoor autonomous navigation of quadrotor helicopters,
+ and our project of an indoor maze solving using a helicopter is based on
+ this idea.
+ AMazeHelicopter features a Schunk manipulator bolted to an ultralilght
+ quad-roter helicopter.
+ The flying component is based off of Ascending Technology's ultralight
+ X-3D-BL quad-rotor helicopter.
+ The manipulator is the Schunk arm and is attached to the bottom of the
+ helicopter.
+ For weight savings, we did not include the Schunk gripper.
+ As suggested in the project description, we used two prismatic joints for
+ the translation of the helicopter, which is roughly consistent with a helicopte
+r real's motion.
 \end_layout
 
 \begin_layout Subsection
 Mobile Manipulation
 \end_layout
 
+\begin_layout Standard
+Our task is to solve mazes using RRTs which involve both the mobile robot
+ and the use of a manipulator.
+ The goal in most of our mazes is to get the robot through the maze and
+ get the manipulator into a given configuration (such as through a small
+ window.) 
+\end_layout
+
 \begin_layout Subsection
 Path Optimization
 \end_layout
 
+\begin_layout Standard
+The paths generated from the RRT are generally not smooth.
+ We use two methods for path optimization:
+\end_layout
+
+\begin_layout Enumerate
+Path shortening: We remove intermediate configurations in the path that
+ do not cause collissions.
+\end_layout
+
+\begin_layout Enumerate
+Path smoothing: We use splines to smooth the overall path.
+\end_layout
+
+\begin_layout Standard
+We found that the two methods, combined, generated both better paths (shorter)
+ and more realistic paths (natural looking.)
+\end_layout
+
 \begin_layout Section
 Implementation
+\end_layout
+
+\begin_layout Standard
+Our project primarily deals with the mobile manipulation and path optimization
+ components from above.
+ 
+\end_layout
+
+\begin_layout Standard
+The mobile manipulation results are relatively good for simple mazes, but
+ require a large amount of parameter knob turning to work with complex mazes.
+ This is due to two components of the RRTs: the step size and the greediness
+ parameter.
+ The step size is the 
+\begin_inset Quotes eld
+\end_inset
+
+jump
+\begin_inset Quotes erd
+\end_inset
+
+ the RRT takes at each step, and governs how far the tree can move in any
+ one step (this does not apply to RRT Connect.) The prismatic joints have
+ much larger step sizes compared to the manipulator's joints, and setting
+ these step sizes for each joint requires a lot of manual tuning.
+ If the step sizes are too large, the paths are very unrealistic and choppy,
+ and the RRT may not find a solution to the maze in situations where a tunnel
+ occurs (and fine positioning into the tunnel is required.) The greediness
+ parameter determines how much the robot randomly explores the maze, versus
+ going directly towards the goal.
+ We believe that there may be an optimal setting for this based on some
+ measure of the 
+\begin_inset Quotes eld
+\end_inset
+
+complexity
+\begin_inset Quotes erd
+\end_inset
+
+ of the maze (number of turns, length of corridors, etc.) but in our project
+ this was determined with much manual tuning.
+\end_layout
+
+\begin_layout Standard
+The path optimization...
+ [NEED TO DO THIS SECTION]
 \end_layout
 
 \begin_layout Standard
