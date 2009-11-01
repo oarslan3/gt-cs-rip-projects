@@ -38,6 +38,18 @@ std::vector<std::vector<double> >  Optimizer::getOptimized() const {
 	return optimized_;
 }
 
+// Counts the length of an existing path
+unsigned int countDist(Path_iterator a, Path_iterator b) {
+	unsigned int length = 0;
+	Path_iterator cur = a;
+	while (cur != b) {
+		++length;
+		++cur;
+	}
+	return length;
+}
+
+
 void Optimizer::simpleSearchOptimize() {
 	cout << "Starting path shortening with simple search..." << endl;
 	cout << "start path length: " << optimized_.size() << endl;
@@ -49,37 +61,36 @@ void Optimizer::simpleSearchOptimize() {
 
 	// loop while start has not reached the end of the path
 	while (start_point != optimized_.end()) {
-		//cout << "Looking for shortcut" << endl;
 		// if end = start :
 		// the there is no shorter path from end to start,
 		// move to next start
 		if (start_point == end_point) {
-			//cout << "moving to next point" << endl;
 			++start_point;
 			end_point = optimized_.end()-1;
 		} else {
 			//cout << "checking path" << endl;
 			// check path
 			Path_t segment = evalPath(start_point, end_point);
-			// shorte path exists
-			if (segment.size() > 0) {
-				cout << "Found shortcut" << endl;
+			unsigned int curDist =  countDist(start_point, end_point);
+			cout << "Shortcut length: " << segment.size() << endl;
+			cout << "Current distance: " << curDist << endl;
+			if (segment.size() > 0 && segment.size() < curDist) {
+				cout << "Found shortcut!" << endl;
 				// reconstruct path
 				// first segment
 				Path_t new_path(optimized_.begin(), start_point);
 				// middle segment
-				new_path.insert(new_path.end(), start_point, end_point);
+				new_path.insert(new_path.end(), segment.begin(), segment.end());
 				// last segment
 				new_path.insert(new_path.end(), end_point, optimized_.end());
 
-				// replace optimizied
+				// replace optimized
 				optimized_ = new_path;
 
 				// reset counters to start process over again
 				start_point = optimized_.begin();
 				end_point = optimized_.end()-1;
 			} else {
-				//cout << "No path found, continuing search" << endl;
 				// no path found, continuing search
 				--end_point;
 			}
