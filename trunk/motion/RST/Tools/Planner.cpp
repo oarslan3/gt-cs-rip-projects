@@ -223,6 +223,5 @@ bool Planner::Plan()
 	cout << "Path Length = " << rrt->path.size();
 	cout << "(" << pass << " iterations, ";
 	cout << rrt->rstateVector.size() << " nodes in tree)" << endl;
-	init_path = rtt->path;
 	return true;
 }
