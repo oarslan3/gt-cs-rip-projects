@@ -1,0 +1,69 @@
+lampchair statistics:
+
+load: DESKTOP-ARM-FINAL.rscene
+
+start configuration:
+-1.309 -0.837758 0.523599 -0.890118 1.25664 0.418879 0 
+
+end configuration:
+-0.314159 1.36136 -0.10472 0.942478 0 0.418879 0 
+
+Stats to find solution:
+
+Greedy = yes, Connect = yes, Bi-directional = yes: 
+Trial 1:
+Trial 2:
+Trial 3:
+
+Greedy = yes, Connect = no, Bi-directional = yes: 
+Trial 1:
+Trial 2:
+Trial 3:
+
+Greedy = yes, Connect = yes, Bi-directional = no: 
+Trial 1:
+Trial 2:
+Trial 3:
+
+Greedy = yes, Connect = no, Bi-directional = no: 
+Trial 1:
+Trial 2:
+Trial 3:
+
+
+
+
+
+
+feedbear statistics:
+
+load: maze3.rscene
+
+start configuration:
+0.10472 -3.08923 0 -1.5708 0.0551175 1.0472 -0.716501 0.49604 0 0 0
+
+end configuration:
+-1.79875 -0.00829031 -9.88931e-06 0.207232 0.0580235 1.40087 -0.716348 0.496041 -0.00012422 -0.00012169 -0.000138793 
+
+Stats to find solution:
+
+Greedy = yes, Connect = yes, Bi-directional = yes: 
+Trial 1: Path Length = 137(877 iterations, 240 nodes in tree)
+Trial 2: Path Length = 139(1586 iterations, 327 nodes in tree)
+Trial 3: Path Length = 139(809 iterations, 181 nodes in tree)
+
+Greedy = yes, Connect = no, Bi-directional = yes: 
+Trial 1: Path Length = 147(1372 iterations, 230 nodes in tree)
+Trial 2: Path Length = 245(1851 iterations, 373 nodes in tree)
+Trial 3: Path Length = 142(1041 iterations, 165 nodes in tree)
+
+Greedy = yes, Connect = yes, Bi-directional = no: 
+Trial 1: Path Length = 120(860 iterations, 281 nodes in tree)
+Trial 2: Did not solve
+Trial 3: Path Length = 120(1610 iterations, 535 nodes in tree)
+
+
+Greedy = yes, Connect = no, Bi-directional = no: 
+Trial 1: Did not solve
+Trial 2: Did not solve
+Trial 3: Did not solve
