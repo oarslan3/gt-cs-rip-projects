@@ -32,6 +32,11 @@ public:
 	void simpleSearchOptimize();
 
 	/**
+	 * Uses splines to smooth the optimized path
+	 */
+	void splineSmooting();
+
+	/**
 	 * evaluate a path via the same process as RRT-connect
 	 * @param initial point
 	 * @param final point

@@ -28,6 +28,7 @@ bool Optimizer::optimize(const std::vector<std::vector<double> >& init_path) {
 
 	// insert optimization code here
 	simpleSearchOptimize();
+	splineSmooting();
 }
 
 std::vector<std::vector<double> >  Optimizer::getOriginal() const {
@@ -161,4 +162,8 @@ Path_t Optimizer::evalPath(Path_iterator it_start, Path_iterator it_end) {
 	// handle return
 	if (successful) return segment;
 	else return Path_t();
+}
+
+void Optimizer::splineSmooting() {
+
 }
