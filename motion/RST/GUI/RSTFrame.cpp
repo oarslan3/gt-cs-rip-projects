@@ -376,23 +376,54 @@ void RSTFrame::OnToolScreenshot(wxCommandEvent& event){
 	wxYield();
 	int w,h;
 
-	wxClientDC dc(viewer);
-	dc.GetSize(&w, &h);
-	wxMemoryDC memDC;
-	wxBitmap memBmp(w, h);
-	memDC.SelectObject(memBmp);
-	memDC.Blit(0,0, w,h, &dc, 0,0);
-    memDC.SelectObject(wxNullBitmap);
-	wxString fname(wxT("screenGL.png"));
-	memBmp.SaveFile(fname, wxBITMAP_TYPE_PNG);
-
+	// Draw Full window pixels first
 	wxClientDC dc2(this);
 	dc2.GetSize(&w, &h);
 	wxMemoryDC memDC2;
 	wxBitmap memBmp2(w, h);
 	memDC2.SelectObject(memBmp2);
 	memDC2.Blit(0,0, w,h, &dc2, 0,0);
-	memDC2.SelectObject(wxNullBitmap);
+
+	// Then draw viewer pixels, in case we're looping
+	wxClientDC dc(viewer);
+	dc.GetSize(&w, &h);
+	wxMemoryDC memDC;
+	wxBitmap memBmp(w, h);
+	memDC.SelectObject(memBmp);
+
+
+#ifdef WIN32
+	// The fast way (currently only works in windowsXP) :
+	memDC.Blit(0,0, w,h, &dc, 0,0);
+#else
+	// The slow way:
+	unsigned char* imageData = (unsigned char*) malloc(w * h * 3);
+	glReadPixels(0, 0, w - 1, h - 1, GL_RGB, GL_UNSIGNED_BYTE, imageData);
+
+	int wIndex = 0;
+	int hIndex = 0;
+	for (int i = 0; i < w * h * 3; i += 3, ++wIndex) {
+		if (wIndex >= w) {
+			wIndex = 0;
+			hIndex++;
+		}
+		// vertically flip the image
+		int hout = -hIndex + h - 1;
+
+		memDC.SetPen(wxPen(wxColor((int) imageData[i], (int) imageData[i + 1], (int) imageData[i + 2]), 1));
+		memDC.DrawCircle(wIndex, hout, 1);
+		memDC2.SetPen(wxPen(wxColor((int) imageData[i], (int) imageData[i + 1], (int) imageData[i + 2]), 1));
+		memDC2.DrawCircle(wIndex, hout, 1);
+	}
+	free(imageData);
+#endif
+
+    memDC.SelectObject(wxNullBitmap);
+    memDC2.SelectObject(wxNullBitmap);
+
+	wxString fname(wxT("screenGL.png"));
+	memBmp.SaveFile(fname, wxBITMAP_TYPE_PNG);
+
 	wxString fname2(wxT("screen.png"));
 	memBmp2.SaveFile(fname2, wxBITMAP_TYPE_PNG);
 
