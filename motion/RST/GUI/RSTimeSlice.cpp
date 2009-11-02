@@ -27,7 +27,7 @@ RSTimeSlice::RSTimeSlice(World *w){
 	for(unsigned int i=0; i<w->robots.size(); i++){
 		Robot* r = w->robots[i];
 		rPose.push_back(r->baseLink->absPose);
-		vector<double> RJointVec;
+		vector<double> RJointVec; // single configuration of robot
 		RJointVec.clear();
 		for(unsigned int j=0; j<r->links.size(); j++){
 			RJointVec.push_back(r->links[j]->jVal);

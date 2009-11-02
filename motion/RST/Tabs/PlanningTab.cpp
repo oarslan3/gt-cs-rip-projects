@@ -348,6 +348,8 @@ void PlanningTab::OnButton(wxCommandEvent &evt) {
 	}
 }
 
+
+// This is where the plan is set into the rest of the world
 void PlanningTab::SetTimeline(){
 		if(world == NULL || planner == NULL || !planner->solved || planner->rrt->path.size() == 0){
 			cout << "Must create a valid plan before updating its duration." << endl;
@@ -366,11 +368,15 @@ void PlanningTab::SetTimeline(){
 
 		int robotID = world->findRobot(planner->probot->name);
 
+		// copy in the solved path to the main timeline
 		for(int i=0; i < numsteps; i++){
+			// loop over number of links and copy them in one by one
 			for(int l=0; l < planner->numLinks; l++){
 				world->robots[robotID]->activeLinks[l]->jVal = planner->rrt->path[i][l];
             }
+			// update the world
             world->updateRobot(world->robots[robotID]);
+            // add a time slice
             frame->AddWorld(world);
 		}
 }

@@ -37,6 +37,13 @@ public:
      */
     void executeOptimize();
 
+    /**
+     * Copy in the path to the overall system timeline
+     * @param path of a robot
+     * Writes the path into the main timeslices vector in RSTFrame
+     */
+    void SetTimeline(const Path_t& path);
+
     // these functions swap the paths stored in RRT
     void setOriginalPath();
     void setOptimizedPath();
