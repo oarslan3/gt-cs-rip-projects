@@ -8,6 +8,8 @@
 #include <iostream>
 #include <cmath>
 #include <boost/foreach.hpp>
+#include <boost/assign/std/vector.hpp> // for operator +=
+using namespace boost::assign;
 #include "../GUI/GUI.h"
 #include "World.h"
 #include "Robot.h"
@@ -16,6 +18,18 @@
 
 using namespace std;
 typedef std::vector<double> rstate;
+
+void printPath(const Path_t& path, string str="") {
+	cout << "Path: " << str << endl;
+	int i = 0;
+	BOOST_FOREACH(rstate state, path) {
+		cout << " Config " << i++ << "[ ";
+		BOOST_FOREACH(double d, state) {
+			cout << d << " ";
+		}
+		cout << "]" << endl;
+	}
+}
 
 bool Optimizer::optimize(const std::vector<std::vector<double> >& init_path) {
 	if (init_path.size() == 0) {
@@ -167,7 +181,52 @@ Path_t Optimizer::evalPath(Path_iterator it_start, Path_iterator it_end) {
 }
 
 void Optimizer::splineSmooting() {
-	// create a spline trajectory smoother
+	printPath(optimized_, "Initial Optimized Path");
 
-	// setup and create a new path
+	// create a trajectory
+	int numlinks = optimized_[0].size();
+	double duration = 5.0;
+	CubicViaSpline spline(numlinks, NORMAL_SPLINE, duration);
+
+	// add the start and end points to the path
+	unsigned int nrInitPts = optimized_.size();
+	spline.setStart(optimized_[0]);
+	spline.setEnd(optimized_[nrInitPts-1]);
+
+	// insert all of the configs at a fixed interval
+	double increment = duration/nrInitPts;
+	for (unsigned int i=1; i<nrInitPts-1; ++i)
+		spline.add(increment*i, optimized_[i]);
+
+	cout << "Generating trajectory with "
+		 << "\n  nrInitPts = " << nrInitPts
+		 << "\n  increment = " << increment
+		 << "\n  duration  = " << duration << endl;
+
+	// generate the trajectory
+	spline.generate_trajectory(duration);
+
+	// perform subsampling
+	// subsampling for even interpolation is twice the n-1 points (leaving out endpoint)
+	unsigned int interp_rate = 2; // interpolation factor
+	unsigned int nrSamples = interp_rate*(nrInitPts-1); // total number of output samples
+	double inc = duration/nrSamples;
+	Path_t smoothed_path;
+	for (int i=0; i<=nrSamples;i++){
+		vector<vector<double> > res = spline.evaluate(inc*i);
+		smoothed_path += res[0];
+	}
+
+	// output for verification
+	cout << "Subsampled trajectory"
+	     << "\n  interpolation rate = " << interp_rate
+	     << "\n  total samples      = " << nrSamples
+	     << "\n  time increment     = " << inc << endl;
+	printPath(smoothed_path, "Full smoothed path");
+
+	// determine if there are collisions
+	// TODO
+
+	// write back to store and visualize
+	optimized_ = smoothed_path;
 }
