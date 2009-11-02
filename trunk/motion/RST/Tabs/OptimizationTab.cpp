@@ -52,7 +52,6 @@ OptimizationTab::OptimizationTab(wxWindow *parent, const wxWindowID id,
 
 void OptimizationTab::OnButton(wxCommandEvent &evt) {
 	int button_num = evt.GetId();
-	cout << "Got button-push" << endl;
 	switch (button_num) {
 	case button_ExecuteOptimization:
 		// perform optimization
@@ -96,61 +95,54 @@ void OptimizationTab::executeOptimize() {
 
 void OptimizationTab::setOriginalPath() {
 	if(!checkPlanner()) return;
-	planner->rrt->path = optimizer.getOriginal();
+	//planner->rrt->path = optimizer.getOriginal();
+	SetTimeline(optimizer.getOriginal());
 	cout << "Current path is now the original path" << endl;
 }
 
 void OptimizationTab::setOptimizedPath() {
 	if(!checkPlanner()) return;
-	planner->rrt->path = optimizer.getOptimized();
+	//planner->rrt->path = optimizer.getOptimized();
+	SetTimeline(optimizer.getOptimized());
 	cout << "Current path is now the optimized path" << endl;
+}
+
+// sets the value of a path to a particular value
+void OptimizationTab::SetTimeline(const Path_t& path) {
+
+	// set the timeline size - just default, rather than pulling from the GUI
+	double T = 5.0;
+
+	// find the number of steps
+	int numsteps = path.size();
+
+	// find the time increments between steps
+	double increment = T/(double)numsteps;
+
+	cout << "Updating Timeline - Increment: " << increment << " Total T: " << T << " Steps: " << numsteps << endl;
+
+	// initialize the RSTFrame timer
+	frame->InitTimer(string("RRT_Plan"),increment);
+
+	int robotID = 0; // just assume this is robot zero, no other robots available
+
+	// copy in the solved path to the main timeline
+	for(int i=0; i < numsteps; i++){
+		// loop over number of links and copy them in one by one
+		for(int l=0; l < planner->numLinks; l++){
+			world->robots[robotID]->activeLinks[l]->jVal = path[i][l];
+		}
+		// update the world
+		world->updateRobot(world->robots[robotID]);
+		// add a time slice
+		frame->AddWorld(world);
+	}
 }
 
 
 // This function is called when an object is selected in the Tree View or other
 // global changes to the RST world. Use this to capture events from outside the tab.
 void OptimizationTab::RSTStateChange() {
-	//	if(selectedTreeNode==NULL){
-	//		return;
-	//	}
-	//
-	//	Object* o;
-	//	Robot* r;
-	//	Link* l;
-	//	string statusBuf;
-	//	string buf, buf2;
-	//	switch (selectedTreeNode->dType) {
-	//	case Return_Type_Object:
-	//		o = (Object*) (selectedTreeNode->data);
-	//		statusBuf = " Selected Object: " + o->name;
-	//		buf = "You clicked on object: " + o->name;
-	//		sampleText1->SetLabel(wxString(buf.c_str(), wxConvUTF8));
-	//		sampleText2->Hide();
-	//
-	//		break;
-	//	case Return_Type_Robot:
-	//		r = (Robot*) (selectedTreeNode->data);
-	//		statusBuf = " Selected Robot: " + r->name;
-	//		buf = "You clicked on robot: " + r->name;
-	//		sampleText2->SetLabel(wxString(buf.c_str(), wxConvUTF8));
-	//		sampleText1->Hide();
-	//
-	//		break;
-	//	case Return_Type_Link:
-	//		l = (Link*) (selectedTreeNode->data);
-	//		statusBuf = " Selected Link: " + l->name + " of Robot: "
-	//				+ l->robot->name;
-	//		buf = " Link: " + l->name + " of Robot: " + l->robot->name;
-	//		// Do something here if you want to.  you get the idea...
-	//
-	//		break;
-	//    default:
-	//        fprintf(stderr, "someone else's problem.");
-	//        assert(0);
-	//        exit(1);
-	//	}
-	//frame->SetStatusText(wxString(statusBuf.c_str(), wxConvUTF8));
-	//sizerFull->Layout();
 }
 
 

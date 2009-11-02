@@ -35,6 +35,8 @@ public:
 
 	vector<Transform> oPose;
 	vector<Transform> rPose;
+
+	// appears to be a path?
 	vector< vector<double> > rJoints;
 };
 
