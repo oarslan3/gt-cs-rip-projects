@@ -15,7 +15,7 @@ typedef std::vector<std::vector<double> >::iterator Path_iterator;
 
 class Optimizer {
 public:
-	Optimizer(double stepSize=0.01, unsigned int robotID=0) : stepSize_(stepSize), robotID_(robotID) {}
+	Optimizer(double stepSize=0.05, unsigned int robotID=0) : stepSize_(stepSize), robotID_(robotID) {}
 	virtual ~Optimizer(){}
 
 	/**
