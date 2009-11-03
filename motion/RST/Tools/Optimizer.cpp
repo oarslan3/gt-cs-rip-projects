@@ -92,9 +92,9 @@ void Optimizer::simpleSearchOptimize() {
 			double rrtStepSize = 0.05;
 			double curDist =  countDist(start_point, end_point) * rrtStepSize;
 			double shortcutLen = segment.size() * stepSize_;
-			cout << "Shortcut length: " << shortcutLen << endl;
-			cout << "Current distance: " << curDist << endl;
 			if (segment.size() > 0 && shortcutLen < curDist) {
+				cout << "Shortcut length: " << shortcutLen << endl;
+				cout << "Current distance: " << curDist << endl;
 				cout << "Found shortcut!" << endl;
 				// reconstruct path
 				// first segment
