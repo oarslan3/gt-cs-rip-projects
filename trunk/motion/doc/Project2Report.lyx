@@ -1,4 +1,4 @@
-#LyX 1.6.2 created this file. For more info see http://www.lyx.org/
+#LyX 1.6.4 created this file. For more info see http://www.lyx.org/
 \lyxformat 345
 \begin_document
 \begin_header
@@ -134,8 +134,8 @@ frontier
  of the first.
  Because we have the option to use RRT Connect, our algorithm slightly differs
  from the bi-directional RRT presented by LaValle and Kuffner.
- As expected, we found the RRT Connect variant to perform well in scenarios
- where there are no or few obstacles.
+ As expected, we found the RRT Connect variant to improve the goal-biased
+ RRT in scenarios where there are no or few obstacles.
 \end_layout
 
 \begin_layout Section
@@ -161,9 +161,9 @@ FeedBear
 
  scenario, which makes use of the robots constructed for Part II of this
  paper.
- For each of these scenarios, we used all combinations of RRT Connect and
- Bidirectional RRT, and performed three tests to allow for variations due
- to the randomness of the algorithm.
+ For each of these scenarios, we used all combinations of Goal-Biased RRT,
+ RRT Connect and Bidirectional RRT, and performed three tests to allow for
+ variations due to the randomness of the algorithm.
  
 \begin_inset Quotes eld
 \end_inset
@@ -1365,8 +1365,8 @@ In order to ensure that the path is as short as is possible by using shortcut
  When shortcuts are inserted into the path, we start the search on the entire
  path again to ensure that no more possible shortcuts have been created.
  The actual performance of this algorithm is quite slow (several minutes
- for optimization) because it will continue until there exist no shortcuts
- between any two points anywhere in the path.
+ for optimization in our FeedBear experiments) because it will continue
+ until there exist no shortcuts between any two points anywhere in the path.
  The nature of the path shortening, in scenarios where there are no obstacles,
  force the path to a straight line.
 \end_layout
@@ -1404,6 +1404,20 @@ This algorithm, while very slow, does provide an optimal path shortening,
 
 .
  
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+***NOTE TO ALEX: I think we should remove this last sentence.
+ Would a binary search still provide an optimal path? I don't think it will.
+ I think there is an O(n log(n)) algorithm (not a binary search though),
+ based on voronoi diagrams, but I think it's best if we just axe the last
+ sentence and leave it at that :)
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
