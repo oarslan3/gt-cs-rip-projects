@@ -20,7 +20,7 @@ using namespace std;
 typedef std::vector<double> rstate;
 
 void printPath(const Path_t& path, string str="") {
-	cout << "Path: " << str << endl;
+	cout << "\nPath: " << str << endl;
 	int i = 0;
 	BOOST_FOREACH(rstate state, path) {
 		cout << " Config " << i++ << "[ ";
@@ -29,6 +29,7 @@ void printPath(const Path_t& path, string str="") {
 		}
 		cout << "]" << endl;
 	}
+	cout << endl;
 }
 
 bool Optimizer::optimize(const std::vector<std::vector<double> >& init_path) {
@@ -225,8 +226,43 @@ void Optimizer::splineSmooting() {
 	printPath(smoothed_path, "Full smoothed path");
 
 	// determine if there are collisions
-	// TODO
+	Path_t collision_free;
+	for (int i=0; i<nrInitPts-1; ++i) { // loop over original size of path
+		unsigned int base_idx = i*interp_rate;
+		//cout << "    Evaluating base index: " << base_idx << endl;
+		// insert the original point at start of segment
+		collision_free += smoothed_path[base_idx];
+
+		// evaluate each of the points in between to check collisions
+		Path_t seg;
+		bool success = true; // if all are good, then the segment will be added
+		for (int j = 0; j<interp_rate-1; ++j) {
+			// get point
+			unsigned int interp_idx = base_idx+j+1;
+			//cout << "     Collision checking: " << interp_idx << endl;
+			rstate testPt = smoothed_path[interp_idx];
+			// will only be added to real point if there are no collisions in the segment
+			seg += testPt;
+
+			// test for collisions
+			world->robots[robotID_]->setConf(testPt);
+			world->updateRobot(world->robots[robotID_]);
+			if (!world->checkCollisions()) {
+				cout << "Found collision in interpolated path!" << endl;
+				success=false;
+				break;
+			}
+		}
+
+		// add the segment if it was collision free
+		if (success)
+			BOOST_FOREACH(rstate s, seg) collision_free += s;
+	}
+	// add end config to path
+	collision_free += smoothed_path[smoothed_path.size()-1];
+
+	printPath(collision_free, "Final, Collision-tested trajectory");
 
 	// write back to store and visualize
-	optimized_ = smoothed_path;
+	optimized_ = collision_free;
 }
