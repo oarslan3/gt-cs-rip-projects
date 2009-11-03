@@ -89,10 +89,12 @@ void Optimizer::simpleSearchOptimize() {
 			//cout << "checking path" << endl;
 			// check path
 			Path_t segment = evalPath(start_point, end_point);
-			unsigned int curDist =  countDist(start_point, end_point);
-			cout << "Shortcut length: " << segment.size() << endl;
+			double rrtStepSize = 0.05;
+			double curDist =  countDist(start_point, end_point) * rrtStepSize;
+			double shortcutLen = segment.size() * stepSize_;
+			cout << "Shortcut length: " << shortcutLen << endl;
 			cout << "Current distance: " << curDist << endl;
-			if (segment.size() > 0 && segment.size() < curDist) {
+			if (segment.size() > 0 && shortcutLen < curDist) {
 				cout << "Found shortcut!" << endl;
 				// reconstruct path
 				// first segment
@@ -160,7 +162,7 @@ Path_t Optimizer::evalPath(Path_iterator it_start, Path_iterator it_end) {
 	bool successful = false;
 	Path_t segment;
 	segment.push_back(start);
-	unsigned int max_steps = diffDist(start, end)/stepSize_;
+	unsigned int max_steps = diffDist(start, end)/stepSize_ +1;
 	// gets within stepsize of the target
 	for (unsigned int i =0; i < max_steps; ++i) {
 		// determine a new point
@@ -168,9 +170,10 @@ Path_t Optimizer::evalPath(Path_iterator it_start, Path_iterator it_end) {
 		// check if it collides
 		world->robots[robotID_]->setConf(testPt);
 		world->updateRobot(world->robots[robotID_]);
-		if (!world->checkCollisions())
+		if (!world->checkCollisions()) {
+			successful=false;
 			break;
-		else {
+		} else {
 			successful=true;
 			segment.push_back(testPt);
 		}
@@ -213,7 +216,7 @@ void Optimizer::splineSmooting() {
 	unsigned int nrSamples = interp_rate*(nrInitPts-1); // total number of output samples
 	double inc = duration/nrSamples;
 	Path_t smoothed_path;
-	for (int i=0; i<=nrSamples;i++){
+	for (unsigned int i=0; i<=nrSamples;i++) {
 		vector<vector<double> > res = spline.evaluate(inc*i);
 		smoothed_path += res[0];
 	}
@@ -227,7 +230,7 @@ void Optimizer::splineSmooting() {
 
 	// determine if there are collisions
 	Path_t collision_free;
-	for (int i=0; i<nrInitPts-1; ++i) { // loop over original size of path
+	for (unsigned int i=0; i<nrInitPts-1; ++i) { // loop over original size of path
 		unsigned int base_idx = i*interp_rate;
 		//cout << "    Evaluating base index: " << base_idx << endl;
 		// insert the original point at start of segment
@@ -236,7 +239,7 @@ void Optimizer::splineSmooting() {
 		// evaluate each of the points in between to check collisions
 		Path_t seg;
 		bool success = true; // if all are good, then the segment will be added
-		for (int j = 0; j<interp_rate-1; ++j) {
+		for (unsigned int j = 0; j<interp_rate-1; ++j) {
 			// get point
 			unsigned int interp_idx = base_idx+j+1;
 			//cout << "     Collision checking: " << interp_idx << endl;

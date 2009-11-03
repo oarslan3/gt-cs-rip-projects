@@ -15,7 +15,7 @@ typedef std::vector<std::vector<double> >::iterator Path_iterator;
 
 class Optimizer {
 public:
-	Optimizer(double stepSize=0.1, unsigned int robotID=0) : stepSize_(stepSize), robotID_(robotID) {}
+	Optimizer(double stepSize=0.01, unsigned int robotID=0) : stepSize_(stepSize), robotID_(robotID) {}
 	virtual ~Optimizer(){}
 
 	/**
@@ -32,7 +32,8 @@ public:
 	void simpleSearchOptimize();
 
 	/**
-	 * Uses splines to smooth the optimized path
+	 * Uses splines to smooth the path by interpolating, currently set at
+	 * doubling the samples in the path.  This can be increased as necessary
 	 */
 	void splineSmooting();
 
@@ -54,7 +55,7 @@ private:
 	std::vector<std::vector<double> > optimized_;
 
 	// shortening parameters
-	double stepSize_;
+	double stepSize_; // used when creating shortcuts
 	unsigned int robotID_;
 };
 
