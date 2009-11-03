@@ -1,4 +1,4 @@
-#LyX 1.6.4 created this file. For more info see http://www.lyx.org/
+#LyX 1.6.2 created this file. For more info see http://www.lyx.org/
 \lyxformat 345
 \begin_document
 \begin_header
@@ -17,14 +17,19 @@
 
 \graphics default
 \paperfontsize default
+\spacing single
 \use_hyperref false
 \papersize default
-\use_geometry false
+\use_geometry true
 \use_amsmath 1
 \use_esint 1
 \cite_engine basic
 \use_bibtopic false
 \paperorientation portrait
+\leftmargin 3cm
+\topmargin 3cm
+\rightmargin 3cm
+\bottommargin 3cm
 \secnumdepth 3
 \tocdepth 3
 \paragraph_separation indent
@@ -55,19 +60,6 @@ Rapidly Exploring Random Trees
 
 \begin_layout Section
 Planner Implementations
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Describe how the implementations work here
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Subsection
@@ -151,7 +143,7 @@ Results
 \end_layout
 
 \begin_layout Standard
-Below are the results for our RTT experiment 
+We tested the implemented RRTs in two separate scenarios, the 
 \begin_inset Quotes eld
 \end_inset
 
@@ -159,10 +151,62 @@ ChairLamp
 \begin_inset Quotes erd
 \end_inset
 
- (DESKTOP-ARM-FINAL.rscene):
+ scenario provided with the default RST software, and the 
+\begin_inset Quotes eld
+\end_inset
+
+FeedBear
+\begin_inset Quotes erd
+\end_inset
+
+ scenario, which makes use of the robots constructed for Part II of this
+ paper.
+ For each of these scenarios, we used all combinations of RRT Connect and
+ Bidirectional RRT, and performed three tests to allow for variations due
+ to the randomness of the algorithm.
+ 
+\begin_inset Quotes eld
+\end_inset
+
+DNS
+\begin_inset Quotes erd
+\end_inset
+
+ in the results table denotes scenarios where the software did not find
+ a solution before the RRT grew outside of memory bounds.
+ 
 \end_layout
 
 \begin_layout Standard
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Results for 
+\begin_inset Quotes eld
+\end_inset
+
+ChairLamp
+\begin_inset Quotes erd
+\end_inset
+
+ Scenario.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
 \begin_inset Tabular
 <lyxtabular version="3" rows="5" columns="6">
 <features>
@@ -459,10 +503,10 @@ No
 
 \end_layout
 
-\begin_layout Standard
-\begin_inset Graphics
-	filename chairlamp.png
-	width 100text%
+\begin_layout Plain Layout
+\align center
+
+\end_layout
 
 \end_inset
 
@@ -470,7 +514,82 @@ No
 \end_layout
 
 \begin_layout Standard
-Below are the results for our RTT experiment 
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename chairlamp.png
+	width 10cm
+	clip
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:RRT-Results-chairlamp"
+
+\end_inset
+
+RRT Results in the 
+\begin_inset Quotes eld
+\end_inset
+
+ChairLamp
+\begin_inset Quotes erd
+\end_inset
+
+ (DESKTOP-ARM-FINAL.rscene) scenario.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:feedbear_basic"
+
+\end_inset
+
+Results for 
 \begin_inset Quotes eld
 \end_inset
 
@@ -478,10 +597,16 @@ FeedBear
 \begin_inset Quotes erd
 \end_inset
 
- (maze3.rscene):
+ scenario
 \end_layout
 
-\begin_layout Standard
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
 \begin_inset Tabular
 <lyxtabular version="3" rows="5" columns="6">
 <features>
@@ -778,10 +903,56 @@ DNS/DNS/DNS
 
 \end_layout
 
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
 \begin_inset Graphics
 	filename feedbear.png
 	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:FeedBear-Scenario-(maze3.rscene)"
+
+\end_inset
+
+FeedBear Scenario (maze3.rscene).
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+
+\end_layout
 
 \end_inset
 
@@ -795,27 +966,18 @@ Performance
 \begin_layout Standard
 In general, our results show that the bi-directional RRT using RRT Connect
  is superior to all other variants.
- Without RRT Connect, the bi-directional approach is still the winner, on
- average.
+ Without RRT Connect, the bi-directional approach is still faster, on average.
 \end_layout
 
 \begin_layout Standard
 In terms of finding a solution at all, the bi-directional approach seems
  to be the most important.
  In particular, the bi-directional RRT is able to find plans in scenarios
- where the goal is blocked by an obstacle; a situation where the goal-baised
- RRT may not find a solution at all.
- One interesting point we noticed is that the non-bi-directional RRT iteration
- level was very sporatic in the FeedBear experiment: if it got 
-\begin_inset Quotes eld
-\end_inset
-
-lucky
-\begin_inset Quotes erd
-\end_inset
-
- initially, a plan was easy to find, but if it didn't get lucky, no solution
- would be found.
+ where the goal is blocked by a concave obstacle; a situation where the
+ goal-biased RRT may not find a solution at all.
+ In the FeedBear experiment, the non-bidirection RRT can occasionally find
+ a solution quickly, or it will completely fail to find a solution, because
+ initial branching decisions trapped the tree behind an obstacle.
  We think this is because the bi-directional RRT is better at growing 
 \begin_inset Quotes eld
 \end_inset
@@ -838,9 +1000,40 @@ out
 \end_layout
 
 \begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
 \begin_inset Graphics
 	filename rrt_vs_birrt.eps
-	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Simple scenario where a bi-directional RRT can improve performance by more
+ effectively handling concave obstacles.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+
+\end_layout
 
 \end_inset
 
@@ -853,9 +1046,39 @@ For a real example of the above scenario, we built the following scenario
 \end_layout
 
 \begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
 \begin_inset Graphics
 	filename schunkstuck.png
-	width 100line%
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Arm planning scenario where non-bidirectional RRTs fail due to concave obstacles.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+
+\end_layout
 
 \end_inset
 
@@ -864,25 +1087,10 @@ For a real example of the above scenario, we built the following scenario
 
 \begin_layout Standard
 In terms of the speed of the planner (number of iterations), the bi-directional
- RRT is similar to the goal-baised RRT, except when the goal-baised RRT
+ RRT is similar to the goal-biased RRT, except when the goal-biased RRT
  cannot find a solution.
  This is somewhat to be expected, as the bi-directional approach is similar
  to the goal-biased, except that it grows from two trees.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-On similarly constructed problems, compare the performance of goal-biased
- and bi-directional RRTs.
- Which planner was the fastest? Why? 
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Subsection
@@ -905,14 +1113,15 @@ direct.
  It is interesting to note that the bi-directional RRT generally produced
  poorer paths than the goal-biased RRT.
  We think that this may be because the one of the bi-directional trees would
- sometimes grow away from the line-of-site solution, but the RRT would find
- a complete path using the second tree.
+ sometimes grow away from the line-of-sight solution, but the RRT would
+ find a complete path using the second tree.
 \end_layout
 
 \begin_layout Standard
 A second measure of the quality of the plan generated is the smoothness
  of the path.
- This is more quantitative, but RRT Connect strongly determined how 
+ For this section of the paper, this is a more quantitative criterion, but
+ RRT Connect strongly determined how 
 \begin_inset Quotes eld
 \end_inset
 
@@ -921,25 +1130,11 @@ straight
 \end_inset
 
  the plan is.
- The bi-directional RRT seemed to produce very jerky paths.
+ The bi-directional RRT, when not using RRT Connect, produced paths that
+ wandered more away from optimial routes.
+ This effect is largely due to RRT Connect's capacity to drive the robot
+ in long straight lines whenever possible.
  We expand on the smoothness of paths in Part II, below.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Which planner resulted in the ”best” solutions? What does best mean? What
- makes a given planner perform better? Submit videos of each of the two
- planners in scenes of your choice that demonstrate difficult tasks for
- the robot.
- 
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Part
@@ -986,6 +1181,14 @@ We built two maze solving robots: AMazeBot and AMazeHelicopter.
 \end_layout
 
 \begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
 \begin_inset Graphics
 	filename bothrobots.png
 	width 100text%
@@ -995,19 +1198,44 @@ We built two maze solving robots: AMazeBot and AMazeHelicopter.
 
 \end_layout
 
+\begin_layout Plain Layout
+\align center
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Robots constructed for this project: AMazeHelicopter (left) and AMazeBot.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
 MIT recently showed the indoor autonomous navigation of quadrotor helicopters
  and our project of indoor maze solving is based on this idea.
- AMazeHelicopter features a Schunk manipulator bolted to an ultralilght
- quad-roter helicopter.
+ AMazeHelicopter features a Schunk manipulator bolted to an ultralight quadrotor
+ helicopter.
  The flying component is based off of Ascending Technology's ultralight
- (5.3kg) X-3D-BL quad-rotor helicopter.
+ (5.3kg) X-3D-BL quadrotor helicopter.
  The manipulator is an 18.7kg Schunk arm and is attached to the bottom of
  the helicopter.
- To reduce weight, we did not include the Schunk gripper.
- As suggested in the project description, we used two prismatic joints for
- the translation of the helicopter, which is roughly consistent with the
- helicopter's real motion.
+ The Schunk hand was not attached, as the additional weight would render
+ the robot too heavy to fly reliably.
+ As suggested in the project description, we used three prismatic joints
+ for the translation of the helicopter in three dimensions, as well as a
+ yaw rotation, which is roughly consistent with the helicopter's real motion,
+ assuming flight stabilization.
 \end_layout
 
 \begin_layout Standard
@@ -1027,18 +1255,16 @@ Mobile Manipulation
 Our task is to solve mazes using RRTs which involve both the mobile robot
  and the use of a manipulator.
  The goal in most of our mazes is to get the robot through the maze and
- get the manipulator into a given configuration (such as through a small
- window.) 
-\end_layout
-
-\begin_layout Standard
-\begin_inset Graphics
-	filename solvemaze.png
-	width 100text%
+ get the manipulator into a given configuration, with one of the main scenarios
+ being the FeedBear scenario (pictured in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:FeedBear-Scenario-(maze3.rscene)"
 
 \end_inset
 
-
+).
+ 
 \end_layout
 
 \begin_layout Subsection
@@ -1077,9 +1303,9 @@ Our project primarily deals with the mobile manipulation and path optimization
 \begin_layout Standard
 The mobile manipulation results are relatively good for simple mazes, but
  require a large amount of parameter knob turning to work with complex mazes.
- A difficulty for using RTTs to solve mazes is that obstacles in configuration
+ A difficulty in using RRTs to solve mazes is that obstacles in configuration
  space are very different from obstacles in joint space.
- We noticed that the RTTs would get 
+ We noticed that the RRTs would get 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1087,9 +1313,9 @@ stuck
 \begin_inset Quotes erd
 \end_inset
 
- on long, thin walls no matter which variant of the RTT we used.
+ on long, thin walls no matter which variant of the RRT we used.
  This is because a goal on one side of the wall is very similar to a goal
- on the other, and the RTTs take a very long time (if ever) to determine
+ on the other, and the RRTs take a very long time (if ever) to determine
  that one of the translational prismatic joints must be moved way up, then
  way down to get around the obstacle.
  To get around this, we chose to use large, convex obstacles in our mazes,
@@ -1097,8 +1323,122 @@ stuck
 \end_layout
 
 \begin_layout Standard
-The path optimization...
- [NEED TO DO THIS SECTION]
+The path optimization has two main portions which are run in sequence: a
+ path shortening algorithm, which finds shortcuts in the path where possible,
+ and a smoothing algorithm, which makes use of the existing CubicViaSpline
+ implementation provided in RST software.
+ These were implemented in a separate module that performed the optimization
+ after the planner created the paths.
+\end_layout
+
+\begin_layout Subsection
+Path Shortening
+\end_layout
+
+\begin_layout Standard
+The path shortening algorithm is a robust algorithm which searches the path
+ for any two configurations that can be connected with a straight line.
+ The inner portion of the path shortening algorithm takes two points in
+ a path, and attempts to find a straight-line path through configuration
+ space that connects the points.
+ We evaluate this 
+\begin_inset Quotes eld
+\end_inset
+
+shortcut
+\begin_inset Quotes erd
+\end_inset
+
+ between the points by using a process like RRT Connect to incrementally
+ extend from one point to the next.
+ If a collision-free shortcut exists, then the segment between the pair
+ of points in the path is replaced with the shortcut.
+ It should be noted that if a collision-free shortcut exists, then it must
+ be as short or shorter than the existing path between the two points.
+ 
+\end_layout
+
+\begin_layout Standard
+In order to ensure that the path is as short as is possible by using shortcut
+ methods, we test every pair of points in the path, starting with an initial
+ pair of the path start and end points.
+ When shortcuts are inserted into the path, we start the search on the entire
+ path again to ensure that no more possible shortcuts have been created.
+ The actual performance of this algorithm is quite slow (several minutes
+ for optimization) because it will continue until there exist no shortcuts
+ between any two points anywhere in the path.
+ The nature of the path shortening, in scenarios where there are no obstacles,
+ force the path to a straight line.
+\end_layout
+
+\begin_layout Standard
+The primary challenge in this system was to ensure that the algorithm would
+ eventually halt, which as if the stepsize used in the shortcut evaluation
+ is too small, the collision detections will make take a very long time.
+ The primary means of solving these problems was to perform a small series
+ of tests, such as rotating an arm around a single axis, or flying a helicopter
+ in a straight line.
+ By starting with small examples, which are simple enough that the paths
+ can be printed and interpreted manually, we could effectively test the
+ system an ensure its functionality.
+ 
+\end_layout
+
+\begin_layout Standard
+This algorithm, while very slow, does provide an optimal path shortening,
+ which resulted in robots hugging walls as they moved around obstacles.
+ In some cases, the improvement is dramatic, as the initial path would wander
+ away from the goal at some points before closing in on the goal.
+ The optimized version is significnatly faster and more direct.
+ The main places for improvement in this algorithm are in the searching
+ algorithm that finds the pairs of points for which to test shortcuts.
+ Right now, the algorithm uses a naive linear search, which is approximately
+ 
+\begin_inset Formula $O(n^{2})$
+\end_inset
+
+ for search for the furthest apart points in the path with an existing shortcut.
+ Using a binary search, this could be reduced to 
+\begin_inset Formula $O(n\log(n))$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Subsection
+Path Smoothing
+\end_layout
+
+\begin_layout Standard
+Path smoothing executed after the initially planned path had been shortened
+ as in the previous section.
+ The path smoothing algorithm used the existing implementation of spline
+ fitting in RST to interpolate the shortened path.
+ A CubicViaSpline was used in this case to perform the interpolation, where
+ we inserted the entire shortened path at regular time intervals into the
+ spline and then resampled the spline at a sampling rate of twice the shorten
+ path's length.
+ After creating a subsampled version of the path, we removed any of the
+ interpolated configurations with collisions.
+ 
+\end_layout
+
+\begin_layout Standard
+The results of this path smoothing system were less dramatic due to the
+ uniform distribution of the initial samples, which bind the path rather
+ tightly to the existing shortened path.
+ Smaller, single-acutator test scenarios showed that the smoothing did not
+ only perform linear interpolation, but also added inertial effects to that
+ were apparent near the ends of the trajectory, as the robot slowed to a
+ stop just before the end.
+ There are a number of ways to improve this system, such as constructing
+ the shortened path such that it does not create intermediate states for
+ shortcuts, and then using the distance between jumps as a means of distributing
+ the configurations in time.
+ A smaller number of configurations, with larger spaces between them, would
+ allow for the splines to do more fitting.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -1118,14 +1458,6 @@ For each of the extensions you perform, summarize your experiences and findings.
 \end_inset
 
 
-\end_layout
-
-\begin_layout Section
-Results
-\end_layout
-
-\begin_layout Section
-Conclusions
 \end_layout
 
 \end_body
