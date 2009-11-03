@@ -1,0 +1,23 @@
+Smoothing stats for feedbear experiment (see feedbear4 videos)
+
+Scene: maze3.rscene
+
+Start configuration:
+-0.575959 -2.40855 0 0 -2.25147 1.46608 0 0 0.628319 1.25664 0 
+
+Goal configuration:
+-1.78024 0 0 0 0.0551175 1.36136 -0.716501 0.49604 0 0 0 
+
+
+Solved using bidirectional RRT with connect and greedy searches.
+Path Length = 135(821 iterations, 212 nodes in tree)
+
+Generating trajectory with 
+  nrInitPts = 87
+  increment = 0.0574713
+  duration  = 5
+Subsampled trajectory
+  interpolation rate = 2
+  total samples      = 172
+  time increment     = 0.0290698
+
