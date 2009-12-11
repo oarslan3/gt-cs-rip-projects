@@ -73,8 +73,11 @@ This project adds new passing capabilities to the GT Robojackets RoboCup Small S
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{INTRODUCTION}
+One of the larger robotics competitions in the world is the RoboCup competition, which seeks to build a robot soccer team that can beat a World Cup human team by the year 2050.  The subdivision in this project is the RoboCup Small Size League (SSL), in which a team plays 5-on-5 autonomous soccer.  What is notable about this league, is that due to the small size of the robots and omnidirectional drivetrain, the robots are extremely fast and agile, to a degree where humans are not capable of manually driving the robots nearly as well as autonomous control.  Due to this speed, SSL games provide an interesting domain for planning problems, as they are capable of playing a rather sophisticated game of soccer.  
 
-We talk about the stuff here, with general description of the game, what makes it hard, what we will do.
+The robot platform includes a team of robots controlled remotely via a centralized computer system, with an overhead vision system to determine the global position of the robots.  The centralization of the processing avoids many of the difficulties of using a true decentralized system, and as such more sophisticated gameplay occurs.  Our research builds on the existing system developed as a part of the Georgia Tech Robojackets RoboCup SSL team, currently ranked 2nd in the US, which includes a full fleet of robots and a simulator environment, in addition to the full robot control system.  
+
+This project is an interesting planning challenge because of the speed of the robots and play that occurs in these games. Unlike the humanoid or four-legged-leagues, the Small Size League (SSL) robots are extremely fast in both motion and shooting, which makes the soccer games fast-paced, and reliant on effectively solving a number of sophisticated planning challenges simultaneously. To implement a basic passing system, the robots need to be able to move and plan in their space effectively, which is a non-trivial challenge because the robots have high enough acceleration to flip themselves over if they stop too quickly. Once a robot has a ball, the other robots need to position themselves to both receive an incoming pass and make another pass. While the number of robots is relatively small, such that a simple graph search can produce a series of passes to shoot on goal, handling the dynamic conditions of a high-speed game forces the planner to be more sophisticated. Because this is a soccer game, the primary 'obstacles' on the field are not just static or even dynamic obstacles, they are adversarial robots that will attempt to disrupt any plan execution that occurs. An effective planner in for these challenges must simultaneously manage basic motion planning for the robots, model passing sufficiently well to pass between the robots, find and replan optimal positions for robots. The additional constraint on the system is the uncertainty of the measurement, as there is noise in the robot position measurements, and especially the ball, which will disappear off of the global vision system if it moves too fast - a scenario that occurs almost every time a shot is made. 
 
 \section{Related Work}
 "STP: Skills, tactics and plays for multi-robot control in adversarial environments" Brett Browning, James Bruce, Michael Bowling, and Manuela Veloso, Journal of System and Control Engineering (2005). This paper is the primary technique used by top RoboCup teams for planning both locally (kicking) and globally (passing) in the soccer domain. We have a rudimentary implementation of the STP framework currently, but it does not support global planning at the level required for competitive play. One of the main goals of our project is to extend our existing implementation, as the STP paper describes, to support passing and generally improved global teamplay.
@@ -87,22 +90,51 @@ We talk about the stuff here, with general description of the game, what makes i
 
 
 \section{METHODS}
-Outline the system here
+In order to perform robust, efficient passing, we have decided on a particular structure for the offense play. The basic concept is that if there is a shot available or a sequence of passes to a shot (henceforth known as a "shooting solution"), then the system will construct the sequence of paths for robots and kicks, run a nonlinear optimization technique to improve the path and ensure viability, and then execute it.
 
-\subsection{Analytical Planning}
-Describe the algorithm for the analytical planner here
+This plan came out of two particular observations:
 
-\subsection{Optimization}
-Describe how the optimization works, with some information on SAM\cite{Dellaert05rss} and optimization techniques.  
+\begin{itemize}
+ \item This bypasses the existing RRT-based planner, which is too unpredictable in timing for highly coordinated actions. We have no particularly good way of telling when a robot will reach a location when using RRTs.
+ \item Because of the particular scenario of robot soccer, we know there are a small number of obstacles on the field, and there are only a small number of possible paths between them. With an optimization algorithm, we can take a simple path and improve it to make it faster.
+\end{itemize}
+
+The resulting system structure for the offensive passing algorithm has the following structure:
+\begin{enumerate}
+ \item \textit{Analytic Planner} Given the positions of all the robots and the ball, it is possible to determine if there is a shot solution available with a simple weighted graph search. This can be a simple heuristic for shot viability, or a more sophisticated system as necessary.
+ \item \textit{Plan Evaluation} We take a set of plans and sort by quality on a number of metrics, so that a good initial estimate can be created.
+ \item \textit{Optimization} With an initial estimate of a plan, the optimization engine will be able to create a graphical model of the plan and optimize for an optimal sequence of actions. The particular optimization engine is a nonlinear constrained optimization algorithm primarily designed for Simultaneous Localization and Mapping, but we will exploit the duality between this planning problem (create an optimal path from constraints) and SLAM (recover a previously traveled path given measurements).
+ \item \textit{Execution} Given a viable plan a variety of motion planning and behavioral approaches can be used to to execute the actions that have been parameterized by plan generation and optimized.  
+\end{enumerate}
+
+The optimization algorithm comes from the gtsam library\cite{Dellaert05rss} developed in the RIM center with Frank Dellaert, and is derived from Sequential Quadratic Programming. This algorithm is robust to both nonlinear systems and constraints, and has been reformulated to work in a graphical model environment, which allows for an intuitive construction of stochastic switched hybrid systems.
+
+\textit{TODO: Describe the actual analytic planner system}
+
+\textit{TODO: Describe the optimizer in mathematical detail and formulation of the constraints and factors}
 
 \section{EXPERIMENTS}
-Describe the test scenarios, limitations, simulator.
+We tested the system using the simulated environment with the GT RoboCup software, which allows for an identical interface between the simulated environment and the real robots.  
+
+\textit{TODO: insert some results here}
 
 \section{ANALYSIS}
-In this section we talk about stuff with lots of math and stuff.  
+The results of the system, in a somewhat simplified form, indicate potential for this process.  W 
 
 \section{DISCUSSION}
-We do more talking about stuff here, but more hand-wavy.
+We learned a number of lessons from the development of this system, and there is a great deal that can be improved, but the combination of an analytic planner and an optimization engine appear to be an effective means of generating passing plans.  The optimizer has a great deal of flexibility, and even in a smaller example system, we have the flexibility to make the system very robust.  Further work could improve the system by integrating a motion model into the factor graph itself, and then bypassing the underlying RRT-based planner to make plans more predictable. 
+\begin{itemize}
+\item The multi-stage planner allows evaluation of plans we would not have been able to find otherwise
+\item While the current optimization approach uses a simpler cost function, the system is very scalable
+\item We need to improve the interactions between the low-level control and the planner outputs
+\end{itemize}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{ACKNOWLEDGMENTS}
+
+The authors would like to thank the GT RoboCup SSL team for developing the system used for this project, and in particular Ben Johnson and the rest of the software team for managing many of the background details of keeping the entire robot control system functional. 
 
 
 \bibliographystyle{unsrt}
