@@ -18,7 +18,7 @@
 
 % The following packages can be found on http:\\www.ctan.org
 %\usepackage{graphics} % for pdf, bitmapped graphics files
-%\usepackage{epsfig} % for postscript graphics files
+\usepackage{epsfig} % for postscript graphics files
 %\usepackage{mathptmx} % assumes new font selection scheme installed
 %\usepackage{times} % assumes new font selection scheme installed
 %\usepackage{amsmath} % assumes amsmath package installed
@@ -80,6 +80,19 @@ The robot platform includes a team of robots controlled remotely via a centraliz
 This project is an interesting planning challenge because of the speed of the robots and play that occurs in these games. Unlike the humanoid or four-legged-leagues, the Small Size League (SSL) robots are extremely fast in both motion and shooting, which makes the soccer games fast-paced, and reliant on effectively solving a number of sophisticated planning challenges simultaneously. To implement a basic passing system, the robots need to be able to move and plan in their space effectively, which is a non-trivial challenge because the robots have high enough acceleration to flip themselves over if they stop too quickly. Once a robot has a ball, the other robots need to position themselves to both receive an incoming pass and make another pass. While the number of robots is relatively small, such that a simple graph search can produce a series of passes to shoot on goal, handling the dynamic conditions of a high-speed game forces the planner to be more sophisticated. Because this is a soccer game, the primary 'obstacles' on the field are not just static or even dynamic obstacles, they are adversarial robots that will attempt to disrupt any plan execution that occurs. An effective planner in for these challenges must simultaneously manage basic motion planning for the robots, model passing sufficiently well to pass between the robots, find and replan optimal positions for robots. The additional constraint on the system is the uncertainty of the measurement, as there is noise in the robot position measurements, and especially the ball, which will disappear off of the global vision system if it moves too fast - a scenario that occurs almost every time a shot is made. 
 
 \section{Related Work}
+
+% this is put here to force it onto page 2 (at the end of related work)
+% this is referenced in our methods section though.
+\begin{figure*}[ht!]
+\begin{center}
+\includegraphics[totalheight=1.0in]{plan2_resized.eps}
+\includegraphics[totalheight=1.0in]{plan3_resized.eps}
+\includegraphics[totalheight=1.0in]{plan5_resized.eps}
+\includegraphics[totalheight=1.0in]{plan4_resized.eps}
+\end{center}
+\caption{Methods used: Left-to-right: (1.) Analytic planner result (2.) Plan evaluation and selection of feasible subset. (3.) Optimization of feasible subset of plans. (4.) Optimized result which is executed.}
+\end{figure*}
+
 "STP: Skills, tactics and plays for multi-robot control in adversarial environments" Brett Browning, James Bruce, Michael Bowling, and Manuela Veloso, Journal of System and Control Engineering (2005). This paper is the primary technique used by top RoboCup teams for planning both locally (kicking) and globally (passing) in the soccer domain. We have a rudimentary implementation of the STP framework currently, but it does not support global planning at the level required for competitive play. One of the main goals of our project is to extend our existing implementation, as the STP paper describes, to support passing and generally improved global teamplay.
 
 "Multi-robot team response to a multi-robot opponent team" James Bruce, Michael Bowling, Brett Browning, and Manuela Veloso, ICRA '03. This paper describes the CMDragons implementation of Skills, Tactics, and Plays (STP) framework, and how they use it to achieve teamwork plays such as passing. It presents an example of their playbook, which is also published in full online, and can be used as a starting point for our passing implementation. The CMDragons team uses extensive passing, including "One-touch" kicking and chip-kick passing.
@@ -87,7 +100,6 @@ This project is an interesting planning challenge because of the speed of the ro
 "Real-Time Randomized Path Planning for Robot Navigation" James Bruce, Manuela Veloso, IROS '02. This paper describes a modification the RRT algorithm called "execution extended RRT" (ERRT) that improves the efficiency of the RRT algorithm by weighting the search-space and improving replanning. Both of these topics are directly applicable to the RoboCup domain, where adversarial players affect the search space, and replanning is constantly occurring. By using ERRTs, our goal is to be able to create more efficient plans at the local planning level, which will lead to improved global plans.
 
 "Map-based Multiple Model Tracking of a Moving Object" Cody Kwok, Dieter Fox, Proceedings of RoboCup Symposium, 2004. Due to the camera position, it is common to lose track of the soccer ball when multiple robots are occluding the camera's view. This paper presents a Rao-Blackwellized Particle Filter (RBPF) for tracking of the ball. It uses a technique of using particle filters for the non-linear portion of the tracking, and an Extended Kalman Filter (EKF) for the linear portions. Examples of the non-linear ball dynamics are during kicking, bouncing, etc. We hope this will improve overall planning, and is a requirement for passing.
-
 
 \section{METHODS}
 In order to perform robust, efficient passing, we have decided on a particular structure for the offense play. The basic concept is that if there is a shot available or a sequence of passes to a shot (henceforth known as a "shooting solution"), then the system will construct the sequence of paths for robots and kicks, run a nonlinear optimization technique to improve the path and ensure viability, and then execute it.
@@ -116,10 +128,18 @@ The optimization algorithm comes from the gtsam library\cite{Dellaert05rss} deve
 \section{EXPERIMENTS}
 We tested the system using the simulated environment with the GT RoboCup software, which allows for an identical interface between the simulated environment and the real robots.  
 
+\begin{figure}[ht!]
+\begin{center}
+\includegraphics[totalheight=1.0in]{nonoptimized_plan.eps}
+\includegraphics[totalheight=1.0in]{optimized_plan.eps}
+\end{center}
+\caption{Left: naive pass, execution took 5 seconds. Right: optimized path, execution took 4 seconds.}
+\end{figure}
+
 \textit{TODO: insert some results here}
 
 \section{ANALYSIS}
-The results of the system, in a somewhat simplified form, indicate potential for this process.  W 
+The results of the system, in a somewhat simplified form, indicate potential for this process.
 
 \section{DISCUSSION}
 We learned a number of lessons from the development of this system, and there is a great deal that can be improved, but the combination of an analytic planner and an optimization engine appear to be an effective means of generating passing plans.  The optimizer has a great deal of flexibility, and even in a smaller example system, we have the flexibility to make the system very robust.  Further work could improve the system by integrating a motion model into the factor graph itself, and then bypassing the underlying RRT-based planner to make plans more predictable. 
