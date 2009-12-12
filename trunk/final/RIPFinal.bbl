@@ -1,0 +1,46 @@
+\begin{thebibliography}{1}
+
+\bibitem{cmdragonsETD}
+Stefan Zickler, James Bruce, Joydeep Biswas, Michael Licitra, and Manuela
+  Veloso.
+\newblock Cmdragons 2009 extended team description.
+\newblock In {\em Proceedings of the RoboCup Symposium}. Springer, 2009.
+
+\bibitem{skubaETD}
+Jirat Srisabye, Piyamate Wasuntapichaikul, Chanon Onman1, Kanjanapan Sukvichai,
+  Supparat Damyot, Thitiwat Munintarawong, Phumin Phuangjaisri, and Yodyium
+  Tipsuwan.
+\newblock Skuba 2009 extended team description.
+\newblock In {\em Proceedings of the RoboCup Symposium}. Springer, 2009.
+
+\bibitem{browning2005stp}
+B.~Browning, J.~Bruce, M.~Bowling, and M.~Veloso.
+\newblock {STP: Skills, tactics, and plays for multi-robot control in
+  adversarial environments}.
+\newblock {\em Proceedings of the Institution of Mechanical Engineers, Part I:
+  Journal of Systems and Control Engineering}, 219(1):33--52, 2005.
+
+\bibitem{bruce2003multi}
+J.~Bruce, M.~Bowling, B.~Browning, and M.~Veloso.
+\newblock {Multi-robot team response to a multi-robot opponent team}.
+\newblock In {\em IEEE International Conference on Robotics and Automation},
+  volume~2, pages 2281--2286. Citeseer, 2003.
+
+\bibitem{zickler2008playing}
+S.~Zickler and M.~Veloso.
+\newblock {Playing creative soccer: Randomized behavioral kinodynamic planning
+  of robot tactics}.
+\newblock In {\em Proceedings of the RoboCup Symposium}. Springer, 2008.
+
+\bibitem{bruce2003real}
+J.~Bruce and M.M. Veloso.
+\newblock {Real-time randomized path planning for robot navigation}.
+\newblock {\em Lecture Notes in Computer Science}, pages 288--295, 2003.
+
+\bibitem{Dellaert05rss}
+F.~Dellaert.
+\newblock Square {Root} {SAM}: Simultaneous location and mapping via square
+  root information smoothing.
+\newblock In {\em RSS}, 2005.
+
+\end{thebibliography}
