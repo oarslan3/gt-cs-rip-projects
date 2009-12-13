@@ -131,13 +131,17 @@ We tested the system using the simulated environment with the GT RoboCup softwar
 \includegraphics[totalheight=1.0in]{nonoptimized_plan}
 \includegraphics[totalheight=1.0in]{optimized_plan}
 \end{center}
-\caption{Left: naive pass, execution took 5 seconds. Right: optimized path, execution took 4 seconds.}
+\caption{Left: naive pass, execution took 5 seconds. Right: optimized path, execution took 4 seconds. Videos of this experiment are available at http://tinyurl.com/optPass and http://tinyurl.com/regPass.}
+\label{experiment1fig}
 \end{figure}
 
-\textit{TODO: insert some results here}
+Our first type of experiments tested a non-optimized pass against an optimized pass under identical initial conditions, where the opponent team is static. As Fig. \ref{experiment1fig} shows, the optimized pass is shorter, and the time required to execute the path is less as a result. We tested several variants of this experiment, and the optimizer consistently produced shorter paths. Additionally, the optimizer did not have a noticeable effect on performance.
+
+Our second type of experiment tested both non-optimized and optimized passes in a dynamic scenario, where the opponent team consisted of one goalie and one defender from the 2008 GT Robocup team. Both of the passes were able to score on the previous team by using quick passes to get the ball past the goalie. The execution of the plans was not robust due to problems intercepting a fast-moving pass, which prevented consistent results comparing the optimized and non-optimized passes.
 
 \section{ANALYSIS}
-The results of the system, in a somewhat simplified form, indicate potential for this process.
+The results of the system, in a somewhat simplified form, indicate potential for this technique. Because our system uses much of the underlying code from our 2008 GT Robocup team to evaluate analytical solutions, our analytical solution step generalizes the ``0-pass'' direct goal kicks of our previous system to plans that include one or two additional robots. The optimization on top of this analytic solution was shown to improve the solutions by considering parameters that neither the 2008 GT Robocup team, nor the analytical solution were able to consider.
+Our experiments have shown that our system can perform both high and low-level planning simultaneously, and while we were not able to test directly against a STP team, at a conceptual level our algorithm goes beyond the STP framework.
 
 \section{DISCUSSION}
 We learned a number of lessons from the development of this system, and there is a great deal that can be improved, but the combination of an analytic planner and an optimization engine appear to be an effective means of generating passing plans.  The optimizer has a great deal of flexibility, and even in a smaller example system, we have the flexibility to make the system very robust.  Further work could improve the system by integrating a motion model into the factor graph itself, and then bypassing the underlying RRT-based planner to make plans more predictable. 
