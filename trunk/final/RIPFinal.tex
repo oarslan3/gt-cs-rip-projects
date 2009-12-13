@@ -101,6 +101,14 @@ The current top Robocup SSL team, Skuba, use a slight variation on the STP frame
 
 By not considering the low-level details of a plan at the plays and tactics level, STP can fail to optimally use the robots' potentials or fail to anticipate obstacles or constraints. This was recognized Zickler and Veloso, who have combined the skills and tactics of the STP into a Kinodynamic planner \cite{zickler2008playing}. This approach has produced impressive results in simulation, such as bouncing the ball off of other players, though it has not been used on real real-time robots.
 
+\begin{figure}[ht!]
+\begin{center}
+\includegraphics[totalheight=1.6in]{gen_play}
+\end{center}
+\caption{A tree diagram showing a play structure of robots, where the five robots on the team are divided into single goalie, and four field robots executing under a single play.}
+\label{play_structure}
+\end{figure}
+
 \subsection{OPTIMIZATION}
 
 There are a variety of means of approaching optimization in the context of high-dimensional systems, and this paper will focus on the relationship between optimizing robot trajectories in an optimal controls sense with recovering robot trajectories from measurements taken on the environment.  The Simultaneous Localization and Mapping (SLAM) problem is a canonical problem in the field, where an optimization algorithm must find the most likely position of a robot in an environment based on a series of measurements of the environment.  Much of the work in the field has focused on approaching this problem using Kalman or particle filters  \cite{Thrun05book, Thrun04ijrr, Dellaert03tutorial} to represent the state of the system, however we will focus on solutions that provide the entire trajectory of the robot, otherwise known as the complete SLAM problem.  
