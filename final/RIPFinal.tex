@@ -106,14 +106,16 @@ By not considering the low-level details of a plan at the plays and tactics leve
 \includegraphics[totalheight=1.6in]{gen_play}
 \end{center}
 \caption{A tree diagram showing a play structure of robots, where the five robots on the team are divided into single goalie, and four field robots executing under a single play.}
-\label{play_structure}
+\label{fig:play_structure}
 \end{figure}
+
+The current GT RoboCup SSL team uses a variation on the STP framework, with more general plays and behaviors, in which a ``play'' is a top-level structure that the strategic-level gameplay module can switch between depending on the state of the game, and ``behaviors,'' which encapsulate the functionality of either one robot or a set of robots at once.  This accomplishes the same goals as the STP framework, but without strict divisions between ``Tactics'' and ``Skills.'' During the last competition GT RoboCup SSL participated in, the system provided sufficient means to manage a variety of scenarios required by the rules, but was less robust in general fluid gameplay due to the inability to robustly collaborate between robots.  The offensive system at the time consisted of a pair of robots that chase the ball around the field and try to make shots.  This system, while simple, is effective against weaker opponents, but proved no match for teams with robust passing systems.  
 
 \subsection{OPTIMIZATION}
 
 There are a variety of means of approaching optimization in the context of high-dimensional systems, and this paper will focus on the relationship between optimizing robot trajectories in an optimal controls sense with recovering robot trajectories from measurements taken on the environment.  The Simultaneous Localization and Mapping (SLAM) problem is a canonical problem in the field, where an optimization algorithm must find the most likely position of a robot in an environment based on a series of measurements of the environment.  Much of the work in the field has focused on approaching this problem using Kalman or particle filters  \cite{Thrun05book, Thrun04ijrr, Dellaert03tutorial} to represent the state of the system, however we will focus on solutions that provide the entire trajectory of the robot, otherwise known as the complete SLAM problem.  
 
-The basic Smoothing and Mapping (SAM) approach\cite{Dellaert05tr} to the problem uses the Information Matrix to describe the relationships between variables, which can be used as an exact dual to the covariance matrix used in Kalman filters, but the key in the SAM approach is that this information matrix does not need to be kept in full form, rather, we can store the square root of the information matrix, which remains sparse during the course of optimization, a feature that we can exploit to perform much more efficient optimization.  The resulting operation used in solving SLAM problems becomes a matter of developing fast, multi-variable optimization algorithms, and there has been much work in this area to improve the underlying optimization techniques, particuarly from graph theory\cite{Triggs99, Bertele72jmaa, Bertele72book}.  In particular, there are methods for incremental SAM\cite{Dellaert06ijrr}, which are especially useful when approaching the development of real-time systems.
+The basic Smoothing and Mapping (SAM) approach\cite{Dellaert05tr} to the problem uses the Information Matrix to describe the relationships between variables, which can be used as an exact dual to the covariance matrix used in Kalman filters, but the key in the SAM approach is that this information matrix does not need to be kept in full form, rather, we can store the square root of the information matrix, which remains sparse during the course of optimization, a feature that we can exploit to perform much more efficient optimization.  The resulting operation used in solving SLAM problems becomes a matter of developing fast, multi-variable optimization algorithms, and there has been much work in this area to improve the underlying optimization techniques, particularly from graph theory\cite{Triggs99, Bertele72jmaa, Bertele72book}.  In particular, there are methods for incremental SAM\cite{Dellaert06ijrr}, which are especially useful when approaching the development of real-time systems.
 
 \section{METHODS}
 In order to perform robust, efficient passing, we have decided on a particular structure for the offense play. The basic concept is that if there is a shot available or a sequence of passes to a shot (henceforth known as a "shooting solution"), then the system will construct the sequence of paths for robots and kicks, run a nonlinear optimization technique to improve the path and ensure viability, and then execute it.
@@ -133,7 +135,7 @@ The resulting system structure for the offensive passing algorithm has the follo
  \item \textit{Execution} Given a viable plan a variety of motion planning and behavioral approaches can be used to to execute the actions that have been parameterized by plan generation and optimized.  
 \end{enumerate}
 
-The optimization algorithm comes from the gtsam library\cite{Dellaert05rss} developed in the RIM center with Frank Dellaert, and is derived from Sequential Quadratic Programming. This algorithm is robust to both nonlinear systems and constraints, and has been reformulated to work in a graphical model environment, which allows for an intuitive construction of stochastic switched hybrid systems.
+The optimization algorithm comes from the gtsam library\cite{Dellaert05rss} developed in the Georgia Tech Robotics and Intelligent Machines (RIM) center with Frank Dellaert, and derives from Sequential Quadratic Programming. This algorithm is robust to both nonlinear systems and constraints, and has been reformulated to work in a graphical model environment, which allows for an intuitive construction of stochastic switched hybrid systems.
 
 \subsection{ANALYTIC PLANNING}
 The analytic planner creates an initial structure of nodes representing robots, with links between them corresponding to the ball movement. This initial graph structure contains all possible combinations of passes with 1, 2, or 3 robots. Additional pass-lengths (such as 4-robot passes) are not considered due to the high probability of errors during passing. Using this high-level graph structure, we construct a cost function for pass solutions that penalizes passes that are too long or that are clearly blocked by either an opponent or another teammate. Special care is taken to not penalize solutions that have a possibility of being good passes at future levels of the planner. Using this cost function, we sort the possible passes and select a subset of the best passes to send to the optimization step.
@@ -151,13 +153,13 @@ There are two steps to effective optimization of a soccer plan:
 The formulation of actual factors in this approach, as it derives from the need to define an error function in SAM, has the form of a function $h(x)$ dependent on the state of the system and a measurement $z$, where in the SAM case, the $h(x)$ is the generative measurement model and the $z$ is the actual value of the system, but in our system, $h(x)$ describes the current state with relation to a cost function, and $z$ is the optimal value.  Expressed in general form, these factors combine as in (\ref{factors}) to form a nonlinear least squares problem, where $x$ forms the set of state variables, $z_{k}$ is the optimal value for the constraint, and $R_{k}$ is a weighting matrix on the cost function.
 
 \begin{equation} \label{factors}
- argmin(\frac{1}{2}\sum_{k}\left\Vert h_{k}(x_{k})-z_{k}\right\Vert _{R_{k}}^{2})
+ x^{*} = argmin(\frac{1}{2}\sum_{k}\left\Vert h_{k}(x_{k})-z_{k}\right\Vert _{R_{k}}^{2})
 \end{equation} 
 
 With this error-function approach, especially as it allows us to place relationships between variables in the system, we can build the cost function to define an optimal solution.  One of the basic cases where these cost functions can be assembled is to optimize for shorter passes between robots, as well as smaller robot movements, which can be expressed by using an optimal distance where $z=0$, and $h(x,y)=\left\Vert x-y \right\Vert$.  By connecting all of nodes with constraints such as these, we can simultaneously optimize the movement of robots and passes to find a series of movements and passes that minimizes all of the distances.  In this unconstrained optimization case, we can approach the actual optimization using nonlinear unconstrained optimization techniques such as Levenberg-Marquardt or Gauss-Newton. Because of the least-squares formulation of a quadratic cost function, we can approximate the Hessian of the overall cost function using only the Jacobian of $h(x)$.  The factor can be approximated through a linearization of the measurement function, which produces the Quadratic Programming problem shown in (\ref{eq:full_linear_factor}).  
 
 \begin{equation} \label{eq:full_linear_factor}
-argmin(\frac{1}{2}\sum_{k}\left\Vert H_{x_{k}}x+h(x_{k_{0}})-z\right\Vert _{R_{k}}^{2})
+x^{*} = argmin(\frac{1}{2}\sum_{k}\left\Vert H_{x_{k}}x+h(x_{k_{0}})-z\right\Vert _{R_{k}}^{2})
 \end{equation}
 
 Some other cases where factors define a means to improve a plan:
@@ -168,10 +170,10 @@ Some other cases where factors define a means to improve a plan:
 \end{itemize}
 
 
-While this works for basic scenarios, such as making the robots move and pass the smallest possible distance, we also need to express hard constraints on the motion nad passing of robots, such as staying on the field and not driving through other robots.  These constraints are not just cost functions to be minimized, but rather requirements that must be met for any solution to be feasible.  We can extend the previous expression to allow the incorporation of these hard constraints by redefining the optimization problem as a Lagrangian optimization problem, as in (\ref{constraints}).  
+While this works for basic scenarios, such as making the robots move and pass the smallest possible distance, we also need to express hard constraints on the motion and passing of robots, such as staying on the field and not driving through other robots.  These constraints are not just cost functions to be minimized, but rather requirements that must be met for any solution to be feasible.  We can extend the previous expression to allow the incorporation of these hard constraints by redefining the optimization problem as a Lagrangian optimization problem, as in (\ref{constraints}), where we minimize the cost function over the states in the system and the Lagrange multiplier cofactors $\lambda$.
 
 \begin{equation} \label{constraints}
- argmin(\frac{1}{2}\sum_{k}\left\Vert h_{k}(x_{k})-z_{k}\right\Vert _{R_{k}}^{2}-\lambda g(x))
+x^{*} = argmin(\frac{1}{2}\sum_{k}\left\Vert h_{k}(x_{k})-z_{k}\right\Vert _{R_{k}}^{2}-\lambda^{T} g(x))
 \end{equation} 
 
 We can express the constraints in the form of $g(x)$, where $g(x)$ defines a vector-valued function where the constraints are considered fulfilled if $g(x)\leq 0$, which allows both equality constraints, such as ensuring passes arrive at the same time and location as the robot receiving the pass, or inequality constraints, such as maintaining bounds on the positions, velocities and acceleration of the robots to keep them on the field and driving with viable commands.  The addition of these constraints requires a more sophisticated solution method, and in our case, we use Sequential Quadratic Programming (SQP) to reduce the full nonlinear constrained problem into a series of quadratic programming subproblems with linear constraints, which can then be solved with a mixture of direct elimination of the constrained variables, and unconstrained optimization on the remaining variables\cite{Fletcher87book}. 
@@ -201,11 +203,11 @@ While we do have direct control over the robots, there are still a number of are
 \begin{itemize}
  \item The control system currently only uses the vision system to provide robot positions, rather than direct wheel velocities, which makes the robots less responsive to commands.
  \item The ball position reported by the overhead camera has uncertainty in the positioning of the ball, especially when it is moving at high speeds, which can result in the vision system losing the ball.
- \item Kicking does not come in the form of a instananeous ``kick'' command, but rather a ``kick when ready'' because the ball must be exactly in front of the kicker bar on the robot.  This makes timing the kicks themselves more difficult.  
+ \item Kicking does not come in the form of a instantaneous ``kick'' command, but rather a ``kick when ready'' because the ball must be exactly in front of the kicker bar on the robot.  This makes timing the kicks themselves more difficult.  
 \end{itemize}
 
 \section{EXPERIMENTS}
-We tested the system using the simulated environment with the GT RoboCup software, which allows for an identical interface between the simulated environment and the real robots.
+We tested the system using the simulated environment with the GT RoboCup software, which allows for an identical interface between the simulated environment and the real robots. This provides an easier to maintain environment than the full robot system, which was unavailable for full execution both due to not having enough robots for two teams and maintenance issues with the robots at the time of the software development.  
 
 \begin{figure}[ht!]
 \begin{center}
@@ -238,17 +240,15 @@ Our second type of experiment tested both non-optimized and optimized passes in 
 
 \section{ANALYSIS}
 The results of the system, in a somewhat simplified form, indicate potential for this technique. Because our system uses much of the underlying code from our 2008 GT Robocup team to evaluate analytical solutions, our analytical solution step generalizes the ``0-pass'' direct goal kicks of our previous system to plans that include one or two additional robots. The optimization on top of this analytic solution was shown to improve the solutions by considering parameters that neither the 2008 GT Robocup team, nor the analytical solution were able to consider.
+
 Our experiments have shown that our system can perform both high and low-level planning simultaneously, and while we were not able to test directly against a STP team, at a conceptual level our algorithm goes beyond the STP framework.
 
-\section{DISCUSSION}
-We learned a number of lessons from the development of this system, and there is a great deal that can be improved, but the combination of an analytic planner and an optimization engine appear to be an effective means of generating passing plans.  The optimizer has a great deal of flexibility, and even in a smaller example system, we have the flexibility to make the system very robust.  Further work could improve the system by integrating a motion model into the factor graph itself, and then bypassing the underlying RRT-based planner to make plans more predictable. 
-\begin{itemize}
-\item The multi-stage planner allows evaluation of plans we would not have been able to find otherwise
-\item While the current optimization approach uses a simpler cost function, the system is very scalable
-\item We need to improve the interactions between the low-level control and the planner outputs
-\end{itemize}
+We should also note that the performance of the optimization was within the bounds necessary for real-time play, which is an important criterion for robust replanning when the field conditions change.  
 
-One area not addressed in this approach is the probabilistic component of the optimizer representation, which affords a means to represent and manage the uncertainty in the actions taken by the robot and the observation error in ball position.  
+\section{DISCUSSION}
+We learned a number of lessons from the development of this system, and there is a great deal that can be improved, but the combination of an analytic planner and an optimization engine appear to be an effective means of generating passing plans.  The optimizer has a great deal of flexibility, and even in a smaller example system, we have the flexibility to make the system very robust.  Further work could improve the system by integrating a motion model into the factor graph itself, and then bypassing the underlying RRT-based planner to make plans more predictable. When the optimization can manage the complete optimal control of the robots, we will be able to avoid using much of the underlying command structure and provide directly optimized commands across the entire team, rather than paths created independently for each robot as in the RRT-based planner.  
+
+One area not addressed in this approach is the probabilistic component of the optimizer representation, which affords a means to represent and manage the uncertainty in the actions taken by the robot and the observation error in ball position.  We can use this to robustly determine the depth with which we can plan before the uncertainty of robot positioning and ball trajectories is to large.  Further tests that make use of the real robot fleet should allow for a better test of the robustness of the representation.  
 
 While the system implemented in this scenario is simple, we still conclude that there are means to develop a more robust approach using these tools. The task of passing in an offensive scenario is a relatively small portion of overall soccer play, and there are a number of other areas where using an optimization-based approach could improver performance.  We could develop a model that can bound and predict opponent robot movement and use this structure to adjust our passes and movement in a more reliable way.  In addition to an offensive system that finds passes that result in a shot on goal, we can also use this approach to develop defensive plays, where we optimize the robot positions to move them into those areas most likely to interfere with opponent passes and shots.  We also believe it should be possible to expand the planner to incorporate the entire team of robots at once, so as soon as the ball is available, we can have a passing solution across the entire team, resulting in controlled, optimized play from the time the goalie gets the ball until a robot can make a shot on goal.
 
