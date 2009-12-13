@@ -1,17 +1,10 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
-\bibitem{cmdragonsETD}
-Stefan Zickler, James Bruce, Joydeep Biswas, Michael Licitra, and Manuela
-  Veloso.
-\newblock Cmdragons 2009 extended team description.
-\newblock In {\em Proceedings of the RoboCup Symposium}. Springer, 2009.
-
-\bibitem{skubaETD}
-Jirat Srisabye, Piyamate Wasuntapichaikul, Chanon Onman1, Kanjanapan Sukvichai,
-  Supparat Damyot, Thitiwat Munintarawong, Phumin Phuangjaisri, and Yodyium
-  Tipsuwan.
-\newblock Skuba 2009 extended team description.
-\newblock In {\em Proceedings of the RoboCup Symposium}. Springer, 2009.
+\bibitem{bruce2003multi}
+J.~Bruce, M.~Bowling, B.~Browning, and M.~Veloso.
+\newblock {Multi-robot team response to a multi-robot opponent team}.
+\newblock In {\em IEEE International Conference on Robotics and Automation},
+  volume~2, pages 2281--2286. Citeseer, 2003.
 
 \bibitem{browning2005stp}
 B.~Browning, J.~Bruce, M.~Bowling, and M.~Veloso.
@@ -20,11 +13,12 @@ B.~Browning, J.~Bruce, M.~Bowling, and M.~Veloso.
 \newblock {\em Proceedings of the Institution of Mechanical Engineers, Part I:
   Journal of Systems and Control Engineering}, 219(1):33--52, 2005.
 
-\bibitem{bruce2003multi}
-J.~Bruce, M.~Bowling, B.~Browning, and M.~Veloso.
-\newblock {Multi-robot team response to a multi-robot opponent team}.
-\newblock In {\em IEEE International Conference on Robotics and Automation},
-  volume~2, pages 2281--2286. Citeseer, 2003.
+\bibitem{skubaETD}
+Jirat Srisabye, Piyamate Wasuntapichaikul, Chanon Onman1, Kanjanapan Sukvichai,
+  Supparat Damyot, Thitiwat Munintarawong, Phumin Phuangjaisri, and Yodyium
+  Tipsuwan.
+\newblock Skuba 2009 extended team description.
+\newblock In {\em Proceedings of the RoboCup Symposium}. Springer, 2009.
 
 \bibitem{zickler2008playing}
 S.~Zickler and M.~Veloso.
@@ -32,10 +26,52 @@ S.~Zickler and M.~Veloso.
   of robot tactics}.
 \newblock In {\em Proceedings of the RoboCup Symposium}. Springer, 2008.
 
-\bibitem{bruce2003real}
-J.~Bruce and M.M. Veloso.
-\newblock {Real-time randomized path planning for robot navigation}.
-\newblock {\em Lecture Notes in Computer Science}, pages 288--295, 2003.
+\bibitem{Thrun05book}
+S.~Thrun, W.~Burgard, and D.~Fox.
+\newblock {\em Probabilistic Robotics}.
+\newblock The MIT press, Cambridge, MA, 2005.
+
+\bibitem{Thrun04ijrr}
+S.~Thrun, Y.~Liu, D.~Koller, A.Y. Ng, Z.~Ghahramani, and H.~Durrant-Whyte.
+\newblock Simultaneous localization and mapping with sparse extended
+  information filters.
+\newblock {\em Intl. J. of Robotics Research}, 23(7-8):693--716, 2004.
+
+\bibitem{Dellaert03tutorial}
+Frank Dellaert.
+\newblock An intuitive introduction to {ML} and {MAP} estimation, {Kalman} and
+  particle filters, and {Rao-Blackwellization}.
+\newblock In preparation, 2003.
+
+\bibitem{Dellaert05tr}
+F.~Dellaert.
+\newblock Square {Root} {SAM}: Simultaneous localization and mapping via square
+  root information smoothing.
+\newblock Technical Report GIT-GVU-05-11, Georgia Institute of Technology,
+  2005.
+
+\bibitem{Triggs99}
+B.~Triggs, P.~McLauchlan, R.~Hartley, and A.~Fitzgibbon.
+\newblock Bundle adjustment -- a modern synthesis.
+\newblock In W.~Triggs, A.~Zisserman, and R.~Szeliski, editors, {\em Vision
+  Algorithms: Theory and Practice}, LNCS, pages 298--375. Springer Verlag, Sep
+  1999.
+
+\bibitem{Bertele72jmaa}
+U.~Bertele and F.~Brioschi.
+\newblock On the theory of the elimination process.
+\newblock {\em J. Math. Anal. Appl.}, 35(1):48--57, July 1972.
+
+\bibitem{Bertele72book}
+U.~Bertele and F.~Brioschi.
+\newblock {\em Nonserial Dynamic Programming}.
+\newblock Academic Press, 1972.
+
+\bibitem{Dellaert06ijrr}
+F.~Dellaert and M.~Kaess.
+\newblock Square {Root} {SAM}: Simultaneous localization and mapping via square
+  root information smoothing.
+\newblock {\em Intl. J. of Robotics Research}, 25(12):1181--1203, Dec 2006.
 
 \bibitem{Dellaert05rss}
 F.~Dellaert.
