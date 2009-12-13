@@ -248,6 +248,10 @@ We learned a number of lessons from the development of this system, and there is
 \item We need to improve the interactions between the low-level control and the planner outputs
 \end{itemize}
 
+One area not addressed in this approach is the probabilistic component of the optimizer representation, which affords a means to represent and manage the uncertainty in the actions taken by the robot and the observation error in ball position.  
+
+While the system implemented in this scenario is simple, we still conclude that there are means to develop a more robust approach using these tools. The task of passing in an offensive scenario is a relatively small portion of overall soccer play, and there are a number of other areas where using an optimization-based approach could improver performance.  We could develop a model that can bound and predict opponent robot movement and use this structure to adjust our passes and movement in a more reliable way.  In addition to an offensive system that finds passes that result in a shot on goal, we can also use this approach to develop defensive plays, where we optimize the robot positions to move them into those areas most likely to interfere with opponent passes and shots.  We also believe it should be possible to expand the planner to incorporate the entire team of robots at once, so as soon as the ball is available, we can have a passing solution across the entire team, resulting in controlled, optimized play from the time the goalie gets the ball until a robot can make a shot on goal.
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
