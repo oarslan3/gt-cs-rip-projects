@@ -132,7 +132,37 @@ The analytic planner creates an initial structure of nodes representing robots, 
 The cost function used resembles the evaluation step in the STP planner, though it differs because our pass structure is created before any robot has the ball, and includes all possible passes, allowing us to optimize the passer and the receivers, as well as the ball path.
 
 \subsection{OPTIMIZATION}
-In order to peform optimization over the positions of the robots, we use a graphical model approach designed for use in the context of the SLAM to approach 
+Once a plan has been selected for further evaluation, we use a constrained nonlinear optimization approach to find an improved solution.  A key observation in the development of the optimization technique is the dual nature between optimizing a robot control system and SAM.  In the SAM problem, the basic goal is to recover a robot trajectory based on a set of constraints from the robot's sensor systems and motion models after the robot has moved through the environment.  In the controls case, the goal is to determine an optimal trajectory based on a set of constraints, such as those on robot motion or obstacle avoidance.  In both cases, the goal is to recover a robot trajectory from a series of constraints, and they primarily differ in what sort of constraints are applied.  Rather than using the formulation of optimal control, we will use a graphical model approach to assemble a full cost function over the environment.  
+
+There are two steps to effective optimization of a soccer plan:
+\begin{description}
+ \item{Factor Graph Construction}: we assemble a cost function to optimize using a piecewise factor graph approach usually used in SAM solutions.  This allows development by means of combining a large number of constraint functions that individually relate only a small number of variables.
+\item{Nonlinear Optimization}: after the general cost function is assembled, we use Sequential Quadratic Programming (SQP) to reduce the a system with an arbitrary smooth nonlinear cost function and constraint set to a quadratic programming problem suitable for solving via Multi-frontal QR factorization.  
+ \end{description}
+
+The formulation of actual factors in this approach, as it derives from the need to define an error function in SAM, has the form of a function $h(x)$ dependent on the state of the system and a measurement $z$, where in the SAM case, the $h(x)$ is the generative measurement model and the $z$ is the actual value of the system, but in our system, $h(x)$ describes the current state with relation to a cost function, and $z$ is the optimal value.  Expressed in general form, these factors combine as in (\ref{factors}) to form a nonlinear least squares problem.  
+
+\begin{equation} \label{factors}
+ argmin(\frac{1}{2}\sum_{k}\left\Vert h_{k}(x_{k})-z_{k}\right\Vert _{R_{k}}^{2})
+\end{equation} 
+
+With this error-function approach, especially as it allows us to place relationships between variables in the system, we can build the cost function to define an optimal solution.  One of the basic cases where these cost functions can be assembled is to optimize for shorter passes between robots, as well as smaller robot movements, which can be expressed by using an optimal distance where $z=0$, and $h(x,y)=\left\Vert x-y \right\Vert$.  By connecting all of nodes with constraints such as these, we can simultaneously optimize the movement of robots and passes to find a series of movements and passes that minimizes all of the distances.  In this unconstrained optimization case, we can approach the actual optimization using nonlinear unconstrained optimization techniques such as Levenberg-Marquardt or Gauss-Newton. 
+
+Some other cases where factors define a means to improve a plan:
+\begin{itemize}
+ \item Maximizing the distance of pass trajectories from other robots to prevent pass interception.
+ \item Maximizing the distance between robot paths and opponent robots to avoid collisions and improve movement speed.
+ \item Minimizing the angle between the facing of a robot upon receiving a pass and making the next pass so as to minimize the time necessary aiming.  
+\end{itemize}
+
+
+While this works for basic scenarios, such as making the robots move and pass the smallest possible distance, we also need to express hard constraints on the motion nad passing of robots, such as staying on the field and not driving through other robots.  These constraints are not just cost functions to be minimized, but rather requirements that must be met for any solution to be feasible.  We can extend the previous expression to allow the incorporation of these hard constraints by redefining the optimization problem as a Lagrangian optimization problem, as in (\ref{constraints}).  
+
+\begin{equation} \label{constraints}
+ argmin(\frac{1}{2}\sum_{k}\left\Vert h_{k}(x_{k})-z_{k}\right\Vert _{R_{k}}^{2}-\lambda g(x))
+\end{equation} 
+
+We can express the constraints in the form of $g(x)$, where $g(x)$ defines a vector-valued function where the constraints are considered fulfilled if $g(x)\leq 0$, which allows both equality constraints, such as ensuring passes arrive at the same time and location as the robot receiving the pass, or inequality constraints, such as maintaining bounds on the positions, velocities and acceleration of the robots to keep them on the field and driving with viable commands.  
 
 \section{EXPERIMENTS}
 We tested the system using the simulated environment with the GT RoboCup software, which allows for an identical interface between the simulated environment and the real robots.  
