@@ -93,11 +93,19 @@ This project is an interesting planning challenge because of the speed of the ro
 \caption{Methods used: Left-to-right: (1.) Analytic planner result (2.) Plan evaluation and selection of feasible subset. (3.) Optimization of feasible subset of plans. (4.) Optimized result which is executed.}
 \end{figure*}
 
+\subsection{ROBOTIC SOCCER}
+
 The Skills, Tactics and Plays (STP) framework is the primary technique used by top Robocup teams \cite{bruce2003multi}. STP is a hierarchical approach consisting of high-level ``plays'', mid-level ``tactics'', and low-level ``skills'' which supports global planning and is able to make use of teamplay at both the Plays and the Tactics levels \cite{browning2005stp}. In a passing scenario, STP could use an offense play, a passing tactic and a receiving tactic, and skills such as drive, turn or shoot. To achieve computationally fast, robust, and competitive passing, the CMDragons team has an evaluation technique which, given that a pass will occur, selects a near-optimal position for the receiving robot to achieve a clear path for the ball. CMDragons uses several pre-defined passing tactics such as one-touch pass-and-shoot and pass-receive-turn-shoot, which selected for at the play level.
 
 The current top Robocup SSL team, Skuba, use a slight variation on the STP framework \cite{skubaETD}. Their top-level strategy module selects from a number of plays. Each play uses ``Positions'', such as Aggressor and Defender, that are assigned to individual robots. Passing is implemented by using a a special position, called "SpecialOp", which assists a regular position and accepts passes.
 
 By not considering the low-level details of a plan at the plays and tactics level, STP can fail to optimally use the robots' potentials or fail to anticipate obstacles or constraints. This was recognized Zickler and Veloso, who have combined the skills and tactics of the STP into a Kinodynamic planner \cite{zickler2008playing}. This approach has produced impressive results in simulation, such as bouncing the ball off of other players, though it has not been used on real real-time robots.
+
+\subsection{OPTIMIZATION}
+
+There are a variety of means of approaching optimization in the context of high-dimensional systems, and this paper will focus on the relationship between optimizing robot trajectories in an optimal controls sense with recovering robot trajectories from measurements taken on the environment.  The Simultaneous Localization and Mapping (SLAM) problem is a canonical problem in the field, where an optimization algorithm must find the most likely position of a robot in an environment based on a series of measurements of the environment.  Much of the work in the field has focused on approaching this problem using Kalman or particle filters  \cite{Thrun05book, Thrun04ijrr, Dellaert03tutorial} to represent the state of the system, however we will focus on solutions that provide the entire trajectory of the robot, otherwise known as the complete SLAM problem.  
+
+The basic Smoothing and Mapping (SAM) approach\cite{Dellaert05tr} to the problem uses the Information Matrix to describe the relationships between variables, which can be used as an exact dual to the covariance matrix used in Kalman filters, but the key in the SAM approach is that this information matrix does not need to be kept in full form, rather, we can store the square root of the information matrix, which remains sparse during the course of optimization, a feature that we can exploit to perform much more efficient optimization.  The resulting operation used in solving SLAM problems becomes a matter of developing fast, multi-variable optimization algorithms, and there has been much work in this area to improve the underlying optimization techniques, particuarly from graph theory\cite{Triggs99, Bertele72jmaa, Bertele72book}.  In particular, there are methods for incremental SAM\cite{Dellaert06ijrr}, which are especially useful when approaching the development of real-time systems.
 
 \section{METHODS}
 In order to perform robust, efficient passing, we have decided on a particular structure for the offense play. The basic concept is that if there is a shot available or a sequence of passes to a shot (henceforth known as a "shooting solution"), then the system will construct the sequence of paths for robots and kicks, run a nonlinear optimization technique to improve the path and ensure viability, and then execute it.
@@ -119,9 +127,11 @@ The resulting system structure for the offensive passing algorithm has the follo
 
 The optimization algorithm comes from the gtsam library\cite{Dellaert05rss} developed in the RIM center with Frank Dellaert, and is derived from Sequential Quadratic Programming. This algorithm is robust to both nonlinear systems and constraints, and has been reformulated to work in a graphical model environment, which allows for an intuitive construction of stochastic switched hybrid systems.
 
+\subsection{ANALYTIC PLANNING}
 \textit{TODO: Describe the actual analytic planner system}
 
-\textit{TODO: Describe the optimizer in mathematical detail and formulation of the constraints and factors}
+\subsection{OPTIMIZATION}
+In order to peform optimization over the positions of the robots, we use a graphical model approach designed for use in the context of the SLAM to approach 
 
 \section{EXPERIMENTS}
 We tested the system using the simulated environment with the GT RoboCup software, which allows for an identical interface between the simulated environment and the real robots.  
@@ -168,17 +178,5 @@ The authors would like to thank the GT RoboCup SSL team for developing the syste
 
 \bibliographystyle{unsrt}
 \bibliography{RIPFinal}
-% \begin{thebibliography}{99}
-% 
-% \bibitem{c1}
-% J.G.F. Francis, The QR Transformation I, {\it Comput. J.}, vol. 4, 1961, pp 265-271.
-% 
-% \bibitem{c2}
-% H. Kwakernaak and R. Sivan, {\it Modern Signals and Systems}, Prentice Hall, Englewood Cliffs, NJ; 1991.
-% 
-% \bibitem{c3}
-% D. Boley and R. Maier, "A Parallel QR Algorithm for the Non-Symmetric Eigenvalue Algorithm", {\it in Third SIAM Conference on Applied Linear Algebra}, Madison, WI, 1988, pp. A20.
-% 
-% \end{thebibliography}
 
 \end{document}
