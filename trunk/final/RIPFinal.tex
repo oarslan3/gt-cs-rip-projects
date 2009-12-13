@@ -140,7 +140,7 @@ There are two steps to effective optimization of a soccer plan:
 \item{Nonlinear Optimization}: after the general cost function is assembled, we use Sequential Quadratic Programming (SQP) to reduce the a system with an arbitrary smooth nonlinear cost function and constraint set to a quadratic programming problem suitable for solving via Multi-frontal QR factorization.  
  \end{description}
 
-The formulation of actual factors in this approach, as it derives from the need to define an error function in SAM, has the form of a function $h(x)$ dependent on the state of the system and a measurement $z$, where in the SAM case, the $h(x)$ is the generative measurement model and the $z$ is the actual value of the system, but in our system, $h(x)$ describes the current state with relation to a cost function, and $z$ is the optimal value.  Expressed in general form, these factors combine as in (\ref{factors}) to form a nonlinear least squares problem.  
+The formulation of actual factors in this approach, as it derives from the need to define an error function in SAM, has the form of a function $h(x)$ dependent on the state of the system and a measurement $z$, where in the SAM case, the $h(x)$ is the generative measurement model and the $z$ is the actual value of the system, but in our system, $h(x)$ describes the current state with relation to a cost function, and $z$ is the optimal value.  Expressed in general form, these factors combine as in (\ref{factors}) to form a nonlinear least squares problem, where $x$ forms the set of state variables, $z_{k}$ is the optimal value for the constraint, and $R_{k}$ is a weighting matrix on the cost function.
 
 \begin{equation} \label{factors}
  argmin(\frac{1}{2}\sum_{k}\left\Vert h_{k}(x_{k})-z_{k}\right\Vert _{R_{k}}^{2})
@@ -162,7 +162,29 @@ While this works for basic scenarios, such as making the robots move and pass th
  argmin(\frac{1}{2}\sum_{k}\left\Vert h_{k}(x_{k})-z_{k}\right\Vert _{R_{k}}^{2}-\lambda g(x))
 \end{equation} 
 
-We can express the constraints in the form of $g(x)$, where $g(x)$ defines a vector-valued function where the constraints are considered fulfilled if $g(x)\leq 0$, which allows both equality constraints, such as ensuring passes arrive at the same time and location as the robot receiving the pass, or inequality constraints, such as maintaining bounds on the positions, velocities and acceleration of the robots to keep them on the field and driving with viable commands.  
+We can express the constraints in the form of $g(x)$, where $g(x)$ defines a vector-valued function where the constraints are considered fulfilled if $g(x)\leq 0$, which allows both equality constraints, such as ensuring passes arrive at the same time and location as the robot receiving the pass, or inequality constraints, such as maintaining bounds on the positions, velocities and acceleration of the robots to keep them on the field and driving with viable commands.  The addition of these constraints requires a more sophisticated solution method, and in our case, we use Sequential Quadratic Programming (SQP) to reduce the full nonlinear constrained problem into a series of quadratic programming subproblems, which can then be solved with the same approaches as the nonconstrained system\cite{Fletcher87book}.  
+
+To demonstrate the optimization in a simple environment, we reduced the optimization problem to finding new positions for each of the robots such that we minimize the distance of travel for both passes and robot movement.  We approximated robot motion to include only an initial and final state to allow for straight-line paths between points.  Due to this approximation, we more tightly constrained the distance the robots could move to prevent the need for more sophisticated obstacle avoidance techniques.  The optimization routine takes as input a set of robot positions in a passing sequence and provides a new set of robot positions that result in better passes.  
+
+The factors and constraints used are as follows:
+\begin{itemize}
+ \item \textit{factor} Path shortening on robot movement
+ \item \textit{factor} Path shortening on pass and shot lengths
+ \item \textit{constraint} Robot initial positions are fixed to the real initial positions
+ \item \textit{constraint} Robot positions must remain on the field to be viable
+\end{itemize}
+
+Even with this small set of factors, we can provide an expressive means to optimize robot control, and with additional factors we could find even better final pass sequences.  
+
+\subsection{CONTROL}
+In order translate the plans to robots in the actual system, we have a number of low-level controllers that execute commands. We can switch between various control approaches for particular applications, which can be necessary to avoid using suboptimal methods.  There are several means of issuing commands to the robots to execute movements across the field:
+\begin{description}
+ \item[RRT Planning] For situations when we need a robot to move around other robots, we can use a simple RRT-based system to find a path.  This does, however, have the problem that the resulting path is unpredictable, so it cannot be used well with optimization-based approaches
+ \item[Direct Path Commands] We can instruct a robot to execute a specific path, which allows for more control by the higher-level modules in the system.  
+ \end{description}
+
+The low-level path execution 
+
 
 \section{EXPERIMENTS}
 We tested the system using the simulated environment with the GT RoboCup software, which allows for an identical interface between the simulated environment and the real robots.
