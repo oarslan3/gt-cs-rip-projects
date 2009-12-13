@@ -128,7 +128,8 @@ The resulting system structure for the offensive passing algorithm has the follo
 The optimization algorithm comes from the gtsam library\cite{Dellaert05rss} developed in the RIM center with Frank Dellaert, and is derived from Sequential Quadratic Programming. This algorithm is robust to both nonlinear systems and constraints, and has been reformulated to work in a graphical model environment, which allows for an intuitive construction of stochastic switched hybrid systems.
 
 \subsection{ANALYTIC PLANNING}
-\textit{TODO: Describe the actual analytic planner system}
+The analytic planner creates an initial structure of nodes representing robots, with links between them corresponding to the ball movement. This initial graph structure contains all possible combinations of passes with 1, 2, or 3 robots. Additional pass-lengths (such as 4-robot passes) are not considered due to the high probability of errors during passing. Using this high-level graph structure, we construct a cost function for pass solutions that penalizes passes that are too long or that are clearly blocked by either an opponent or another teammate. Special care is taken to not penalize solutions that have a possibility of being good passes at future levels of the planner. Using this cost function, we sort the possible passes and select a subset of the best passes to send to the optimization step.
+The cost function used resembles the evaluation step in the STP planner, though it differs because our pass structure is created before any robot has the ball, and includes all possible passes, allowing us to optimize the passer and the receivers, as well as the ball path.
 
 \subsection{OPTIMIZATION}
 In order to peform optimization over the positions of the robots, we use a graphical model approach designed for use in the context of the SLAM to approach 
